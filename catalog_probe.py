@@ -8,7 +8,10 @@ from collector import Client, safe_name, utcnow
 def main():
     client = Client(delay=1.0)
     site = client.get_json("site")
-    season_names = list(dict.fromkeys([site["season"]["name"]] + site.get("seasons", [])))[:12]
+    all_seasons = list(dict.fromkeys([site["season"]["name"]] + site.get("seasons", [])))
+    indices = [0, 1, len(all_seasons)//4, len(all_seasons)//2,
+               3*len(all_seasons)//4, max(0, len(all_seasons)-1)]
+    season_names = list(dict.fromkeys(all_seasons[i] for i in indices if i<len(all_seasons)))
     lines = [
         "# Match catalog discovery", "",
         f"Generated UTC: {utcnow()}", "",
