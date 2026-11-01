@@ -1,6 +1,14 @@
-# Snake26 strategy laboratory
+# Snake26 strategy laboratory — LEGACY POOLED EXPLORATION
 
-Updated UTC: 2026-11-01T23:37:55+00:00
+**Important:** This legacy diagnostic pools on-arrival trials and actual league
+replays. It is NOT valid evidence that a strategy works in the league.
+Use [Joined Research](joint_analysis.md) and
+[Mode-Separated Replay Behavior](behavior_by_mode.md) instead.
+The static reachable-space search is capped: many genuinely different
+moves tie at the cap. Thus a very high 'widest-space choice' percentage
+does NOT establish that a snake uses a space-maximizing algorithm.
+
+Updated UTC: 2026-11-01T23:45:33+00:00
 Unique replays analyzed: **87** (duplicate hashes skipped: 63; unreadable: 0)
 Sampling: every **25th** turn per match, not independent observations.
 
@@ -10,7 +18,7 @@ This is **behavioral observation**, not a live match simulator. Candidate moves 
 
 A prerecorded opponent does **not** respond to changes made by our bot; fixed historical moves cannot provide a valid full counterfactual match. To benchmark wins, we need to run live executables against locally available opponents or compare equivalent seed/opponent setups.
 
-## Current top-ten versus other observed snakes
+## Mixed trial/league samples: diagnostic only
 
 | Group | Sampled moves | Food-nearest choices | Widest-space choices | Clear food/space tradeoffs | Space favored in tradeoffs |
 |---|---:|---:|---:|---:|---:|
@@ -98,7 +106,7 @@ A tradeoff means the most food-directed static-free move had a reachable-space e
 | [`game-71056.rep`](../replays/2026-11-01-225859-season/game-71056.rep.gz) | 1475 | `409987-sbongakonke-shange` | 85 | DOWN | 16 | 105/105 | yes |
 | [`game-71006.rep`](../replays/2026-11-01-225859-season/game-71006.rep.gz) | 1225 | `388060-tshepang-tshabalala` | 85 | UP | 8 | 105/105 | yes |
 
-## Experiments we can implement and benchmark
+## Historical hypotheses for later investigation (NO implementation yet)
 
 1. **Food-versus-space planner:** Assign each candidate move a weighted score for distance to food and bounded flood-fill space. Compare against current Java bot, using the same fresh seeds.
 2. **Danger override:** When a candidate leads to constrained reachable space, temporarily prioritize escape over food; test ablation with/without the override.

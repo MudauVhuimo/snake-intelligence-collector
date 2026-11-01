@@ -1,0 +1,44 @@
+{
+  "catalog": {
+    "league": 2093,
+    "trial": 17958
+  },
+  "replays": {
+    "league": 95,
+    "trial": 55
+  },
+  "unique": {
+    "league": 45,
+    "trial": 42
+  },
+  "game_rows": 25860,
+  "bad_retention": 0,
+  "current_season": "2026-11-01-225859-season",
+  "league_team_seasons": 1548,
+  "trial_team_seasons": 5986,
+  "joined_rows": 6005,
+  "latest_div1_matched": 32,
+  "latest_season_paired": 146,
+  "correlations": [
+    {
+      "metric": "Apples per game",
+      "n": 32,
+      "rho": 0.491
+    },
+    {
+      "metric": "Final body length",
+      "n": 32,
+      "rho": 0.475
+    },
+    {
+      "metric": "Kills per game",
+      "n": 32,
+      "rho": 0.438
+    },
+    {
+      "metric": "Retained growth / expected no-reset growth",
+      "n": 32,
+      "rho": 0.499
+    }
+  ]
+}

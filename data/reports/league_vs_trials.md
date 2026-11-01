@@ -1,6 +1,6 @@
 # Snake26: League versus on-arrival trials
 
-Generated UTC: 2026-11-01T23:37:34+00:00
+Generated UTC: 2026-11-01T23:45:15+00:00
 Latest season with official standings: 2026-11-01-225859-season
 
 ## 1. Are league and benchmark results consistent?

@@ -1,6 +1,6 @@
 # Snake26 — Data Science Dashboard: Phase I
 
-Generated UTC: 2026-11-01T23:38:11+00:00
+Generated UTC: 2026-11-01T23:45:46+00:00
 
 ## Data coverage and quality
 
@@ -36,13 +36,13 @@ Below-reference points may reflect growth lost to deaths, but only full replay e
 Current-season gauntlet_1 trial replays with trajectories: **4**.
 Actual recorded body lengths, sampled every 100 turns; missing curves are not interpolated.
 
-## 4. Deaths by recorded cause
+## 4. Deaths by recorded cause (all match modes pooled)
 
 ![Observed death events](charts/death_causes.svg)
 
 Raw counts mix opponent groups and survival exposure; they are not comparable risk rates.
 
-## 5. Death-event rate by body length
+## 5. Death-event rate by body length (all match modes pooled)
 
 ![Deaths normalized by observed alive turns](charts/death_rates.svg)
 
@@ -57,8 +57,25 @@ Raw counts mix opponent groups and survival exposure; they are not comparable ri
 Exposure: one alive snake at the start of an observed turn. A death is attributed
 to its previous alive state, not the dead/respawned frame's length. A zero-exposure
 bin is **unknown**, not safe. Rates are descriptive and not independent probabilities.
+These pooled figures DO NOT establish differences between the two game environments.
 
-## Research roadmap — no competition-snake changes yet
+## 6. Corrected: student death risk separated by mode
+
+![Student death rates by match kind](charts/death_rates_by_mode.svg)
+
+| Length | League alive turns | League deaths | League rate / 1000 | Trial alive turns | Trial deaths | Trial rate / 1000 |
+|---|---:|---:|---:|---:|---:|---:|
+| 5-24 | 78,372 | 29 | 0.370 | 7,440 | 0 | 0.000 |
+| 25-49 | 79,633 | 38 | 0.477 | 9,523 | 1 | 0.105 |
+| 50-99 | 121,854 | 75 | 0.615 | 17,719 | 2 | 0.113 |
+| 100-149 | 64,184 | 43 | 0.670 | 20,062 | 0 | 0.000 |
+| 150+ | 12,946 | 8 | 0.618 | 29,206 | 7 | 0.240 |
+
+Unique full replay payloads sampled: league 45, trials 42.
+A missing bar denotes NO exposure, not zero risk. Different opponents,
+seeds and bot versions make these observational, non-causal comparisons.
+
+## 7. Research roadmap — no competition-snake changes yet
 
 1. Detailed pre-death event studies and matched successful escapes.
 2. Food-contest timelines: distance to food at spawn, arrival times, and head pressure.

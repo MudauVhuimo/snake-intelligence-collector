@@ -1,6 +1,6 @@
 # Snake26: League aggression vs growth-retention hypothesis
 
-Generated UTC: 2026-11-01T23:37:35+00:00
+Generated UTC: 2026-11-01T23:45:15+00:00
 
 ## Data design
 

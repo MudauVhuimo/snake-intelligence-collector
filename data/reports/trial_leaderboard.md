@@ -1,6 +1,6 @@
 # Snake26 on-arrival trial comparison
 
-Generated UTC: 2026-11-01T23:37:34+00:00
+Generated UTC: 2026-11-01T23:45:15+00:00
 Latest season: `2026-11-01-225859-season`
 Student trial sets found: **146**
 Complete three-trial sets: **146**
@@ -99,11 +99,11 @@ Official placement and final length from the trial that also includes survivor a
 | 34 | `424820-elisha-mundalamo` | 1 | 180 | 35 | 14 | `trials/424820-elisha-mundalamo/trial-912000.rep` |
 | 35 | `403754-vhuimo-mudau` | 1 | 175 | 34 | 8 | `trials/403754-vhuimo-mudau/trial-912000.rep` |
 
-## What to do with this
+## Research next steps (no competition-bot implementation yet)
 
-1. Reproduce all three *opponent groupings* against our current Java snake in the local engine, preserving seat order and using seeds 910000, 911000 and 912000.
-2. Compare placement, ending length, food and kills against the top entries above. Repeat across fresh seeds because one fixed-seed match is not a robust benchmark.
-3. Prioritize downloading detailed on-arrival replays of strong gauntlet_1 performers and observe their decisions near food and hazards.
-4. Build a safety-first Java candidate, benchmark against local gauntlets, and promote it only with consistent improvement on fresh, unseen seeds.
+1. Compare the same student and season in the actual league and on-arrival conditions using the canonical [joined analysis](joint_analysis.md).
+2. For both settings, measure food, kills, growth retained and replay-derived death rates with matched definitions.
+3. Prioritize full league replays of Division 1 students and diverse on-arrival suites; deduplicate identical replay payloads.
+4. Treat large trial final lengths as controlled observations, not evidence of league dominance.
 
 Different bot versions, seeds, map changes, or seat orders make direct numerical comparisons misleading. These trial comparisons provide a common reference, not a controlled head-to-head against private competitor code.

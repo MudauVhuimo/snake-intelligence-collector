@@ -1,6 +1,6 @@
 # Snake26: does occupied-space geometry explain underdog apples?
 
-Generated UTC: 2026-11-01T23:38:40+00:00
+Generated UTC: 2026-11-01T23:46:10+00:00
 
 ## Critical definition
 
