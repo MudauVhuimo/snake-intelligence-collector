@@ -3,10 +3,10 @@
 from collections import Counter
 from pathlib import Path
 
-from collector import Client, safe_name, utcnow
+from collector import Client, safe_name, utcnow, checked_json
 
 def main():
-    client = Client(delay=1.0)
+    client = Client(delay=1.0, retries=1)
     site = client.get_json("site")
     all_seasons = list(dict.fromkeys([site["season"]["name"]] + site.get("seasons", [])))
     indices = [0, 1, len(all_seasons)//4, len(all_seasons)//2,
@@ -24,7 +24,7 @@ def main():
     for season in season_names:
         season = safe_name(season)
         try:
-            data = client.get_json("games", {"season": season})
+            data = checked_json(client.fetch("games", {"season": season}, timeout=18))
         except Exception as exc:
             lines.append(f"| `{season}` | ERROR | {type(exc).__name__} | — |")
             continue
