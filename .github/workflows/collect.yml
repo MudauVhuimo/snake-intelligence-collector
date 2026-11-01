@@ -9,6 +9,8 @@ on:
       - 'strategy_lab.py'
       - 'test_strategy_lab.py'
       - 'catalog_probe.py'
+      - 'trial_leaderboard.py'
+      - 'test_trial_leaderboard.py'
       - '.github/workflows/collect.yml'
   schedule:
     - cron: '15 * * * *'
@@ -51,6 +53,8 @@ jobs:
           MAX_REPLAYS: ${{ github.event_name == 'push' && '24' || inputs.max_replays || '6' }}
           LOOKBACK: ${{ inputs.lookback_seasons || '12' }}
         run: python collector.py --max-replays "$MAX_REPLAYS" --lookback-seasons "$LOOKBACK"
+      - name: Compare all on-arrival benchmark trials
+        run: python trial_leaderboard.py
       - name: Build replay strategy laboratory report
         run: python strategy_lab.py --stride 25
       - name: Identify arrival and benchmark match types
