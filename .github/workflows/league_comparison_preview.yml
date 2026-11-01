@@ -19,6 +19,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Run league comparison unit tests
         run: python -m unittest -v test_league_comparison test_collector
+      - name: Preview balanced league/trial replay selection
+        run: python -m research.sampler_audit --data-dir data --limit 10
       - name: Generate and inspect real league versus trials analysis
         run: |
           python -m research.league_comparison --data-dir data
