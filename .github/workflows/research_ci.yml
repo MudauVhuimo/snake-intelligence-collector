@@ -1,0 +1,45 @@
+name: Validate Snake26 research (read-only)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/**'
+      - 'test*.py'
+      - 'strategy_lab.py'
+      - 'trial_leaderboard.py'
+      - 'docs/**'
+      - '.github/workflows/research_ci.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: snake-research-readonly
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout source and archived database
+        uses: actions/checkout@v4
+      - name: Run every offline regression test
+        run: python -m unittest discover -s . -p 'test*.py' -v
+      - name: Rebuild canonical joined datasets without network access
+        run: |
+          python -m research.integrated_dashboard --data-dir data
+          sed -n '1,85p' data/reports/joint_analysis.md
+          cat data/derived/quality.json
+      - name: Save validated report and charts (never commits data)
+        uses: actions/upload-artifact@v4
+        with:
+          name: snake26-joined-research
+          path: |
+            data/derived/*.csv
+            data/derived/quality.json
+            data/reports/README.md
+            data/reports/joint_analysis.md
+            data/reports/charts/joint_*.svg
