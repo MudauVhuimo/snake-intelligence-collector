@@ -18,7 +18,7 @@ from .league_comparison import chart
 
 PAIRS=(
     ("mean_food","Mean apples per game","apples"),
-    ("mean_final_length","Mean final body length","length"),
+    ("mean_length","Mean final body length","length"),
     ("mean_kills","Mean kills per game","kills"),
     ("mean_retention","Mean growth retention","retention"),
 )
@@ -125,6 +125,7 @@ def build(data_dir):
         "**not proof that every match in that season used that exact code version**.",
         "",
         "## 1. Data provenance and cleaning","",
+        "**Source of truth:** official public Wits catalog records in the SQLite archive.","",
         "| Separate data source | Cataloged matches | Full replays | Unique replay hashes |",
         "|---|---:|---:|---:|"]
     for kind in modes:
