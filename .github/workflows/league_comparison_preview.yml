@@ -18,7 +18,7 @@ jobs:
       - name: Check out real Wits league records
         uses: actions/checkout@v4
       - name: Run league comparison unit tests
-        run: python -m unittest -v test_league_comparison
+        run: python -m unittest -v test_league_comparison test_collector
       - name: Generate and inspect real league versus trials analysis
         run: |
           python -m research.league_comparison --data-dir data
