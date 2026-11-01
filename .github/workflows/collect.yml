@@ -20,7 +20,7 @@ on:
         description: 'Maximum replay downloads this run (0-30)'
         type: number
         required: false
-        default: 6
+        default: 10
       lookback_seasons:
         description: 'Seasons to catalog, including latest (1-12)'
         type: number
@@ -50,11 +50,13 @@ jobs:
         run: python -m unittest discover -s . -p 'test*.py' -v
       - name: Collect metadata and selected replays
         env:
-          MAX_REPLAYS: ${{ github.event_name == 'push' && '24' || inputs.max_replays || '6' }}
+          MAX_REPLAYS: ${{ github.event_name == 'push' && '24' || inputs.max_replays || '10' }}
           LOOKBACK: ${{ inputs.lookback_seasons || '12' }}
         run: python collector.py --max-replays "$MAX_REPLAYS" --lookback-seasons "$LOOKBACK"
       - name: Compare all on-arrival benchmark trials
         run: python trial_leaderboard.py
+      - name: Compare real league competition against trial rankings
+        run: python -m research.league_comparison --data-dir data
       - name: Build replay strategy laboratory report
         run: python strategy_lab.py --stride 25
       - name: Build data science dashboard and five SVG charts
