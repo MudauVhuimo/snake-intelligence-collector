@@ -1,7 +1,7 @@
 # Snake26 strategy laboratory
 
-Updated UTC: 2026-11-01T21:41:01+00:00
-Replays analyzed: **30** (unreadable: 0)
+Updated UTC: 2026-11-01T21:56:06+00:00
+Unique replays analyzed: **22** (duplicate hashes skipped: 32; unreadable: 0)
 Sampling: every **25th** turn per match, not independent observations.
 
 ## What the data can and cannot tell us
@@ -14,45 +14,46 @@ A prerecorded opponent does **not** respond to changes made by our bot; fixed hi
 
 | Group | Sampled moves | Food-nearest choices | Widest-space choices | Clear food/space tradeoffs | Space favored in tradeoffs |
 |---|---:|---:|---:|---:|---:|
-| Current top-10 | 2929 | 68.0% | 99.1% | 31 | 48.4% |
-| Other observed | 6277 | 66.6% | 99.5% | 63 | 61.9% |
+| Current top-10 | 1936 | 68.4% | 99.3% | 20 | 55.0% |
+| Other student bots | 3468 | 69.0% | 99.4% | 40 | 72.5% |
+| Built-in benchmarks | 1391 | 88.4% | 98.8% | 14 | 21.4% |
 
-**Interpretation guardrail:** Top-ten means the *latest* Division 1 top-ten ranking, not necessarily the same code version in old seasons. Groups have unequal and possibly biased opponents. Do not infer causation or an optimal policy from this table.
+**Interpretation guardrail:** Built-in `~` bots are reported separately. Top-ten means the *latest* Division 1 top-ten ranking, not necessarily the same code version in old seasons. Groups have unequal and possibly biased opponents. Do not infer causation or an optimal policy from this table.
 
 ## Individual behavior fingerprints
 
 | Team | Replays | Sampled moves | Food-nearest | Widest-space | Food/space conflicts | Space chosen in conflicts |
 |---|---:|---:|---:|---:|---:|---:|
-| `388828-ngcebo-methula` | 7 | 532 | 69.9% | 100.0% | 0 | — |
-| `421349-phathutshedzo-mudzanani` | 5 | 392 | 73.2% | 98.9% | 6 | 33.3% |
-| `428786-marvellous-sambo` | 4 | 312 | 66.9% | 98.0% | 6 | 33.3% |
-| `419342-ayeshan-puckree` | 4 | 308 | 60.1% | 99.3% | 2 | 100.0% |
-| `424820-elisha-mundalamo` | 4 | 305 | 70.4% | 97.9% | 4 | 25.0% |
-| `426895-mpho-ramasakona` | 3 | 237 | 62.2% | 100.0% | 0 | — |
-| `421462-alexander-palmer` | 3 | 235 | 68.2% | 100.0% | 1 | 100.0% |
-| `427064-khodani-netili` | 3 | 229 | 73.8% | 99.1% | 6 | 66.7% |
-| `427039-sameeha-miabala` | 3 | 222 | 68.6% | 97.1% | 6 | 50.0% |
-| `403339-david-ndambo` | 2 | 157 | 61.8% | 100.0% | 0 | — |
-| `423258-muhammed-dar` | 9 | 674 | 65.5% | 100.0% | 4 | 100.0% |
-| `410193-vhugala-makhwathane` | 9 | 668 | 62.4% | 98.9% | 7 | 0.0% |
-| `428954-njabulo-ndlozi` | 7 | 539 | 65.8% | 100.0% | 7 | 100.0% |
-| `409997-utayan-naidoo` | 5 | 393 | 63.5% | 100.0% | 2 | 100.0% |
-| `423546-ndabenhle-shabangu` | 5 | 391 | 62.8% | 99.7% | 1 | 100.0% |
-| `408501-asher-urison` | 4 | 314 | 64.1% | 100.0% | 4 | 100.0% |
-| `403501-mashau-mudzanani` | 4 | 308 | 74.1% | 99.7% | 1 | 100.0% |
-| `429782-maseeha-seedat` | 4 | 304 | 68.5% | 99.3% | 6 | 66.7% |
-| `388060-tshepang-tshabalala` | 4 | 304 | 70.5% | 100.0% | 0 | — |
-| `423135-mpho-muremi` | 4 | 304 | 63.7% | 99.3% | 6 | 66.7% |
-| `408070-collen-mthombeni` | 4 | 298 | 66.0% | 100.0% | 0 | — |
-| `413538-lelethuthando-nikelo` | 3 | 237 | 70.3% | 100.0% | 2 | 100.0% |
-| `420285-kgotlelelo-aphane` | 3 | 236 | 77.5% | 97.3% | 6 | 0.0% |
-| `423436-ntobeko-zondi` | 3 | 228 | 62.9% | 100.0% | 0 | — |
-| `404721-khensani-maluleke` | 3 | 226 | 66.4% | 98.2% | 3 | 0.0% |
+| `403339-david-ndambo` | 5 | 389 | 64.2% | 100.0% | 1 | 100.0% |
+| `388828-ngcebo-methula` | 5 | 388 | 72.4% | 99.7% | 3 | 66.7% |
+| `421349-phathutshedzo-mudzanani` | 3 | 235 | 72.3% | 99.1% | 3 | 33.3% |
+| `421462-alexander-palmer` | 2 | 157 | 68.5% | 100.0% | 1 | 100.0% |
+| `428786-marvellous-sambo` | 2 | 156 | 66.9% | 98.0% | 3 | 33.3% |
+| `419342-ayeshan-puckree` | 2 | 154 | 60.1% | 99.3% | 1 | 100.0% |
+| `424820-elisha-mundalamo` | 2 | 153 | 70.8% | 98.6% | 2 | 50.0% |
+| `427064-khodani-netili` | 2 | 151 | 73.8% | 98.6% | 4 | 50.0% |
+| `426895-mpho-ramasakona` | 1 | 79 | 62.2% | 100.0% | 0 | — |
+| `427039-sameeha-miabala` | 1 | 74 | 68.6% | 97.1% | 2 | 50.0% |
+| `423546-ndabenhle-shabangu` | 3 | 235 | 63.4% | 99.6% | 1 | 100.0% |
+| `413538-lelethuthando-nikelo` | 2 | 158 | 69.0% | 100.0% | 1 | 100.0% |
 | `419636-jason-chen` | 2 | 157 | 72.8% | 100.0% | 4 | 100.0% |
+| `408501-asher-urison` | 2 | 157 | 64.1% | 100.0% | 2 | 100.0% |
+| `409997-utayan-naidoo` | 2 | 157 | 62.7% | 100.0% | 1 | 100.0% |
+| `420285-kgotlelelo-aphane` | 2 | 157 | 79.1% | 97.3% | 4 | 0.0% |
 | `402334-angile-saho` | 2 | 157 | 72.7% | 98.7% | 4 | 100.0% |
-| `406000-mulimisi-rammela` | 2 | 154 | 64.5% | 98.7% | 2 | 0.0% |
-| `423239-zeeshaan-bham` | 2 | 152 | 64.4% | 97.3% | 2 | 0.0% |
-| `386901-amanda-huo` | 1 | 79 | 74.7% | 100.0% | 0 | — |
+| `386901-amanda-huo` | 2 | 156 | 78.4% | 100.0% | 0 | — |
+| `403501-mashau-mudzanani` | 2 | 154 | 74.8% | 99.3% | 1 | 100.0% |
+| `423436-ntobeko-zondi` | 2 | 152 | 65.3% | 100.0% | 0 | — |
+| `429782-maseeha-seedat` | 2 | 152 | 68.5% | 99.3% | 3 | 66.7% |
+| `388060-tshepang-tshabalala` | 2 | 152 | 70.5% | 100.0% | 0 | — |
+| `423258-muhammed-dar` | 2 | 152 | 67.6% | 100.0% | 2 | 100.0% |
+| `423135-mpho-muremi` | 2 | 152 | 63.7% | 99.3% | 3 | 66.7% |
+| `404721-khensani-maluleke` | 2 | 151 | 66.4% | 98.0% | 2 | 0.0% |
+| `408070-collen-mthombeni` | 2 | 150 | 66.7% | 100.0% | 0 | — |
+| `410193-vhugala-makhwathane` | 2 | 149 | 59.4% | 99.3% | 1 | 0.0% |
+| `423239-zeeshaan-bham` | 2 | 147 | 67.8% | 97.9% | 3 | 66.7% |
+| `421538-tshifhiwa-bvumbi` | 1 | 79 | 71.8% | 98.7% | 2 | 100.0% |
+| `409987-sbongakonke-shange` | 1 | 79 | 77.2% | 100.0% | 2 | 100.0% |
 
 ## Observed deaths by cause
 
@@ -60,8 +61,9 @@ Counts are actual `died` replay events, unlike static-space estimates.
 
 | Group | Self-collision | Body collision | Head-to-head | Other |
 |---|---:|---:|---:|---:|
-| Current top-10 | 4 | 4 | 2 | 0 |
-| Other observed | 15 | 16 | 8 | 0 |
+| Current top-10 | 4 | 5 | 2 | 0 |
+| Other student bots | 17 | 19 | 9 | 0 |
+| Built-in benchmarks | 36 | 83 | 49 | 0 |
 
 Use the death causes to decide whether to first test tail-reachability, body-avoidance, or head-to-head threat rules. Compare on equivalent unseen matches, not raw unadjusted death totals.
 
@@ -72,29 +74,29 @@ A tradeoff means the most food-directed static-free move had a reachable-space e
 | Replay | Turn | Snake | Body length | Actual move | Food distance after move | Space score (chosen/best) | Favored space? |
 |---|---:|---|---:|---|---:|---:|---|
 | [`game-72003.rep`](../replays/2026-11-01-205859-season/game-72003.rep.gz) | 1875 | `421462-alexander-palmer` | 220 | LEFT | 17 | 240/240 | yes |
+| [`trials/388828-ngcebo-methula/trial-912000.rep`](../replays/2026-11-01-205859-season/trials/388828-ngcebo-methula/trial-912000.rep.gz) | 1950 | `388828-ngcebo-methula` | 200 | UP | 17 | 220/220 | yes |
+| [`game-72005.rep`](../replays/2026-11-01-205859-season/game-72005.rep.gz) | 1775 | `423239-zeeshaan-bham` | 165 | UP | 2 | 185/185 | yes |
 | [`game-71006.rep`](../replays/2026-11-01-205859-season/game-71006.rep.gz) | 1375 | `419342-ayeshan-puckree` | 135 | RIGHT | 18 | 155/155 | yes |
-| [`game-71006.rep`](../replays/2026-11-01-195859-season/game-71006.rep.gz) | 1375 | `419342-ayeshan-puckree` | 135 | RIGHT | 18 | 155/155 | yes |
+| [`game-72005.rep`](../replays/2026-11-01-205859-season/game-72005.rep.gz) | 1175 | `423239-zeeshaan-bham` | 125 | DOWN | 30 | 145/145 | yes |
+| [`game-71051.rep`](../replays/2026-11-01-205859-season/game-71051.rep.gz) | 1850 | `421538-tshifhiwa-bvumbi` | 125 | LEFT | 22 | 145/145 | yes |
+| [`trials/403339-david-ndambo/trial-911000.rep`](../replays/2026-11-01-205859-season/trials/403339-david-ndambo/trial-911000.rep.gz) | 775 | `403339-david-ndambo` | 115 | RIGHT | 14 | 135/135 | yes |
 | [`game-71007.rep`](../replays/2026-11-01-205859-season/game-71007.rep.gz) | 1175 | `427064-khodani-netili` | 115 | DOWN | 19 | 135/135 | yes |
 | [`game-71005.rep`](../replays/2026-11-01-195859-season/game-71005.rep.gz) | 1200 | `419636-jason-chen` | 115 | UP | 23 | 135/135 | yes |
 | [`game-71005.rep`](../replays/2026-11-01-195859-season/game-71005.rep.gz) | 1225 | `419636-jason-chen` | 115 | LEFT | 15 | 135/135 | yes |
-| [`game-71007.rep`](../replays/2026-10-18-235859-season/game-71007.rep.gz) | 1175 | `427064-khodani-netili` | 115 | DOWN | 19 | 135/135 | yes |
 | [`game-72001.rep`](../replays/2026-11-01-205859-season/game-72001.rep.gz) | 700 | `413538-lelethuthando-nikelo` | 110 | RIGHT | 20 | 130/130 | yes |
 | [`game-71007.rep`](../replays/2026-11-01-205859-season/game-71007.rep.gz) | 1125 | `427064-khodani-netili` | 110 | DOWN | 20 | 130/130 | yes |
-| [`game-72001.rep`](../replays/2026-11-01-195859-season/game-72001.rep.gz) | 700 | `413538-lelethuthando-nikelo` | 110 | RIGHT | 20 | 130/130 | yes |
-| [`game-71007.rep`](../replays/2026-10-18-235859-season/game-71007.rep.gz) | 1125 | `427064-khodani-netili` | 110 | DOWN | 20 | 130/130 | yes |
+| [`game-71051.rep`](../replays/2026-11-01-205859-season/game-71051.rep.gz) | 1050 | `421538-tshifhiwa-bvumbi` | 100 | UP | 28 | 120/120 | yes |
 | [`game-72000.rep`](../replays/2026-11-01-205859-season/game-72000.rep.gz) | 1725 | `423135-mpho-muremi` | 95 | UP | 24 | 85/85 | yes |
-| [`game-72000.rep`](../replays/2026-10-14-133830-season/game-72000.rep.gz) | 1725 | `423135-mpho-muremi` | 95 | UP | 24 | 85/85 | yes |
 | [`game-72000.rep`](../replays/2026-11-01-205859-season/game-72000.rep.gz) | 1600 | `423135-mpho-muremi` | 90 | LEFT | 20 | 110/110 | yes |
 | [`game-71005.rep`](../replays/2026-11-01-195859-season/game-71005.rep.gz) | 1375 | `419926-mphile-nchabeleng` | 90 | UP | 28 | 110/110 | yes |
-| [`game-72000.rep`](../replays/2026-10-14-133830-season/game-72000.rep.gz) | 1600 | `423135-mpho-muremi` | 90 | LEFT | 20 | 110/110 | yes |
+| [`game-71051.rep`](../replays/2026-11-01-205859-season/game-71051.rep.gz) | 975 | `409987-sbongakonke-shange` | 85 | RIGHT | 9 | 105/105 | yes |
+| [`game-71051.rep`](../replays/2026-11-01-205859-season/game-71051.rep.gz) | 1000 | `409987-sbongakonke-shange` | 85 | LEFT | 23 | 66/66 | yes |
 | [`game-71007.rep`](../replays/2026-11-01-205859-season/game-71007.rep.gz) | 1950 | `429782-maseeha-seedat` | 85 | UP | 16 | 105/105 | yes |
-| [`game-71007.rep`](../replays/2026-10-18-235859-season/game-71007.rep.gz) | 1950 | `429782-maseeha-seedat` | 85 | UP | 16 | 105/105 | yes |
+| [`game-72005.rep`](../replays/2026-11-01-205859-season/game-72005.rep.gz) | 625 | `388828-ngcebo-methula` | 75 | DOWN | 18 | 95/95 | yes |
 | [`game-72002.rep`](../replays/2026-11-01-205859-season/game-72002.rep.gz) | 1525 | `408501-asher-urison` | 75 | RIGHT | 19 | 95/95 | yes |
 | [`game-71000.rep`](../replays/2026-11-01-205859-season/game-71000.rep.gz) | 650 | `428954-njabulo-ndlozi` | 75 | RIGHT | 24 | 95/95 | yes |
-| [`game-72002.rep`](../replays/2026-11-01-195859-season/game-72002.rep.gz) | 1525 | `408501-asher-urison` | 75 | RIGHT | 19 | 95/95 | yes |
-| [`game-71000.rep`](../replays/2026-10-14-155859-season/game-71000.rep.gz) | 650 | `428954-njabulo-ndlozi` | 75 | RIGHT | 24 | 95/95 | yes |
-| [`game-71000.rep`](../replays/2026-10-14-145859-season/game-71000.rep.gz) | 650 | `428954-njabulo-ndlozi` | 75 | RIGHT | 24 | 95/95 | yes |
-| [`game-71000.rep`](../replays/2026-10-14-135857-season/game-71000.rep.gz) | 650 | `428954-njabulo-ndlozi` | 75 | RIGHT | 24 | 95/95 | yes |
+| [`game-72004.rep`](../replays/2026-11-01-205859-season/game-72004.rep.gz) | 525 | `424820-elisha-mundalamo` | 70 | LEFT | 26 | 90/90 | yes |
+| [`game-72001.rep`](../replays/2026-11-01-205859-season/game-72001.rep.gz) | 1075 | `423258-muhammed-dar` | 70 | RIGHT | 34 | 90/90 | yes |
 
 ## Experiments we can implement and benchmark
 
