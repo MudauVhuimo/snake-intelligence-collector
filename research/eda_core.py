@@ -39,7 +39,10 @@ def replay_summary(data_dir, season, max_files=250):
     chosen = candidates[:max_files] if max_files else candidates
     summary = dict(files=len(candidates), scanned=len(chosen), unique=0,
                    duplicate=0, bad=0, curves={}, deaths=defaultdict(Counter),
-                   exposures=defaultdict(Counter))
+                   exposures=defaultdict(Counter),
+                   mode_deaths=defaultdict(Counter),
+                   mode_exposures=defaultdict(Counter),
+                   unique_modes=Counter())
     hashes = set()
     for path in chosen:
         try:
@@ -59,6 +62,8 @@ def replay_summary(data_dir, season, max_files=250):
             continue
         summary["unique"] += 1
         relative = path.relative_to(data_dir/"replays")
+        mode = "trial" if "trials" in relative.parts else "league"
+        summary["unique_modes"][mode] += 1
         if relative.parts[0] == season and path.name == "trial-912000.rep.gz":
             students = [s.get("name") for s in frames[0].get("snakes",[])
                         if isinstance(s.get("name"),str) and not s["name"].startswith("~")]
@@ -89,6 +94,8 @@ def replay_summary(data_dir, season, max_files=250):
                 if cat:
                     alive[sid]=(group,cat)
                     summary["exposures"][group][cat]+=1
+                    if group=="Student":
+                        summary["mode_exposures"][mode][cat]+=1
             for event in after.get("events",[]):
                 if event.get("kind") != "died" or event.get("snake") not in alive:
                     continue
@@ -97,4 +104,7 @@ def replay_summary(data_dir, season, max_files=250):
                 cause=cause if cause in CAUSES else "other"
                 summary["deaths"][group][cause]+=1
                 summary["deaths"][group]["bin:"+cat]+=1
+                if group=="Student":
+                    summary["mode_deaths"][mode]["bin:"+cat]+=1
+                    summary["mode_deaths"][mode][cause]+=1
     return summary
