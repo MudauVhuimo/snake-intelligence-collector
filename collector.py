@@ -56,6 +56,7 @@ CREATE TABLE IF NOT EXISTS matches (
     replay_name TEXT NOT NULL, round_num INTEGER,
     division INTEGER, seed INTEGER, map_id TEXT, turns INTEGER,
     winner TEXT, kept INTEGER NOT NULL DEFAULT 1,
+    kind TEXT NOT NULL DEFAULT 'league', label TEXT,
     replay_sha256 TEXT, replay_bytes INTEGER, downloaded_at TEXT,
     PRIMARY KEY(season_name, replay_name)
 );
@@ -104,6 +105,20 @@ def safe_name(value: str) -> str:
     return value
 
 
+def safe_replay_name(value: str) -> str:
+    """Allow structured trial replay paths, never traversal or arbitrary paths."""
+    if not isinstance(value, str) or len(value) > 180:
+        raise ValueError("Invalid replay identifier")
+    parts = value.split("/")
+    if not 1 <= len(parts) <= 4 or any(
+        not NAME_RX.fullmatch(part) or part in (".", "..") for part in parts
+    ):
+        raise ValueError(f"Unsafe replay identifier: {value!r}")
+    if not parts[-1].endswith(".rep"):
+        raise ValueError("Expected .rep replay")
+    return value
+
+
 def checked_json(raw: bytes) -> dict[str, Any]:
     result = json.loads(raw)
     if not isinstance(result, dict):
@@ -145,7 +160,7 @@ class Client:
         return checked_json(self.fetch(endpoint, params))
 
     def get_replay(self, replay_name: str) -> bytes:
-        return self.fetch("replay", {"name": safe_name(replay_name)}, timeout=60)
+        return self.fetch("replay", {"name": safe_replay_name(replay_name)}, timeout=60)
 
 
 def connect(path: Path) -> sqlite3.Connection:
@@ -153,6 +168,16 @@ def connect(path: Path) -> sqlite3.Connection:
     db = sqlite3.connect(path)
     db.execute("PRAGMA journal_mode=DELETE")  # safe when committing db file to git
     db.executescript(SCHEMA)
+    # In-place migration of existing database and repair of incomplete old catalogs.
+    columns = {row[1] for row in db.execute("PRAGMA table_info(matches)")}
+    if "kind" not in columns:
+        db.execute("ALTER TABLE matches ADD COLUMN kind TEXT NOT NULL DEFAULT 'league'")
+    if "label" not in columns:
+        db.execute("ALTER TABLE matches ADD COLUMN label TEXT")
+    seasons_columns = {row[1] for row in db.execute("PRAGMA table_info(seasons)")}
+    if "catalog_version" not in seasons_columns:
+        db.execute("ALTER TABLE seasons ADD COLUMN catalog_version INTEGER NOT NULL DEFAULT 0")
+    db.commit()
     return db
 
 
@@ -327,7 +352,8 @@ def analyze_replay(replay: dict[str, Any]) -> tuple[dict[str, dict[str, Any]], l
 
 
 def replay_location(root: Path, season: str, replay: str) -> Path:
-    return root / "replays" / safe_name(season) / (safe_name(replay) + ".gz")
+    parts = safe_replay_name(replay).split("/")
+    return root / "replays" / safe_name(season) / Path(*parts[:-1]) / (parts[-1] + ".gz")
 
 
 def install_replay(db: sqlite3.Connection, root: Path, season: str, name: str, raw: bytes) -> None:
