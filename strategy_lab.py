@@ -217,14 +217,21 @@ def analyze(root: Path, top: set[str] | None=None, every: int=25, limit: int=0) 
 
 def markdown(results: dict) -> str:
     teams=results["teams"]; groups=results["groups"]; matches=results["matches"]
-    lines=["# Snake26 strategy laboratory","",
+    lines=["# Snake26 strategy laboratory — LEGACY POOLED EXPLORATION","",
+           "**Important:** This legacy diagnostic pools on-arrival trials and actual league",
+           "replays. It is NOT valid evidence that a strategy works in the league.",
+           "Use [Joined Research](joint_analysis.md) and",
+           "[Mode-Separated Replay Behavior](behavior_by_mode.md) instead.",
+           "The static reachable-space search is capped: many genuinely different",
+           "moves tie at the cap. Thus a very high 'widest-space choice' percentage",
+           "does NOT establish that a snake uses a space-maximizing algorithm.","",
            f"Updated UTC: {utcnow()}",
            f"Unique replays analyzed: **{results['processed']}** (duplicate hashes skipped: {results['duplicates']}; unreadable: {results['failed']})",
            f"Sampling: every **{results['stride']}th** turn per match, not independent observations.","",
            "## What the data can and cannot tell us","",
            "This is **behavioral observation**, not a live match simulator. Candidate moves use a conservative **static occupancy** approximation: snake tails may vacate, opponents move simultaneously, and outcomes could change. Therefore percentages are descriptive proxies, not guaranteed-safe decisions or win probabilities.","",
            "A prerecorded opponent does **not** respond to changes made by our bot; fixed historical moves cannot provide a valid full counterfactual match. To benchmark wins, we need to run live executables against locally available opponents or compare equivalent seed/opponent setups.","",
-           "## Current top-ten versus other observed snakes","",
+           "## Mixed trial/league samples: diagnostic only","",
            "| Group | Sampled moves | Food-nearest choices | Widest-space choices | Clear food/space tradeoffs | Space favored in tradeoffs |",
            "|---|---:|---:|---:|---:|---:|"]
     for k in ("Current top-10","Other student bots","Built-in benchmarks"):
@@ -262,7 +269,7 @@ def markdown(results: dict) -> str:
         lines.append(f"| [`{e['replay']}`]({link}) | {e['turn']} | `{e['team']}` | {e['length']} | {e['move']} | {e['selected_food']} | {e['selected_space']}/{e['best_space']} | {'yes' if e['space_over_food'] else 'no'} |")
     if not ranked_cases:
         lines.append("| No clear space/food conflicts sampled yet | | | | | | | |")
-    lines+=["","## Experiments we can implement and benchmark","",
+    lines+=["","## Historical hypotheses for later investigation (NO implementation yet)","",
             "1. **Food-versus-space planner:** Assign each candidate move a weighted score for distance to food and bounded flood-fill space. Compare against current Java bot, using the same fresh seeds.",
             "2. **Danger override:** When a candidate leads to constrained reachable space, temporarily prioritize escape over food; test ablation with/without the override.",
             "3. **Opponent-pressure rule:** Test threat-aware movement when an opponent head is within three toroidal tiles. The current report counts proximity but does not yet recover opponent intent.",
