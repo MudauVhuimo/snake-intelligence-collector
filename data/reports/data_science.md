@@ -1,13 +1,13 @@
 # Snake26 — Data Science Dashboard: Phase I
 
-Generated UTC: 2026-11-01T23:18:32+00:00
+Generated UTC: 2026-11-01T23:38:11+00:00
 
 ## Data coverage and quality
 
-- Cataloged seasons: **41**; match records: **17,562**.
-- Replay records marked downloaded in SQLite: **126**.
-- Files on disk: **126**; sampled: **126**.
-- Unique replay payloads (SHA-256): **68**; duplicate payloads skipped: **58**; unreadable: **0**.
+- Cataloged seasons: **47**; match records: **20,406**.
+- Replay records marked downloaded in SQLite: **150**.
+- Files on disk: **150**; sampled: **150**.
+- Unique replay payloads (SHA-256): **87**; duplicate payloads skipped: **63**; unreadable: **0**.
 - Latest season: **2026-11-01-225859-season**; published gauntlet_1 trial results: **146**.
 
 > Thousands of catalog records are not thousands of independent replay observations.
@@ -33,7 +33,7 @@ Below-reference points may reflect growth lost to deaths, but only full replay e
 
 ![Growth across game turns](charts/gauntlet_growth.svg)
 
-Current-season gauntlet_1 trial replays with trajectories: **2**.
+Current-season gauntlet_1 trial replays with trajectories: **4**.
 Actual recorded body lengths, sampled every 100 turns; missing curves are not interpolated.
 
 ## 4. Deaths by recorded cause
@@ -48,11 +48,11 @@ Raw counts mix opponent groups and survival exposure; they are not comparable ri
 
 | Length range | Student alive turns | Student deaths | Deaths / 1,000 alive turns | Benchmark alive turns | Benchmark deaths |
 |---|---:|---:|---:|---:|---:|
-| 5-24 | 66,278 | 23 | 0.347 | 131,641 | 595 |
-| 25-49 | 70,242 | 34 | 0.484 | 44,681 | 197 |
-| 50-99 | 108,439 | 62 | 0.572 | 16,627 | 56 |
-| 100-149 | 65,776 | 33 | 0.502 | 608 | 2 |
-| 150+ | 32,409 | 11 | 0.339 | 0 | 0 |
+| 5-24 | 85,812 | 29 | 0.338 | 165,206 | 733 |
+| 25-49 | 89,156 | 39 | 0.437 | 55,814 | 241 |
+| 50-99 | 139,573 | 77 | 0.552 | 24,119 | 74 |
+| 100-149 | 84,246 | 43 | 0.510 | 1,343 | 4 |
+| 150+ | 42,152 | 15 | 0.356 | 0 | 0 |
 
 Exposure: one alive snake at the start of an observed turn. A death is attributed
 to its previous alive state, not the dead/respawned frame's length. A zero-exposure

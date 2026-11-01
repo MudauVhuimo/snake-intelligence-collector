@@ -1,6 +1,6 @@
 # Match catalog discovery
 
-Generated UTC: 2026-11-01T23:18:55+00:00
+Generated UTC: 2026-11-01T23:38:43+00:00
 
 Metadata only; no private snake source code or new replay downloads.
 
