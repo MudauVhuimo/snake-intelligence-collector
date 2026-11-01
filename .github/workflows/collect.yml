@@ -1,6 +1,12 @@
 name: Collect Snake26 intelligence
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'collector.py'
+      - 'test_collector.py'
+      - '.github/workflows/collect.yml'
   schedule:
     - cron: '15 * * * *'
   workflow_dispatch:
