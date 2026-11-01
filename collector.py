@@ -1,0 +1,513 @@
+#!/usr/bin/env python3
+"""Wits Snake26 respectful, restart-safe metadata/replay collector.
+
+Python 3.11+ standard library only. This project uses only public GET endpoints.
+The reported API schema has not been independently verified from this environment.
+"""
+from __future__ import annotations
+
+import argparse
+from collections import Counter, defaultdict
+from datetime import datetime, timezone
+import gzip
+import hashlib
+import json
+import os
+from pathlib import Path
+import random
+import re
+import sqlite3
+import tempfile
+import time
+from typing import Any
+import urllib.error
+import urllib.parse
+import urllib.request
+
+API_BASE = "https://lamp.ms.wits.ac.za/snake26/api/"
+USER_AGENT = "WitsSnakeResearchCollector/0.1 (+educational research; polite requests)"
+NAME_RX = re.compile(r"^[A-Za-z0-9_.-]+$")
+DIRECTIONS = {(1, 0): "RIGHT", (-1, 0): "LEFT", (0, 1): "DOWN", (0, -1): "UP"}
+SCHEMA = """
+PRAGMA foreign_keys = ON;
+CREATE TABLE IF NOT EXISTS seasons (
+    name TEXT PRIMARY KEY, created TEXT, entrants INTEGER, rounds INTEGER,
+    config_hash TEXT, recorded_at TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS teams (
+    slug TEXT PRIMARY KEY, language TEXT, file_name TEXT,
+    latest_sha256 TEXT, last_seen_season TEXT
+);
+CREATE TABLE IF NOT EXISTS team_versions (
+    season_name TEXT NOT NULL REFERENCES seasons(name),
+    team_slug TEXT NOT NULL REFERENCES teams(slug),
+    sha256 TEXT NOT NULL, language TEXT,
+    PRIMARY KEY (season_name, team_slug)
+);
+CREATE TABLE IF NOT EXISTS standings (
+    season_name TEXT NOT NULL REFERENCES seasons(name),
+    team_slug TEXT NOT NULL REFERENCES teams(slug),
+    division INTEGER, division_rank INTEGER, rating REAL,
+    points REAL, career_games INTEGER, career_wins INTEGER,
+    PRIMARY KEY(season_name, team_slug)
+);
+CREATE TABLE IF NOT EXISTS matches (
+    season_name TEXT NOT NULL REFERENCES seasons(name),
+    replay_name TEXT NOT NULL, round_num INTEGER,
+    division INTEGER, seed INTEGER, map_id TEXT, turns INTEGER,
+    winner TEXT, kept INTEGER NOT NULL DEFAULT 1,
+    replay_sha256 TEXT, replay_bytes INTEGER, downloaded_at TEXT,
+    PRIMARY KEY(season_name, replay_name)
+);
+CREATE TABLE IF NOT EXISTS participants (
+    season_name TEXT NOT NULL,
+    replay_name TEXT NOT NULL,
+    team_slug TEXT NOT NULL REFERENCES teams(slug),
+    slot INTEGER, placement INTEGER, final_length INTEGER,
+    max_length INTEGER, food_eaten INTEGER, kills INTEGER,
+    deaths INTEGER, turns_survived INTEGER,
+    PRIMARY KEY(season_name, replay_name, team_slug),
+    FOREIGN KEY(season_name, replay_name) REFERENCES matches(season_name, replay_name)
+);
+CREATE TABLE IF NOT EXISTS events (
+    season_name TEXT NOT NULL, replay_name TEXT NOT NULL,
+    turn INTEGER NOT NULL, event_idx INTEGER NOT NULL,
+    kind TEXT, snake_slot INTEGER, cause TEXT, killer_slot INTEGER,
+    PRIMARY KEY(season_name, replay_name, turn, event_idx),
+    FOREIGN KEY(season_name, replay_name) REFERENCES matches(season_name, replay_name)
+);
+CREATE TABLE IF NOT EXISTS behavior (
+    season_name TEXT NOT NULL, replay_name TEXT NOT NULL,
+    team_slug TEXT NOT NULL REFERENCES teams(slug),
+    observed_moves INTEGER NOT NULL, straight_moves INTEGER NOT NULL,
+    left_turns INTEGER NOT NULL, right_turns INTEGER NOT NULL,
+    food_events INTEGER NOT NULL, deaths INTEGER NOT NULL,
+    self_collisions INTEGER NOT NULL, body_collisions INTEGER NOT NULL,
+    head_to_head_deaths INTEGER NOT NULL,
+    avg_latency_ms REAL,
+    PRIMARY KEY(season_name, replay_name, team_slug),
+    FOREIGN KEY(season_name, replay_name) REFERENCES matches(season_name, replay_name)
+);
+CREATE INDEX IF NOT EXISTS idx_matches_division ON matches(division);
+CREATE INDEX IF NOT EXISTS idx_participants_team ON participants(team_slug);
+CREATE INDEX IF NOT EXISTS idx_standings_team ON standings(team_slug);
+"""
+
+
+def utcnow() -> str:
+    return datetime.now(timezone.utc).isoformat(timespec="seconds")
+
+
+def safe_name(value: str) -> str:
+    if not isinstance(value, str) or not NAME_RX.fullmatch(value) or value in (".", ".."):
+        raise ValueError(f"Unsafe or invalid API identifier: {value!r}")
+    return value
+
+
+def checked_json(raw: bytes) -> dict[str, Any]:
+    result = json.loads(raw)
+    if not isinstance(result, dict):
+        raise ValueError("Expected a JSON object")
+    return result
+
+
+class Client:
+    def __init__(self, delay: float = 1.0, retries: int = 3):
+        self.delay, self.retries = delay, retries
+        self.last_request = 0.0
+
+    def fetch(self, endpoint: str, params: dict[str, str] | None = None, timeout: int = 40) -> bytes:
+        url = API_BASE + endpoint
+        if params:
+            url += "?" + urllib.parse.urlencode(params)
+        for attempt in range(self.retries):
+            elapsed = time.monotonic() - self.last_request
+            if self.last_request and elapsed < self.delay:
+                time.sleep(self.delay - elapsed)
+            self.last_request = time.monotonic()
+            req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Accept": "application/json"})
+            try:
+                with urllib.request.urlopen(req, timeout=timeout) as resp:
+                    if resp.status != 200:
+                        raise RuntimeError(f"HTTP {resp.status} from {endpoint}")
+                    return resp.read()
+            except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, OSError) as exc:
+                if isinstance(exc, urllib.error.HTTPError) and exc.code in (400, 401, 403, 404):
+                    raise
+                if attempt + 1 == self.retries:
+                    raise
+                wait = min(2 ** attempt * 2, 12) + random.uniform(0, 0.5)
+                print(f"Retrying {endpoint} after {type(exc).__name__} ({wait:.1f}s)")
+                time.sleep(wait)
+        raise AssertionError("unreachable")
+
+    def get_json(self, endpoint: str, params: dict[str, str] | None = None) -> dict[str, Any]:
+        return checked_json(self.fetch(endpoint, params))
+
+    def get_replay(self, replay_name: str) -> bytes:
+        return self.fetch("replay", {"name": safe_name(replay_name)}, timeout=60)
+
+
+def connect(path: Path) -> sqlite3.Connection:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    db = sqlite3.connect(path)
+    db.execute("PRAGMA journal_mode=DELETE")  # safe when committing db file to git
+    db.executescript(SCHEMA)
+    return db
+
+
+def ensure_team(db: sqlite3.Connection, slug: str) -> None:
+    db.execute("INSERT OR IGNORE INTO teams(slug) VALUES (?)", (slug,))
+
+
+def ensure_season(db: sqlite3.Connection, name: str) -> None:
+    db.execute("INSERT OR IGNORE INTO seasons(name, recorded_at) VALUES (?, ?)", (name, utcnow()))
+
+
+def ingest_latest_season(db: sqlite3.Connection, season: dict[str, Any]) -> None:
+    name = safe_name(season["name"])
+    meta = season.get("meta") or {}
+    ensure_season(db, name)
+    db.execute("""UPDATE seasons SET created=?, entrants=?, rounds=?, config_hash=? WHERE name=?""",
+               (meta.get("created"), meta.get("entrants"), meta.get("rounds"), meta.get("config_hash"), name))
+    for entry in season.get("entrants", []):
+        slug = entry.get("id") or entry.get("name")
+        if not slug:
+            continue
+        ensure_team(db, slug)
+        db.execute("""UPDATE teams SET language=?, file_name=?, latest_sha256=?, last_seen_season=? WHERE slug=?""",
+                   (entry.get("language"), entry.get("file"), entry.get("sha256"), name, slug))
+        if entry.get("sha256"):
+            db.execute("""INSERT INTO team_versions(season_name,team_slug,sha256,language)
+                VALUES (?,?,?,?) ON CONFLICT(season_name,team_slug) DO UPDATE SET
+                sha256=excluded.sha256, language=excluded.language""",
+                       (name, slug, entry["sha256"], entry.get("language")))
+    ranks = {}
+    for table in season.get("tables", []):
+        for member in table.get("table", []):
+            ranks[member.get("name")] = (table.get("division"), member.get("position"))
+    for item in season.get("standings", []):
+        slug = item.get("name")
+        if not slug:
+            continue
+        ensure_team(db, slug)
+        division, rank = ranks.get(slug, (item.get("division"), None))
+        db.execute("""INSERT INTO standings(season_name,team_slug,division,division_rank,rating,points,career_games,career_wins)
+            VALUES (?,?,?,?,?,?,?,?) ON CONFLICT(season_name,team_slug) DO UPDATE SET
+            division=excluded.division,division_rank=excluded.division_rank,
+            rating=excluded.rating,points=excluded.points,career_games=excluded.career_games,
+            career_wins=excluded.career_wins""",
+                   (name, slug, division, rank, item.get("rating"), item.get("points"),
+                    item.get("games"), item.get("wins")))
+    db.commit()
+
+
+def ingest_games(db: sqlite3.Connection, name: str, catalog: dict[str, Any]) -> int:
+    ensure_season(db, name)
+    count = 0
+    for match in catalog.get("games", []):
+        replay = match.get("replay")
+        if not replay:
+            continue
+        try:
+            replay = safe_name(replay)
+        except ValueError:
+            continue
+        db.execute("""INSERT INTO matches(season_name,replay_name,round_num,division,seed,map_id,turns,winner,kept)
+            VALUES (?,?,?,?,?,?,?,?,?) ON CONFLICT(season_name,replay_name) DO UPDATE SET
+            round_num=excluded.round_num,division=excluded.division,seed=excluded.seed,
+            map_id=excluded.map_id,turns=excluded.turns,winner=excluded.winner,kept=excluded.kept""",
+                   (name, replay, match.get("round"), match.get("division"), match.get("seed"),
+                    match.get("map_id"), match.get("turns"), match.get("winner"),
+                    int(match.get("kept") is not False)))
+        for person in match.get("snakes", []):
+            slug = person.get("name")
+            if not slug:
+                continue
+            ensure_team(db, slug)
+            # The catalog has no verified snake-slot ID; preserve NULL until replay parsing.
+            db.execute("""INSERT INTO participants(season_name,replay_name,team_slug,slot,placement,final_length,food_eaten,kills,turns_survived)
+                VALUES (?,?,?,?,?,?,?,?,?) ON CONFLICT(season_name,replay_name,team_slug) DO UPDATE SET
+                placement=excluded.placement,final_length=excluded.final_length,
+                food_eaten=excluded.food_eaten,kills=excluded.kills,turns_survived=excluded.turns_survived""",
+                       (name, replay, slug, None, person.get("placement"), person.get("length"),
+                        person.get("food"), person.get("kills"), person.get("turns")))
+        count += 1
+    db.commit()
+    return count
+
+
+def direction(old: dict, new: dict, width: int, height: int) -> str | None:
+    if width < 3 or height < 3:
+        return None
+    dx = (new["x"] - old["x"]) % width
+    dy = (new["y"] - old["y"]) % height
+    if dx == width - 1:
+        dx = -1
+    if dy == height - 1:
+        dy = -1
+    return DIRECTIONS.get((dx, dy))
+
+
+def relative_turn(before: str, after: str) -> str:
+    clockwise = ["UP", "RIGHT", "DOWN", "LEFT"]
+    delta = (clockwise.index(after) - clockwise.index(before)) % 4
+    return {0: "straight", 1: "right", 2: "reverse", 3: "left"}[delta]
+
+
+def analyze_replay(replay: dict[str, Any]) -> tuple[dict[str, dict[str, Any]], list[tuple]]:
+    frames = replay.get("frames", [])
+    if not isinstance(frames, list) or not frames:
+        raise ValueError("Replay has no frames")
+    header = replay.get("header") or {}
+    board = header.get("board") or [35, 35]
+    width, height = int(board[0]), int(board[1])
+    observations = defaultdict(lambda: Counter())
+    latency = defaultdict(list)
+    slot_names: dict[int, str] = {}
+    events = []
+    for frame in frames:
+        for snake in frame.get("snakes", []):
+            slot = snake.get("id")
+            name = snake.get("name")
+            if slot is not None and name:
+                slot_names[int(slot)] = name
+            if name and snake.get("latency_ms") is not None:
+                latency[name].append(float(snake["latency_ms"]))
+        for ix, event in enumerate(frame.get("events", [])):
+            turn = event.get("turn", frame.get("turn", 0))
+            cause = event.get("cause") or {}
+            if not isinstance(cause, dict):
+                cause = {}
+            kind = event.get("kind")
+            slot = event.get("snake")
+            events.append((turn, ix, kind, slot, cause.get("kind"), cause.get("by")))
+            name = slot_names.get(slot)
+            if name and kind == "ate":
+                observations[name]["food_events"] += 1
+            if name and kind == "died":
+                observations[name]["deaths"] += 1
+                cause_name = cause.get("kind")
+                if cause_name == "self_collision":
+                    observations[name]["self_collisions"] += 1
+                elif cause_name == "head_to_head":
+                    observations[name]["head_to_head_deaths"] += 1
+                elif cause_name == "collision":
+                    observations[name]["body_collisions"] += 1
+    for before, after in zip(frames, frames[1:]):
+        if after.get("turn", -10) != before.get("turn", -10) + 1:
+            continue
+        former = {s.get("id"): s for s in before.get("snakes", [])}
+        for snake in after.get("snakes", []):
+            previous = former.get(snake.get("id"))
+            if not previous or not snake.get("alive") or not previous.get("alive"):
+                continue
+            prev_body, body = previous.get("body") or [], snake.get("body") or []
+            if len(prev_body) < 2 or not body:
+                continue
+            old_heading = direction(prev_body[1], prev_body[0], width, height)
+            move = direction(prev_body[0], body[0], width, height)
+            if not old_heading or not move:
+                continue
+            result = relative_turn(old_heading, move)
+            if result == "reverse":  # usually invalid or a discontinuity; not a reliable choice
+                continue
+            name = snake.get("name") or previous.get("name")
+            if name:
+                observations[name]["observed_moves"] += 1
+                observations[name][{"straight": "straight_moves", "left": "left_turns", "right": "right_turns"}[result]] += 1
+    result = {}
+    for name in set(observations) | set(latency) | set(slot_names.values()):
+        obs = observations[name]
+        result[name] = {k: obs[k] for k in (
+            "observed_moves", "straight_moves", "left_turns", "right_turns",
+            "food_events", "deaths", "self_collisions", "body_collisions", "head_to_head_deaths")}
+        result[name]["avg_latency_ms"] = (sum(latency[name]) / len(latency[name])) if latency[name] else None
+    return result, events
+
+
+def replay_location(root: Path, season: str, replay: str) -> Path:
+    return root / "replays" / safe_name(season) / (safe_name(replay) + ".gz")
+
+
+def install_replay(db: sqlite3.Connection, root: Path, season: str, name: str, raw: bytes) -> None:
+    payload = checked_json(raw)
+    stats, events = analyze_replay(payload)  # validate BEFORE committing file or DB state
+    target = replay_location(root, season, name)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.NamedTemporaryFile(prefix=".replay-", suffix=".gz", dir=target.parent, delete=False) as fh:
+        tmp = Path(fh.name)
+        try:
+            with gzip.GzipFile(fileobj=fh, mode="wb", compresslevel=6, mtime=0) as gz:
+                gz.write(raw)
+        except BaseException:
+            tmp.unlink(missing_ok=True)
+            raise
+    tmp.replace(target)
+    digest = hashlib.sha256(raw).hexdigest()
+    header = payload.get("header") or {}
+    roster = header.get("roster", [])
+    slot_by_name: dict[str, int] = {}
+    for i, slug in enumerate(roster):
+        if isinstance(slug, str):
+            slot_by_name[slug] = i
+    if payload.get("frames"):
+        for snake in payload["frames"][0].get("snakes", []):
+            if snake.get("name") and snake.get("id") is not None:
+                slot_by_name[snake["name"]] = int(snake["id"])
+    with db:
+        db.execute("DELETE FROM events WHERE season_name=? AND replay_name=?", (season, name))
+        db.execute("DELETE FROM behavior WHERE season_name=? AND replay_name=?", (season, name))
+        for turn, ix, kind, slot, cause, killer in events:
+            db.execute("""INSERT INTO events(season_name,replay_name,turn,event_idx,kind,snake_slot,cause,killer_slot)
+                        VALUES (?,?,?,?,?,?,?,?)""", (season, name, turn, ix, kind, slot, cause, killer))
+        for slug, metrics in stats.items():
+            ensure_team(db, slug)
+            db.execute("""INSERT INTO behavior(season_name,replay_name,team_slug,
+                observed_moves,straight_moves,left_turns,right_turns,food_events,deaths,self_collisions,
+                body_collisions,head_to_head_deaths,avg_latency_ms) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                (season, name, slug, *(metrics[k] for k in (
+                    "observed_moves", "straight_moves", "left_turns", "right_turns",
+                    "food_events", "deaths", "self_collisions", "body_collisions", "head_to_head_deaths",
+                    "avg_latency_ms"))))
+            db.execute("""UPDATE participants SET slot=?, deaths=? WHERE season_name=? AND replay_name=? AND team_slug=?""",
+                       (slot_by_name.get(slug), metrics["deaths"], season, name, slug))
+        db.execute("""UPDATE matches SET replay_sha256=?, replay_bytes=?, downloaded_at=?
+                     WHERE season_name=? AND replay_name=?""", (digest, len(raw), utcnow(), season, name))
+
+
+def top_slugs(season: dict[str, Any], limit: int = 10) -> set[str]:
+    ranked = []
+    for table in season.get("tables", []):
+        if table.get("division") == 1:
+            ranked.extend((m.get("position", 999), m.get("name")) for m in table.get("table", []) if m.get("name"))
+    return {slug for _, slug in sorted(ranked)[:limit]}
+
+
+def queued_matches(db: sqlite3.Connection, root: Path, known_seasons: list[str], priority: set[str],
+                   limit: int) -> list[tuple[str, str]]:
+    """Pick a diverse small batch: mostly newest, some historical if available."""
+    per_season: list[list[tuple[str, str]]] = []
+    for season in known_seasons:
+        rows = db.execute("""SELECT m.replay_name, m.division FROM matches m
+            WHERE m.season_name=? AND m.kept=1 AND m.replay_sha256 IS NULL
+            ORDER BY CASE WHEN m.division=1 THEN 0 ELSE 1 END, m.round_num DESC, m.replay_name""", (season,)).fetchall()
+        scored = []
+        for name, division in rows:
+            participants = {row[0] for row in db.execute(
+                "SELECT team_slug FROM participants WHERE season_name=? AND replay_name=?", (season, name))}
+            score = (0 if priority & participants else 1, 0 if division == 1 else 1)
+            scored.append((score, name))
+        per_season.append([(season, name) for _, name in sorted(scored)])
+    if not per_season or limit == 0:
+        return []
+    # Reserve roughly 1/3 of downloads for past seasons, so backfill genuinely happens.
+    older_quota = limit // 3 if len(per_season) > 1 else 0
+    picked: list[tuple[str, str]] = []
+    past = [entry for batch in per_season[1:] for entry in batch]
+    picked.extend(past[:older_quota])
+    remaining = limit - len(picked)
+    picked.extend(per_season[0][:remaining])
+    if len(picked) < limit:
+        already = set(picked)
+        picked.extend(entry for entry in past if entry not in already)
+    return picked[:limit]
+
+
+def report(db: sqlite3.Connection, root: Path, season: str) -> None:
+    rows = db.execute("""SELECT p.team_slug, COUNT(*) samples,
+        SUM(CASE WHEN p.placement=1 THEN 1 ELSE 0 END) wins,
+        ROUND(AVG(p.final_length),1) avg_length,
+        SUM(COALESCE(b.observed_moves,0)) moves,
+        SUM(COALESCE(b.deaths,0)) deaths,
+        SUM(COALESCE(b.self_collisions,0)) self_deaths,
+        SUM(COALESCE(b.food_events,0)) food_events
+        FROM participants p JOIN matches m ON p.season_name=m.season_name AND p.replay_name=m.replay_name
+        LEFT JOIN behavior b ON p.season_name=b.season_name AND p.replay_name=b.replay_name AND p.team_slug=b.team_slug
+        WHERE p.season_name=? AND m.replay_sha256 IS NOT NULL
+        GROUP BY p.team_slug ORDER BY samples DESC, wins DESC LIMIT 20""", (season,)).fetchall()
+    seasons, catalogs, downloaded = db.execute("SELECT COUNT(*), (SELECT COUNT(*) FROM matches), (SELECT COUNT(*) FROM matches WHERE replay_sha256 IS NOT NULL) FROM seasons").fetchone()
+    lines = ["# Snake intelligence — collection status", "", f"Generated (UTC): {utcnow()}",
+             f"Latest season: `{season}`", f"Cataloged seasons: {seasons}",
+             f"Cataloged matches: {catalogs}", f"Downloaded replays (all seasons): {downloaded}", "",
+             "## Most-observed snakes in downloaded current-season replays", "",
+             "| Team | Matches | Wins | Avg final length | Observed moves | Deaths | Self-deaths | Food events |",
+             "|---|---:|---:|---:|---:|---:|---:|---:|"]
+    for slug, n, wins, length, moves, deaths, self_deaths, ate in rows:
+        lines.append(f"| `{slug}` | {n} | {wins} | {length} | {moves} | {deaths} | {self_deaths} | {ate} |")
+    lines.extend(["", "Counts reflect downloaded replays only, not the whole league. Actions are inferred from adjacent alive frames, excluding discontinuities.",
+                  "No strategy or win-rate advantage is assumed from these descriptive numbers.", ""])
+    path = root / "reports" / "latest.md"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("\n".join(lines), encoding="utf-8")
+
+
+def collect(client: Client, db: sqlite3.Connection, root: Path, max_replays: int,
+            lookback: int = 2) -> dict[str, Any]:
+    site = client.get_json("site")
+    current = safe_name(site["season"]["name"])
+    listed = [current] + [s for s in site.get("seasons", []) if s != current]
+    seasons = []
+    for name in listed:
+        try:
+            name = safe_name(name)
+        except ValueError:
+            continue
+        if name not in seasons:
+            seasons.append(name)
+        if len(seasons) >= lookback:
+            break
+    season_data = client.get_json("season")
+    if season_data.get("name") != current:
+        raise ValueError("/api/season does not match /api/site season; try next run")
+    ingest_latest_season(db, season_data)
+    for name in seasons:
+        if name != current and db.execute("SELECT 1 FROM matches WHERE season_name=? LIMIT 1", (name,)).fetchone():
+            continue
+        catalog = client.get_json("games", {"season": name})
+        if catalog.get("season") not in (None, name):
+            raise ValueError(f"Catalog season mismatch: {name}")
+        n = ingest_games(db, name, catalog)
+        print(f"Cataloged {n} matches from {name}")
+    chosen = queued_matches(db, root, seasons, top_slugs(season_data), max_replays)
+    completed = 0
+    for name, replay in chosen:
+        try:
+            target = replay_location(root, name, replay)
+            if target.exists():
+                # Recover after a previous crash between file write and DB update.
+                with gzip.open(target, "rb") as fh:
+                    raw = fh.read()
+            else:
+                raw = client.get_replay(replay)
+            install_replay(db, root, name, replay, raw)
+            completed += 1
+            print(f"Saved replay {name}/{replay}")
+        except (OSError, ValueError, KeyError, TypeError, urllib.error.URLError) as exc:
+            print(f"Skipped {name}/{replay}: {type(exc).__name__}: {exc}")
+            # Leave absent/unmarked so future hourly cycles retry.
+    report(db, root, current)
+    return {"season": current, "season_count": len(seasons), "downloaded": completed,
+            "attempted": len(chosen)}
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--data-dir", type=Path, default=Path("data"))
+    parser.add_argument("--max-replays", type=int, default=6)
+    parser.add_argument("--lookback-seasons", type=int, default=2)
+    parser.add_argument("--delay-seconds", type=float, default=1.0)
+    args = parser.parse_args()
+    if not (0 <= args.max_replays <= 30) or not (1 <= args.lookback_seasons <= 12) or args.delay_seconds < 0.75:
+        parser.error("Use 0–30 replays, 1–12 seasons, and a delay of at least 0.75 seconds")
+    db = connect(args.data_dir / "snake.db")
+    try:
+        outcome = collect(Client(delay=args.delay_seconds), db, args.data_dir,
+                          args.max_replays, args.lookback_seasons)
+        print(json.dumps(outcome, indent=2))
+    finally:
+        db.close()
+
+
+if __name__ == "__main__":
+    main()
