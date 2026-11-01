@@ -58,16 +58,26 @@ class ResearchDashboardTests(unittest.TestCase):
         self.assertEqual(stats["deaths"]["Student"]["self_collision"],1)
         self.assertEqual(stats["deaths"]["Student"]["bin:25-49"],1)
 
+    def test_match_modes_are_not_pooled_in_replay_risk(self):
+        stats=replay_summary(self.root,self.season,250)
+        self.assertEqual(stats["unique_modes"]["trial"],1)
+        self.assertEqual(stats["unique_modes"]["league"],0)
+        self.assertEqual(stats["mode_exposures"]["trial"]["25-49"],3)
+        self.assertEqual(stats["mode_deaths"]["trial"]["bin:25-49"],1)
+        self.assertEqual(stats["mode_exposures"]["league"]["25-49"],0)
+
     def test_dashboard_charts(self):
         result=build(self.root)
         self.assertEqual(result["trials"],2)
         self.assertEqual(result["curves"],1)
         for file in ["gauntlet_rankings.svg","apples_vs_length.svg",
-                     "gauntlet_growth.svg","death_causes.svg","death_rates.svg"]:
+                     "gauntlet_growth.svg","death_causes.svg","death_rates.svg",
+                     "death_rates_by_mode.svg"]:
             ElementTree.parse(self.root/"reports"/"charts"/file)
         report=(self.root/"reports"/"data_science.md").read_text()
         self.assertIn("175",report)
         self.assertIn("2/2",report)
+        self.assertIn("Corrected: student death risk separated by mode",report)
 
 if __name__=="__main__":
     unittest.main()
