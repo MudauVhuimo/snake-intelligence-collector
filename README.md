@@ -1,74 +1,54 @@
-# Wits Snake26 Intelligence Collector 🐍
+# Snake26 Intelligence — League + Trial Data Science 🐍📊
 
-A **conservative, restart-safe** public-API research collector for the Wits Snake AI 2026 competition. It tracks seasonal standings and code hashes, catalogs matches, downloads a limited number of replays, derives reliable movement statistics, and generates `data/reports/latest.md`.
+**Research first. No new competition Snake AI is implemented in this repository.**
 
-**Status:** Implementation tested with local synthetic API/replay fixtures. Network access to the live platform was unavailable in the build environment. API endpoint structures are taken from the Gemini investigation dated November 2026 and must be validated in the first live run. This project is installed in the private GitHub repository. The first live collection succeeded on GitHub Actions on November 1, 2026.
+This private repository collects publicly accessible Wits Snake26 match catalogs, official league standings, submitted-bot version hashes where available, and selected full replays. Our purpose is to learn what predicts performance **against other students**, while preserving on-arrival benchmark trials as controlled, *different* evidence.
 
-## Quick start
+## Start here
 
-Requires Python 3.11 or newer. No third-party packages.
+1. **[Research dashboard and report index](data/reports/README.md)** — the entry point for all studies
+2. **[Canonical joint league–trial report](data/reports/joint_analysis.md)** — same student, same season, cross-environment correlations
+3. **[Full replay behavior separated by environment](data/reports/behavior_by_mode.md)** — real observed decisions, not inferred from match scores
+4. **[Joined data exports](data/derived/joined_team_seasons.csv)** and **[quality audit](data/derived/quality.json)** — reproducible inputs and coverage
+
+The old [strategy laboratory](data/reports/strategy_lab.md) is a **legacy pooled diagnostic**, not evidence about league strategy. On-arrival food-race/underdog studies remain useful supporting studies but **do not substitute for student-versus-student replay observations**.
+
+## The correct research design
+
+| Environment | Opponents | Data used | What we can claim |
+|---|---|---|---|
+| League | Other submitted student snakes; occasional built-in filler | Official match results, standings and full replays | Actual competitive outcomes and observed behavior when downloaded |
+| On-arrival trials | Three fixed built-in benchmark groups | Three common trial scores and full replays | Controlled performance with common opponent configurations |
+| Joint cohort | **Same student + same season**, separate source columns | Joined tables and mode-separated replay features | Observational cross-environment correlations, not causation |
+
+**Important:** A student's recorded SHA-256 is the season snapshot. It does not prove that *every match* within the season used that exact submitted version. Historical standings may be missing; never compare Division 2 rank 1 to Division 1 rank 1 as equivalent. Match catalog data cannot tell us how a snake chose to move; only replay frames can provide movement observations. Identical full replays are deduplicated by content SHA-256 for behavioral analysis.
+
+The paired outcomes dataset includes both complete trial sets and student-opponent league games. The matched **replay-behavior** cohort is smaller and must report its sample size explicitly; it cannot be filled in using aggregate food or length values.
+
+## GitHub Actions — just two workflows
+
+- **[Collect Snake26 intelligence](.github/workflows/collect.yml)** — the **sole data writer**, scheduled hourly at minute 15 UTC and available by manual Run workflow. Downloads a small number of replays sequentially with ≥0.75 seconds between requests, safely updates the SQLite archive, rebuilds reports and publishes data. Replay sampling targets **60% league / 40% trials**, prioritizing Division 1 student-versus-student matches and retaining historical coverage; actual quotas depend on unseen games.
+- **[Validate Snake26 research](.github/workflows/research_ci.yml)** — read-only tests and analysis on code changes. **Never downloads from Wits or writes to the Git repository.** Produces a downloadable artifact with current paired reports and graphs.
+
+Research code changes **do not trigger costly collection runs**. Only one GitHub Actions job can publish the database/replays at a time. GitHub can delay hourly jobs; this is not guaranteed real-time monitoring.
+
+## Run locally (Python 3.11+, standard library only)
 
 ```bash
 python -m unittest discover -s . -p 'test*.py' -v
-python strategy_lab.py
-python collector.py --max-replays 2
+python -m research.integrated_dashboard --data-dir data
+python -m research.league_comparison --data-dir data
+python -m research.dashboard --data-dir data
+# Optional: collect limited new public replay data:
+python collector.py --max-replays 2 --lookback-seasons 2
 ```
 
-The first run creates `data/snake.db`, `data/replays/<season>/<game>.rep.gz`, and `data/reports/latest.md`. `--max-replays 0` collects metadata without downloading replays.
+The repository holds `data/snake.db`, `data/replays/<season>/**/*.rep.gz` (gzipped JSON), reports under `data/reports/`, and derived tables under `data/derived/`. GitHub does not preview compressed replay JSON as a video. The analysis scripts intentionally do not require private competitors' source code or accounts.
 
-## Cloud deployment — GitHub Actions
+## Quality, safety and storage
 
-1. Create a **private** GitHub repository and upload the entire contents of this project, including `.github/workflows/collect.yml`.
-2. Enable Actions for the repository and allow workflow `GITHUB_TOKEN` **Read and write permissions** if your repository/account settings require it. The workflow also requests `contents: write`.
-3. From **Actions → Collect Snake26 intelligence → Run workflow**, run it once manually and inspect logs and `data/reports/latest.md`.
-4. The workflow is scheduled hourly at `HH:15 UTC`; schedules may be delayed or missed by GitHub and are not real-time guarantees.
-5. Your computer can be switched off. Data is committed to the **private repository** after each successful run.
+Public GET requests only; no credential collection or aggressive scraping. Respect Wits server limits and any campus restrictions. Full replays may contain the positions, events and timings needed for analysis, but they **cannot act as responsive opponent executables in hypothetical matches**. Retain match-level controls, differentiate versions and avoid interpreting correlated turns as independent trials.
 
-For manual catch-up, use **Run workflow** and temporarily increase `max_replays` up to 30. Be respectful of the platform's server load. The default is **six replays per run**, not the entire season. Historical catalog selection samples recent, middle-aged, and oldest seasons (up to 12 per run); the collector can also gradually fill missing historical catalogs. Only replays of catalogued matches marked `kept=true` are considered.
+The SQLite file is tracked in Git as a pragmatic short-term archive. **Frequent database and replay commits will increase repository history size**; longer-term work should migrate raw storage to object storage rather than treating Git as an unlimited time-series database. Avoid deleting raw evidence as part of report cleanup.
 
-### How selection works
-
-The latest season is preferred, with Division 1 matches and matches featuring the latest Division 1 top ten prioritized. When older seasons are available, about one-third of replay slots go toward historical games to ensure backfilling progresses. Older seasons are picked up as space allows. Each game is only downloaded once. If the previous run downloaded a file but failed before committing its DB entry, the next run re-parses the local compressed file instead of requesting it again. Failed downloads remain eligible for later retries.
-
-The `api/season` schema has only been reported for the latest season. Therefore, the collector archives historical **game catalogs**, not unverified historical standings.
-
-## Database and replay analysis
-
-- `seasons`: known seasons and current-season metadata
-- `teams`: entrant identifiers and current metadata
-- `team_versions`: `(season, team)` ↔ submitted code hash, so old hashes are not lost
-- `standings`: seasonal ratings and division rank
-- `matches`: metadata and replay digest, unique by `(season, replay name)`
-- `participants`: individual results, **unknown snake slot stays NULL until replay parsed**
-- `events`: per-turn death, food, and other events
-- `behavior`: counts of valid relative moves (straight/left/right), deaths and death causes, food events, latency
-
-The replay format reportedly contains complete states but *not* explicit move strings. Moves are **inferred** from consecutive alive frames on the toroidal grid. Frames with missing moves, respawns, jumps or ambiguous reversals are intentionally omitted. This **does not** recover an unsuccessful decision, a rejected move, or the bot's reasoning. Analysis counts are descriptive, not claims about superiority.
-
-## Security, volume, and reliability
-
-- Uses public unauthenticated GET requests only. No login/session scraping, passwords or tokens.
-- Keeps requests sequential with ≥0.75 seconds spacing and retries transient failures with backoff.
-- Validates safe replay identifiers to prevent writing outside `data/replays/`.
-- Replays are gzip-compressed; the current workflow tracks the database and compressed raw replays in Git. **Git repository history grows over time**, particularly with an updated SQLite file every hour. This is intended as a short-term, modest-volume solution for the November 8 deadline, not limitless archive storage.
-- SQLite uses rollback-journal mode rather than WAL for safer commit-to-Git workflows. No concurrent writers.
-- The site may block scraping or have unpublished usage restrictions; follow the institution's instructions and stop if requested. Don't increase concurrency aggressively.
-- Hosted runners and scheduled jobs are not guaranteed exact execution times. For high-volume, long-term storage, migrate replays to object storage and keep Git to code and summaries.
-
-## Limitations
-
-This code has **not** been live-tested against Wits from this environment. If Gemini's sample JSON differs from the real API, adjust the parser after examining a redacted response. The last-run report contains only metrics from downloaded replays; it should not be interpreted as a leaderboard. No predictive model or new competition bot is included yet.
-
-## Where are the replay files?
-
-Open [data/replays](data/replays) in GitHub. Each season is a folder containing `.rep.gz` files. These are **gzip-compressed JSON**, so GitHub cannot display them in the browser. Click a file and use its Download button, or clone the private repository. To unpack a local file:
-
-```bash
-python -c "import gzip,sys; print(gzip.open(sys.argv[1],'rt').read()[:2000])" data/replays/<season>/<game>.rep.gz
-```
-
-For something readable immediately, open [the strategy laboratory report](data/reports/strategy_lab.md), [match-type discovery](data/reports/catalog.md), or [collection summary](data/reports/latest.md). The two first reports will appear when the updated workflow finishes.
-
-## Research and benchmarking
-
-The analysis uses sampled observed actions from historical frames and estimates food versus reachable-space tradeoffs. **It cannot prove which bot wins against a changed opponent.** Actual win-rate comparisons require executable opponents and controlled fresh seeds; we use the historical decisions to generate and test hypotheses locally. Publication of arrival/benchmark-style games, if present, is documented in the catalog discovery report.
+**Research stage:** audit and quantify student league play and controlled trials together; investigate hypotheses next; implement a new Snake AI only after the evidence justifies it.
