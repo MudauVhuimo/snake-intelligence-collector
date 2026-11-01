@@ -51,7 +51,7 @@ class JoinedResearchTests(unittest.TestCase):
                 games.append(dict(replay=f"trials/{n}/trial-{suite}.rep",
                                   kind="trial",seed=int(suite),kept=True,
                                   snakes=[
-                                      dict(name=n,placement=1,length=50+i*25,food=9+i*5,kills=i),
+                                      dict(name=n,placement=1,length=50+i*25,food=10+i*6,kills=i),
                                       dict(name="~benchmark",placement=2,length=5,food=0,kills=0)]))
         ingest_games(db,SEASON,dict(season=SEASON,games=games))
         # Historical data must remain an independent season, not join current.
