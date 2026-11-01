@@ -1,14 +1,14 @@
 # Snake26 — Data Science Dashboard: Phase I
 
-Generated UTC: 2026-11-01T22:55:52+00:00
+Generated UTC: 2026-11-01T23:18:32+00:00
 
 ## Data coverage and quality
 
-- Cataloged seasons: **31**; match records: **12,468**.
-- Replay records marked downloaded in SQLite: **102**.
-- Files on disk: **102**; sampled: **102**.
-- Unique replay payloads (SHA-256): **54**; duplicate payloads skipped: **48**; unreadable: **0**.
-- Latest season: **2026-11-01-215859-season**; published gauntlet_1 trial results: **146**.
+- Cataloged seasons: **41**; match records: **17,562**.
+- Replay records marked downloaded in SQLite: **126**.
+- Files on disk: **126**; sampled: **126**.
+- Unique replay payloads (SHA-256): **68**; duplicate payloads skipped: **58**; unreadable: **0**.
+- Latest season: **2026-11-01-225859-season**; published gauntlet_1 trial results: **146**.
 
 > Thousands of catalog records are not thousands of independent replay observations.
 > Adjacent turns are correlated. Same bot, version, opponent setup or seed can recur.
@@ -48,11 +48,11 @@ Raw counts mix opponent groups and survival exposure; they are not comparable ri
 
 | Length range | Student alive turns | Student deaths | Deaths / 1,000 alive turns | Benchmark alive turns | Benchmark deaths |
 |---|---:|---:|---:|---:|---:|
-| 5-24 | 56,622 | 21 | 0.371 | 93,998 | 424 |
-| 25-49 | 60,441 | 30 | 0.496 | 34,076 | 147 |
-| 50-99 | 94,025 | 55 | 0.585 | 12,139 | 40 |
-| 100-149 | 52,852 | 31 | 0.587 | 608 | 2 |
-| 150+ | 23,285 | 8 | 0.344 | 0 | 0 |
+| 5-24 | 66,278 | 23 | 0.347 | 131,641 | 595 |
+| 25-49 | 70,242 | 34 | 0.484 | 44,681 | 197 |
+| 50-99 | 108,439 | 62 | 0.572 | 16,627 | 56 |
+| 100-149 | 65,776 | 33 | 0.502 | 608 | 2 |
+| 150+ | 32,409 | 11 | 0.339 | 0 | 0 |
 
 Exposure: one alive snake at the start of an observed turn. A death is attributed
 to its previous alive state, not the dead/respawned frame's length. A zero-exposure
