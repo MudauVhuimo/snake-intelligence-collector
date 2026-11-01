@@ -189,7 +189,9 @@ def analyze(root: Path, top: set[str] | None=None, every: int=25, limit: int=0) 
         for name,obs in summary.items():
             teams[name].update(obs)
             matches[name]+=1
-            group["Current top-10" if name in top else "Other observed"].update(obs)
+            label = ("Built-in benchmarks" if name.startswith("~") else
+                     "Current top-10" if name in top else "Other student bots")
+            group[label].update(obs)
         for e in examples:
             if len(cases)>=100:
                 break
@@ -225,14 +227,14 @@ def markdown(results: dict) -> str:
            "## Current top-ten versus other observed snakes","",
            "| Group | Sampled moves | Food-nearest choices | Widest-space choices | Clear food/space tradeoffs | Space favored in tradeoffs |",
            "|---|---:|---:|---:|---:|---:|"]
-    for k in ("Current top-10","Other observed"):
+    for k in ("Current top-10","Other student bots","Built-in benchmarks"):
         x=groups.get(k,Counter())
         lines.append(f"| {k} | {x['valid']} | {percent(x['greedy'],x['greedy_applicable'])} | {percent(x['roomiest'],x['space_applicable'])} | {x['tradeoff']} | {percent(x['space_over_food'],x['tradeoff'])} |")
-    lines+=["","**Interpretation guardrail:** Top-ten means the *latest* Division 1 top-ten ranking, not necessarily the same code version in old seasons. Groups have unequal and possibly biased opponents. Do not infer causation or an optimal policy from this table.","",
+    lines+=["","**Interpretation guardrail:** Built-in `~` bots are reported separately. Top-ten means the *latest* Division 1 top-ten ranking, not necessarily the same code version in old seasons. Groups have unequal and possibly biased opponents. Do not infer causation or an optimal policy from this table.","",
             "## Individual behavior fingerprints","",
             "| Team | Replays | Sampled moves | Food-nearest | Widest-space | Food/space conflicts | Space chosen in conflicts |",
             "|---|---:|---:|---:|---:|---:|---:|"]
-    ranked=sorted(teams, key=lambda n:(n not in results["top"],-matches[n],-teams[n]["valid"]))
+    ranked=sorted(teams, key=lambda n:(n.startswith("~"),n not in results["top"],-matches[n],-teams[n]["valid"]))
     for n in ranked[:30]:
         x=teams[n]
         lines.append(f"| `{n}` | {matches[n]} | {x['valid']} | {percent(x['greedy'],x['greedy_applicable'])} | {percent(x['roomiest'],x['space_applicable'])} | {x['tradeoff']} | {percent(x['space_over_food'],x['tradeoff'])} |")
@@ -240,10 +242,12 @@ def markdown(results: dict) -> str:
             "Counts are actual `died` replay events, unlike static-space estimates.","",
             "| Group | Self-collision | Body collision | Head-to-head | Other |",
             "|---|---:|---:|---:|---:|"]
-    for label in ("Current top-10","Other observed"):
+    for label in ("Current top-10","Other student bots","Built-in benchmarks"):
         combined=Counter()
         for slug,causes in results["death_causes"].items():
-            if (slug in results["top"])==(label=="Current top-10"):
+            group_name = ("Built-in benchmarks" if slug.startswith("~") else
+                          "Current top-10" if slug in results["top"] else "Other student bots")
+            if group_name == label:
                 combined.update(causes)
         major=sum(combined.get(k,0) for k in ("self_collision","collision","head_to_head"))
         lines.append(f"| {label} | {combined['self_collision']} | {combined['collision']} | {combined['head_to_head']} | {sum(combined.values())-major} |")
