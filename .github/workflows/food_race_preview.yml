@@ -1,0 +1,33 @@
+name: Preview Snake26 food-race study
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/food_race_preview.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out archived replay data
+        uses: actions/checkout@v4
+      - name: Test food-race measurement
+        run: python -m unittest -v test_food_races
+      - name: Analyze archived food races without network calls
+        run: |
+          python -m research.food_races --data-dir data --max-files 250
+          sed -n '1,70p' data/reports/food_races.md
+      - name: Save report and SVG charts as downloadable run artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: snake26-food-races-preview
+          path: |
+            data/reports/food_races.md
+            data/reports/charts/food_start_advantage.svg
+            data/reports/charts/food_capture_lag.svg
