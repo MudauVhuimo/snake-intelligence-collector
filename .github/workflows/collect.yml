@@ -58,6 +58,8 @@ jobs:
         run: python -m research.underdog_study --data-dir data --max-files 250
       - name: Analyze snapshot path reversal with clustered bootstrap
         run: python -m research.path_geometry --data-dir data
+      - name: Build canonical joined league and trial research dashboard
+        run: python -m research.integrated_dashboard --data-dir data
       - name: Commit updated database and compressed replays
         run: |
           git config user.name 'github-actions[bot]'
