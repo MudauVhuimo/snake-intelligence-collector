@@ -104,7 +104,7 @@ class JoinedResearchTests(unittest.TestCase):
         path=self.data/"reports"/"joint_analysis.md"
         report=path.read_text(encoding="utf-8")
         self.assertIn("same season + same student",report)
-        self.assertIn("League replays",report)
+        self.assertIn("Full replays",report)
         self.assertIn("Source",report)
         self.assertIn("top-league",report)
         for metric in ("apples","length","kills","retention","correlations"):
