@@ -1,14 +1,14 @@
 # Snake26 — Data Science Dashboard: Phase I
 
-Generated UTC: 2026-11-01T22:35:22+00:00
+Generated UTC: 2026-11-01T22:55:52+00:00
 
 ## Data coverage and quality
 
-- Cataloged seasons: **24**; match records: **8,994**.
-- Replay records marked downloaded in SQLite: **78**.
-- Files on disk: **78**; sampled: **78**.
-- Unique replay payloads (SHA-256): **37**; duplicate payloads skipped: **41**; unreadable: **0**.
-- Latest season: **2026-11-01-205859-season**; published gauntlet_1 trial results: **146**.
+- Cataloged seasons: **31**; match records: **12,468**.
+- Replay records marked downloaded in SQLite: **102**.
+- Files on disk: **102**; sampled: **102**.
+- Unique replay payloads (SHA-256): **54**; duplicate payloads skipped: **48**; unreadable: **0**.
+- Latest season: **2026-11-01-215859-season**; published gauntlet_1 trial results: **146**.
 
 > Thousands of catalog records are not thousands of independent replay observations.
 > Adjacent turns are correlated. Same bot, version, opponent setup or seed can recur.
@@ -33,7 +33,7 @@ Below-reference points may reflect growth lost to deaths, but only full replay e
 
 ![Growth across game turns](charts/gauntlet_growth.svg)
 
-Current-season gauntlet_1 trial replays with trajectories: **4**.
+Current-season gauntlet_1 trial replays with trajectories: **2**.
 Actual recorded body lengths, sampled every 100 turns; missing curves are not interpolated.
 
 ## 4. Deaths by recorded cause
@@ -48,11 +48,11 @@ Raw counts mix opponent groups and survival exposure; they are not comparable ri
 
 | Length range | Student alive turns | Student deaths | Deaths / 1,000 alive turns | Benchmark alive turns | Benchmark deaths |
 |---|---:|---:|---:|---:|---:|
-| 5-24 | 39,836 | 11 | 0.276 | 60,616 | 281 |
-| 25-49 | 44,450 | 21 | 0.472 | 19,551 | 89 |
-| 50-99 | 66,015 | 44 | 0.667 | 7,157 | 26 |
-| 100-149 | 38,617 | 21 | 0.544 | 608 | 2 |
-| 150+ | 16,557 | 2 | 0.121 | 0 | 0 |
+| 5-24 | 56,622 | 21 | 0.371 | 93,998 | 424 |
+| 25-49 | 60,441 | 30 | 0.496 | 34,076 | 147 |
+| 50-99 | 94,025 | 55 | 0.585 | 12,139 | 40 |
+| 100-149 | 52,852 | 31 | 0.587 | 608 | 2 |
+| 150+ | 23,285 | 8 | 0.344 | 0 | 0 |
 
 Exposure: one alive snake at the start of an observed turn. A death is attributed
 to its previous alive state, not the dead/respawned frame's length. A zero-exposure
