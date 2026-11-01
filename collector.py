@@ -594,12 +594,23 @@ def select_seasons(site: dict[str, Any], db: sqlite3.Connection, limit: int) -> 
 
 def collect(client: Client, db: sqlite3.Connection, root: Path, max_replays: int,
             lookback: int = 2) -> dict[str, Any]:
-    site = client.get_json("site")
-    current = safe_name(site["season"]["name"])
+    # During a platform season rollover, these two independent endpoints can
+    # briefly disagree. Retry without assuming either response is authoritative.
+    for rollover_attempt in range(3):
+        site = client.get_json("site")
+        current = safe_name(site["season"]["name"])
+        season_data = client.get_json("season")
+        if season_data.get("name") == current:
+            break
+        print(f"Season rollover in progress (attempt {rollover_attempt+1}/3); "
+              "retrying consistent site/season snapshot", flush=True)
+        time.sleep(2 + 2 * rollover_attempt)
+    else:
+        print("SKIPPED: /api/site and /api/season disagree during rollover; "
+              "preserving existing data for the next scheduled run", flush=True)
+        return {"season": current, "season_count": 0, "downloaded": 0,
+                "attempted": 0, "skipped": "season_rollover"}
     seasons = select_seasons(site, db, lookback)
-    season_data = client.get_json("season")
-    if season_data.get("name") != current:
-        raise ValueError("/api/season does not match /api/site season; try next run")
     ingest_latest_season(db, season_data)
     for name in seasons:
         version = db.execute("SELECT catalog_version FROM seasons WHERE name=?", (name,)).fetchone()
