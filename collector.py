@@ -413,40 +413,64 @@ def top_slugs(season: dict[str, Any], limit: int = 10) -> set[str]:
     return {slug for _, slug in sorted(ranked)[:limit]}
 
 
-def queued_matches(db: sqlite3.Connection, root: Path, known_seasons: list[str], priority: set[str],
-                   limit: int) -> list[tuple[str, str]]:
-    """Pick a diverse small batch: mostly newest, some historical if available."""
+def queued_matches(db: sqlite3.Connection, root: Path, known_seasons: list[str],
+                   priority: set[str], limit: int) -> list[tuple[str, str]]:
+    """Mix on-arrival trials against local benchmark bots with league games.
+
+    Spread historical quotas across different seasons and all 3 trial suites.
+    The latest ranked teams are preferred where present, but no bot is assumed
+    executable: only the public replay is retrieved.
+    """
     per_season: list[list[tuple[str, str]]] = []
-    for season in known_seasons:
-        rows = db.execute("""SELECT m.replay_name, m.division FROM matches m
+    for index, season in enumerate(known_seasons):
+        rows = db.execute("""SELECT m.replay_name, m.division, m.kind FROM matches m
             WHERE m.season_name=? AND m.kept=1 AND m.replay_sha256 IS NULL
-            ORDER BY CASE WHEN m.division=1 THEN 0 ELSE 1 END, m.round_num DESC, m.replay_name""", (season,)).fetchall()
-        scored = []
-        for name, division in rows:
-            participants = {row[0] for row in db.execute(
-                "SELECT team_slug FROM participants WHERE season_name=? AND replay_name=?", (season, name))}
-            score = (0 if priority & participants else 1, 0 if division == 1 else 1)
-            scored.append((score, name))
-        per_season.append([(season, name) for _, name in sorted(scored)])
+            ORDER BY m.replay_name""", (season,)).fetchall()
+        buckets: list[list[tuple[int,str]]] = [[] for _ in range(5)]
+        for name, division, kind in rows:
+            roster = {row[0] for row in db.execute(
+                "SELECT team_slug FROM participants WHERE season_name=? AND replay_name=?",
+                (season, name))}
+            if kind == "trial":
+                # Gauntlet 1 is especially informative; 910 and 911 are also
+                # essential for comparison with the built-in local benchmarks.
+                category = (0 if "/trial-912" in name else
+                            1 if "/trial-910" in name else
+                            2)
+            else:
+                category = 3 if division == 1 else 4
+            buckets[category].append((0 if priority & roster else 1, name))
+        for bucket in buckets:
+            bucket.sort()
+        # Rotate historical starts to avoid exhausting gauntlet trials only.
+        order = ([0,1,2,3] if index == 0
+                 else [0,1,2,3][(index-1)%4:] + [0,1,2,3][:(index-1)%4])
+        order.append(4)
+        selected: list[tuple[str, str]] = []
+        offsets = [0]*len(buckets)
+        while any(offsets[i]<len(buckets[i]) for i in range(len(buckets))):
+            for category in order:
+                ix = offsets[category]
+                if ix < len(buckets[category]):
+                    selected.append((season, buckets[category][ix][1]))
+                    offsets[category] += 1
+        per_season.append(selected)
     if not per_season or limit == 0:
         return []
-    # Two-seasons pilot: 1/3 historical. Larger archives: prioritize history.
-    older_quota = (limit // 3 if len(per_season) == 2
-                   else (limit * 2 // 3 if len(per_season) > 2 else 0))
-    history = per_season[1:]
-    # Round-robin: don't exhaust one historical season before sampling others.
-    past: list[tuple[str, str]] = []
-    offset = 0
-    while any(offset < len(batch) for batch in history):
-        for batch in history:
-            if offset < len(batch):
-                past.append(batch[offset])
-        offset += 1
-    picked = past[:older_quota]
-    picked.extend(per_season[0][:limit - len(picked)])
+    older_quota = (limit//3 if len(per_season)==2
+                   else (limit*2//3 if len(per_season)>2 else 0))
+    historical: list[tuple[str, str]] = []
+    ix = 0
+    while any(ix<len(batch) for batch in per_season[1:]):
+        for batch in per_season[1:]:
+            if ix < len(batch):
+                historical.append(batch[ix])
+        ix += 1
+    picked = historical[:older_quota]
+    picked.extend(per_season[0][:limit-len(picked)])
     if len(picked) < limit:
         seen = set(picked)
-        picked.extend(entry for entry in past if entry not in seen)
+        picked.extend(row for row in historical if row not in seen)
     return picked[:limit]
 
 
