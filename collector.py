@@ -447,92 +447,122 @@ def likely_replay_signatures(db: sqlite3.Connection) -> tuple[dict[tuple[str,str
 
 def queued_matches(db: sqlite3.Connection, root: Path, known_seasons: list[str],
                    priority: set[str], limit: int) -> list[tuple[str, str]]:
-    """Mix on-arrival trials against local benchmark bots with league games.
+    """Research sampler: 60% student league, 40% controlled trials when available.
 
-    Spread historical quotas across different seasons and all 3 trial suites.
-    The latest ranked teams are preferred where present, but no bot is assumed
-    executable: only the public replay is retrieved.
+    League matches with several student opponents and Division 1 are preferred.
+    Preserve recent and historical representation inside BOTH tracks.
+    Do not count identical catalog signatures as new observations if alternatives
+    exist. Exact SHA-256 deduplication still happens after replay download.
     """
-    signatures, previously_downloaded = likely_replay_signatures(db)
-    per_season: list[list[tuple[str, str]]] = []
-    for index, season in enumerate(known_seasons):
-        rows = db.execute("""SELECT m.replay_name, m.division, m.kind FROM matches m
-            WHERE m.season_name=? AND m.kept=1 AND m.replay_sha256 IS NULL
-            ORDER BY m.replay_name""", (season,)).fetchall()
-        buckets: list[list[tuple[int,str]]] = [[] for _ in range(5)]
+    if limit <= 0 or not known_seasons:
+        return []
+    signatures, downloaded = likely_replay_signatures(db)
+    # Represent a historical season once, even if a caller supplies duplicates.
+    seasons = list(dict.fromkeys(known_seasons))
+    pools: dict[str, list[list[tuple[str, str]]]] = {
+        "league": [[], []], "trial": [[], []]
+    }
+    for index, season in enumerate(seasons):
+        rows = db.execute("""SELECT m.replay_name, m.division, m.kind
+                            FROM matches m WHERE m.season_name=?
+                              AND m.kept=1 AND m.replay_sha256 IS NULL""",
+                          (season,)).fetchall()
+        entries: dict[str, list[tuple[tuple, str]]] = {"league": [], "trial": []}
         for name, division, kind in rows:
-            roster = {row[0] for row in db.execute(
+            names = {p[0] for p in db.execute(
                 "SELECT team_slug FROM participants WHERE season_name=? AND replay_name=?",
                 (season, name))}
+            human_count = sum(not n.startswith("~") for n in names)
+            priority_flag = 0 if (priority & names) else 1
+            signature = signatures.get((season, name))
+            already = signature in downloaded
             if kind == "trial":
-                # Gauntlet 1 is especially informative; 910 and 911 are also
-                # essential for comparison with the built-in local benchmarks.
-                category = (0 if "/trial-912" in name else
-                            1 if "/trial-910" in name else
-                            2)
+                # Keep all three fixed on-arrival setups, not only gauntlet_1.
+                suite_order = (0 if "/trial-912" in name else
+                               1 if "/trial-910" in name else 2)
+                score = (already, priority_flag, suite_order, name)
+                entries["trial"].append((score, name))
             else:
-                category = 3 if division == 1 else 4
-            buckets[category].append((0 if priority & roster else 1, name))
-        for bucket in buckets:
-            # Prefer unseen outcome/roster/seed combinations; retain lookalikes
-            # as fallbacks, because identical metadata does NOT prove same actions.
-            bucket.sort(key=lambda pair: (
-                signatures.get((season,pair[1])) in previously_downloaded,
-                pair[0], pair[1]))
-        # Rotate historical starts to avoid exhausting gauntlet trials only.
-        order = ([0,1,2,3] if index == 0
-                 else [0,1,2,3][(index-1)%4:] + [0,1,2,3][:(index-1)%4])
-        order.append(4)
-        selected: list[tuple[str, str]] = []
-        offsets = [0]*len(buckets)
-        while any(offsets[i]<len(buckets[i]) for i in range(len(buckets))):
-            for category in order:
-                ix = offsets[category]
-                if ix < len(buckets[category]):
-                    selected.append((season, buckets[category][ix][1]))
-                    offsets[category] += 1
-        per_season.append(selected)
-    if not per_season or limit == 0:
-        return []
-    older_quota = (limit//3 if len(per_season)==2
-                   else (limit*2//3 if len(per_season)>2 else 0))
-    historical: list[tuple[str, str]] = []
-    ix = 0
-    while any(ix<len(batch) for batch in per_season[1:]):
-        for batch in per_season[1:]:
-            if ix < len(batch):
-                historical.append(batch[ix])
-        ix += 1
-    # First fill historical + current quotas with likely novel examples, then
-    # fall back to lookalikes only if needed. Replays are truly deduplicated
-    # by SHA256 after download in strategy_lab.py.
-    seen_signatures = set(previously_downloaded)
-    picked: list[tuple[str,str]] = []
-    chosen = set()
-    def append_novel(pool: list[tuple[str,str]], capacity: int) -> None:
+                # Includes old catalogs whose kind was not explicitly classified.
+                # Most actual league games have four students, but some include
+                # filler benchmarks. Both are cataloged and reported separately.
+                score = (already, division != 1, -human_count,
+                         priority_flag, name)
+                entries["league"].append((score, name))
+        for kind in ("league", "trial"):
+            entries[kind].sort(key=lambda x: x[0])
+            dest = 0 if index == 0 else 1
+            # Historical entries are interleaved across seasons below.
+            if dest == 0:
+                pools[kind][0] = [(season, name) for _, name in entries[kind]]
+            else:
+                existing = pools[kind][1]
+                batch = [(season, name) for _, name in entries[kind]]
+                # Round-robin across older seasons: avoid fully mining one
+                # old season before sampling other archived periods.
+                if index == 1:
+                    pools[kind][1] = [batch]
+                else:
+                    pools[kind][1].append(batch)
+
+    historical: dict[str, list[tuple[str, str]]] = {}
+    for kind in ("league", "trial"):
+        batches = pools[kind][1]
+        # Older history may be absent; no API calls are made here.
+        if batches and isinstance(batches[0],tuple):
+            historical[kind] = list(batches)
+        else:
+            historical[kind] = [
+                item for offset in range(max((len(x) for x in batches),default=0))
+                for batch in batches if offset < len(batch)
+                for item in (batch[offset],)
+            ]
+
+    league_target = (limit * 3 + 4) // 5  # ceil(60% of total)
+    targets = {"league": league_target, "trial": limit - league_target}
+    history_target = min(limit - 1, limit // 3) if len(seasons) > 1 else 0
+    history_goals = {
+        "league": min(targets["league"], (history_target * 3 + 4) // 5),
+        "trial": max(0, history_target - min(targets["league"], (history_target * 3 + 4) // 5))
+    }
+    selected: list[tuple[str, str]] = []
+    chosen: set[tuple[str, str]] = set()
+    seen = set(downloaded)
+
+    def add(pool: list[tuple[str, str]], cap: int, novel: bool) -> None:
         for pair in pool:
-            if len(picked) >= capacity:
+            if len(selected) >= cap:
                 break
-            signature = signatures.get(pair)
-            if pair in chosen or signature in seen_signatures:
+            if pair in chosen:
                 continue
-            picked.append(pair)
+            sig = signatures.get(pair)
+            if novel and sig in seen:
+                continue
+            selected.append(pair)
             chosen.add(pair)
-            seen_signatures.add(signature)
-    def append_fallback(pool: list[tuple[str,str]], capacity: int) -> None:
-        for pair in pool:
-            if len(picked) >= capacity:
-                break
-            if pair not in chosen:
-                chosen.add(pair)
-                picked.append(pair)
-    append_novel(historical,older_quota)
-    append_fallback(historical,older_quota)
-    append_novel(per_season[0],limit)
-    append_novel(historical,limit)
-    append_fallback(per_season[0],limit)
-    append_fallback(historical,limit)
-    return picked
+            if sig is not None:
+                seen.add(sig)
+
+    # Explicit quotas for each environment, not an accidental side effect of
+    # sorting trial suites before league games.
+    for kind in ("league", "trial"):
+        start = len(selected)
+        hist_goal = start + history_goals[kind]
+        goal = start + targets[kind]
+        add(historical[kind], hist_goal, True)
+        add(historical[kind], hist_goal, False)
+        add(pools[kind][0], goal, True)
+        add(historical[kind], goal, True)
+        add(pools[kind][0], goal, False)
+        add(historical[kind], goal, False)
+    # If one environment has fewer new games, use the rest of the budget
+    # in the other rather than leave available evidence on the table.
+    if len(selected) < limit:
+        for novel in (True, False):
+            for kind in ("league", "trial"):
+                add(pools[kind][0] + historical[kind], limit, novel)
+    return selected
+
 
 
 def report(db: sqlite3.Connection, root: Path, season: str) -> None:
