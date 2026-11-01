@@ -401,16 +401,23 @@ def queued_matches(db: sqlite3.Connection, root: Path, known_seasons: list[str],
         per_season.append([(season, name) for _, name in sorted(scored)])
     if not per_season or limit == 0:
         return []
-    # Reserve roughly 1/3 of downloads for past seasons, so backfill genuinely happens.
-    older_quota = limit // 3 if len(per_season) > 1 else 0
-    picked: list[tuple[str, str]] = []
-    past = [entry for batch in per_season[1:] for entry in batch]
-    picked.extend(past[:older_quota])
-    remaining = limit - len(picked)
-    picked.extend(per_season[0][:remaining])
+    # Two-seasons pilot: 1/3 historical. Larger archives: prioritize history.
+    older_quota = (limit // 3 if len(per_season) == 2
+                   else (limit * 2 // 3 if len(per_season) > 2 else 0))
+    history = per_season[1:]
+    # Round-robin: don't exhaust one historical season before sampling others.
+    past: list[tuple[str, str]] = []
+    offset = 0
+    while any(offset < len(batch) for batch in history):
+        for batch in history:
+            if offset < len(batch):
+                past.append(batch[offset])
+        offset += 1
+    picked = past[:older_quota]
+    picked.extend(per_season[0][:limit - len(picked)])
     if len(picked) < limit:
-        already = set(picked)
-        picked.extend(entry for entry in past if entry not in already)
+        seen = set(picked)
+        picked.extend(entry for entry in past if entry not in seen)
     return picked[:limit]
 
 
@@ -442,21 +449,40 @@ def report(db: sqlite3.Connection, root: Path, season: str) -> None:
     path.write_text("\n".join(lines), encoding="utf-8")
 
 
+def select_seasons(site: dict[str, Any], db: sqlite3.Connection, limit: int) -> list[str]:
+    """Sample recent and old seasons; gradually index missing history."""
+    current = safe_name(site["season"]["name"])
+    older = []
+    for item in site.get("seasons", []):
+        try:
+            name = safe_name(item)
+        except (TypeError, ValueError):
+            continue
+        if name != current and name not in older:
+            older.append(name)
+    chosen = [current]
+    if not older:
+        return chosen
+    for index in [0, len(older)-1, len(older)//2, len(older)//4, 3*len(older)//4]:
+        if len(chosen) >= limit:
+            break
+        if older[index] not in chosen:
+            chosen.append(older[index])
+    missing = [name for name in reversed(older) if not db.execute(
+        "SELECT 1 FROM matches WHERE season_name=? LIMIT 1", (name,)).fetchone()]
+    for item in missing + older:
+        if len(chosen) >= limit:
+            break
+        if item not in chosen:
+            chosen.append(item)
+    return chosen[:limit]
+
+
 def collect(client: Client, db: sqlite3.Connection, root: Path, max_replays: int,
             lookback: int = 2) -> dict[str, Any]:
     site = client.get_json("site")
     current = safe_name(site["season"]["name"])
-    listed = [current] + [s for s in site.get("seasons", []) if s != current]
-    seasons = []
-    for name in listed:
-        try:
-            name = safe_name(name)
-        except ValueError:
-            continue
-        if name not in seasons:
-            seasons.append(name)
-        if len(seasons) >= lookback:
-            break
+    seasons = select_seasons(site, db, lookback)
     season_data = client.get_json("season")
     if season_data.get("name") != current:
         raise ValueError("/api/season does not match /api/site season; try next run")
@@ -464,11 +490,16 @@ def collect(client: Client, db: sqlite3.Connection, root: Path, max_replays: int
     for name in seasons:
         if name != current and db.execute("SELECT 1 FROM matches WHERE season_name=? LIMIT 1", (name,)).fetchone():
             continue
-        catalog = client.get_json("games", {"season": name})
-        if catalog.get("season") not in (None, name):
-            raise ValueError(f"Catalog season mismatch: {name}")
-        n = ingest_games(db, name, catalog)
-        print(f"Cataloged {n} matches from {name}")
+        try:
+            catalog = client.get_json("games", {"season": name})
+            if catalog.get("season") not in (None, name):
+                raise ValueError(f"Catalog season mismatch: {name}")
+            n = ingest_games(db, name, catalog)
+            print(f"Cataloged {n} matches from {name}")
+        except (OSError, ValueError, urllib.error.URLError, urllib.error.HTTPError) as exc:
+            if name == current:
+                raise
+            print(f"Unable to index historical season {name}: {type(exc).__name__}: {exc}")
     chosen = queued_matches(db, root, seasons, top_slugs(season_data), max_replays)
     completed = 0
     for name, replay in chosen:
