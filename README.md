@@ -2,14 +2,15 @@
 
 A **conservative, restart-safe** public-API research collector for the Wits Snake AI 2026 competition. It tracks seasonal standings and code hashes, catalogs matches, downloads a limited number of replays, derives reliable movement statistics, and generates `data/reports/latest.md`.
 
-**Status:** Implementation tested with local synthetic API/replay fixtures. Network access to the live platform was unavailable in the build environment. API endpoint structures are taken from the Gemini investigation dated November 2026 and must be validated in the first live run. No GitHub repository or automation has been created by this package alone.
+**Status:** Implementation tested with local synthetic API/replay fixtures. Network access to the live platform was unavailable in the build environment. API endpoint structures are taken from the Gemini investigation dated November 2026 and must be validated in the first live run. This project is installed in the private GitHub repository. The first live collection succeeded on GitHub Actions on November 1, 2026.
 
 ## Quick start
 
 Requires Python 3.11 or newer. No third-party packages.
 
 ```bash
-python -m unittest discover -s tests -v
+python -m unittest discover -s . -p 'test*.py' -v
+python strategy_lab.py
 python collector.py --max-replays 2
 ```
 
@@ -20,10 +21,10 @@ The first run creates `data/snake.db`, `data/replays/<season>/<game>.rep.gz`, an
 1. Create a **private** GitHub repository and upload the entire contents of this project, including `.github/workflows/collect.yml`.
 2. Enable Actions for the repository and allow workflow `GITHUB_TOKEN` **Read and write permissions** if your repository/account settings require it. The workflow also requests `contents: write`.
 3. From **Actions → Collect Snake26 intelligence → Run workflow**, run it once manually and inspect logs and `data/reports/latest.md`.
-4. If successful, the workflow is scheduled hourly at `HH:15 UTC`; schedules may be delayed or missed by GitHub and are not real-time guarantees.
+4. The workflow is scheduled hourly at `HH:15 UTC`; schedules may be delayed or missed by GitHub and are not real-time guarantees.
 5. Your computer can be switched off. Data is committed to the **private repository** after each successful run.
 
-For manual catch-up, use **Run workflow** and temporarily increase `max_replays` up to 30. Be respectful of the platform's server load. The default is **six replays per run**, not the entire season. Initial historical metadata is limited to two latest seasons; change `--lookback-seasons` (up to 12) if needed. Only replays of catalogued matches marked `kept=true` are considered.
+For manual catch-up, use **Run workflow** and temporarily increase `max_replays` up to 30. Be respectful of the platform's server load. The default is **six replays per run**, not the entire season. Historical catalog selection samples recent, middle-aged, and oldest seasons (up to 12 per run); the collector can also gradually fill missing historical catalogs. Only replays of catalogued matches marked `kept=true` are considered.
 
 ### How selection works
 
@@ -57,3 +58,17 @@ The replay format reportedly contains complete states but *not* explicit move st
 ## Limitations
 
 This code has **not** been live-tested against Wits from this environment. If Gemini's sample JSON differs from the real API, adjust the parser after examining a redacted response. The last-run report contains only metrics from downloaded replays; it should not be interpreted as a leaderboard. No predictive model or new competition bot is included yet.
+
+## Where are the replay files?
+
+Open [data/replays](data/replays) in GitHub. Each season is a folder containing `.rep.gz` files. These are **gzip-compressed JSON**, so GitHub cannot display them in the browser. Click a file and use its Download button, or clone the private repository. To unpack a local file:
+
+```bash
+python -c "import gzip,sys; print(gzip.open(sys.argv[1],'rt').read()[:2000])" data/replays/<season>/<game>.rep.gz
+```
+
+For something readable immediately, open [the strategy laboratory report](data/reports/strategy_lab.md), [match-type discovery](data/reports/catalog.md), or [collection summary](data/reports/latest.md). The two first reports will appear when the updated workflow finishes.
+
+## Research and benchmarking
+
+The analysis uses sampled observed actions from historical frames and estimates food versus reachable-space tradeoffs. **It cannot prove which bot wins against a changed opponent.** Actual win-rate comparisons require executable opponents and controlled fresh seeds; we use the historical decisions to generate and test hypotheses locally. Publication of arrival/benchmark-style games, if present, is documented in the catalog discovery report.
