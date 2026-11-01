@@ -32,3 +32,4 @@ jobs:
             data/reports/underdog_episodes.csv
             data/reports/underdog_examples.json
             data/reports/charts/underdog_*.svg
+            data/reports/charts/underdog_case_*.svg
