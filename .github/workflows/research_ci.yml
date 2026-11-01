@@ -42,4 +42,6 @@ jobs:
             data/derived/quality.json
             data/reports/README.md
             data/reports/joint_analysis.md
+            data/reports/behavior_by_mode.md
+            data/reports/charts/observed_*_by_mode.svg
             data/reports/charts/joint_*.svg
