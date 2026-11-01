@@ -1,0 +1,54 @@
+name: Collect Snake26 intelligence
+
+on:
+  schedule:
+    - cron: '15 * * * *'
+  workflow_dispatch:
+    inputs:
+      max_replays:
+        description: 'Maximum replay downloads this run (0-30)'
+        type: number
+        required: false
+        default: 6
+      lookback_seasons:
+        description: 'Seasons to catalog, including latest (1-12)'
+        type: number
+        required: false
+        default: 2
+
+permissions:
+  contents: write
+
+concurrency:
+  group: snake-intelligence-data
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Python version
+        run: python --version
+      - name: Run unit tests
+        run: python -m unittest discover -s . -p 'test*.py' -v
+      - name: Collect metadata and selected replays
+        env:
+          MAX_REPLAYS: ${{ inputs.max_replays || '6' }}
+          LOOKBACK: ${{ inputs.lookback_seasons || '2' }}
+        run: python collector.py --max-replays "$MAX_REPLAYS" --lookback-seasons "$LOOKBACK"
+      - name: Commit updated database and compressed replays
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/
+          if ! git diff --cached --quiet; then
+            git commit -m 'data: update snake replays and analysis'
+            git push
+          else
+            echo 'No new data.'
+          fi
