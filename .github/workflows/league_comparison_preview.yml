@@ -1,0 +1,33 @@
+name: Preview actual league vs benchmark analysis
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/league_comparison_preview.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  analysis:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out real Wits league records
+        uses: actions/checkout@v4
+      - name: Run league comparison unit tests
+        run: python -m unittest -v test_league_comparison
+      - name: Generate and inspect real league versus trials analysis
+        run: |
+          python -m research.league_comparison --data-dir data
+          sed -n '1,110p' data/reports/league_vs_trials.md
+      - name: Upload analysis and SVG figures
+        uses: actions/upload-artifact@v4
+        with:
+          name: snake26-league-and-trials
+          path: |
+            data/reports/league_vs_trials.md
+            data/reports/charts/league_vs_trials.svg
+            data/reports/charts/league_replay_coverage.svg
