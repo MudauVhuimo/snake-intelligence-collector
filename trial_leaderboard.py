@@ -75,11 +75,11 @@ def make_report(db: sqlite3.Connection) -> str:
                     key=lambda x:(x[1]["place"],-(x[1]["length"] or 0),x[0]))
     for i,(name,obs) in enumerate(gauntlet[:35],1):
         lines.append(f"| {i} | `{name}` | {obs['place']} | {obs['length']} | {obs['food']} | {obs['kills']} | `{obs['replay']}` |")
-    lines+=["","## What to do with this","",
-            "1. Reproduce all three *opponent groupings* against our current Java snake in the local engine, preserving seat order and using seeds 910000, 911000 and 912000.",
-            "2. Compare placement, ending length, food and kills against the top entries above. Repeat across fresh seeds because one fixed-seed match is not a robust benchmark.",
-            "3. Prioritize downloading detailed on-arrival replays of strong gauntlet_1 performers and observe their decisions near food and hazards.",
-            "4. Build a safety-first Java candidate, benchmark against local gauntlets, and promote it only with consistent improvement on fresh, unseen seeds.",
+    lines+=["","## Research next steps (no competition-bot implementation yet)","",
+            "1. Compare the same student and season in the actual league and on-arrival conditions using the canonical [joined analysis](joint_analysis.md).",
+            "2. For both settings, measure food, kills, growth retained and replay-derived death rates with matched definitions.",
+            "3. Prioritize full league replays of Division 1 students and diverse on-arrival suites; deduplicate identical replay payloads.",
+            "4. Treat large trial final lengths as controlled observations, not evidence of league dominance.",
             "",
             "Different bot versions, seeds, map changes, or seat orders make direct numerical comparisons misleading. These trial comparisons provide a common reference, not a controlled head-to-head against private competitor code.",""]
     return "\n".join(lines)
