@@ -457,6 +457,11 @@ def queued_matches(db: sqlite3.Connection, root: Path, known_seasons: list[str],
     if limit <= 0 or not known_seasons:
         return []
     signatures, downloaded = likely_replay_signatures(db)
+    champion_row = db.execute(
+        "SELECT team_slug FROM standings WHERE season_name=? "
+        "AND division=1 AND division_rank=1 LIMIT 1", (known_seasons[0],)
+    ).fetchone()
+    champion = champion_row[0] if champion_row else None
     # Represent a historical season once, even if a caller supplies duplicates.
     seasons = list(dict.fromkeys(known_seasons))
     pools: dict[str, list[list[tuple[str, str]]]] = {
@@ -486,11 +491,25 @@ def queued_matches(db: sqlite3.Connection, root: Path, known_seasons: list[str],
                 # Includes old catalogs whose kind was not explicitly classified.
                 # Most actual league games have four students, but some include
                 # filler benchmarks. Both are cataloged and reported separately.
-                score = (already, division != 1, -human_count,
-                         priority_flag, name)
+                score = (already, division != 1,
+                         0 if champion is not None and champion in names else 1,
+                         -human_count, priority_flag, name)
                 entries["league"].append((score, name))
         for kind in ("league", "trial"):
             entries[kind].sort(key=lambda x: x[0])
+            if kind == "trial":
+                # Round-robin all three controlled trial suites: each cycle
+                # still captures gauntlet_1, hungry and hunter setups.
+                groups = [[], [], []]
+                for score, filename in entries[kind]:
+                    suite = (0 if "/trial-912" in filename else
+                             1 if "/trial-910" in filename else 2)
+                    groups[suite].append((score, filename))
+                entries[kind] = [
+                    item for offset in range(max(map(len, groups), default=0))
+                    for group_items in groups if offset < len(group_items)
+                    for item in (group_items[offset],)
+                ]
             dest = 0 if index == 0 else 1
             # Historical entries are interleaved across seasons below.
             if dest == 0:
