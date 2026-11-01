@@ -413,6 +413,38 @@ def top_slugs(season: dict[str, Any], limit: int = 10) -> set[str]:
     return {slug for _, slug in sorted(ranked)[:limit]}
 
 
+def promising_trial_slugs(db: sqlite3.Connection, season: str, limit: int = 15) -> set[str]:
+    """Prioritize top gauntlet-1 trial performers even outside league Division 1."""
+    rows = db.execute("""SELECT p.team_slug
+        FROM matches m JOIN participants p
+          ON m.season_name=p.season_name AND m.replay_name=p.replay_name
+        WHERE m.season_name=? AND m.kind='trial'
+          AND m.replay_name LIKE '%/trial-912000.rep'
+          AND p.team_slug NOT LIKE '~%'
+        ORDER BY p.placement ASC, p.final_length DESC
+        LIMIT ?""", (season,limit)).fetchall()
+    return {row[0] for row in rows}
+
+
+def likely_replay_signatures(db: sqlite3.Connection) -> tuple[dict[tuple[str,str], tuple], set[tuple]]:
+    """Heuristic signatures for prioritization only. Not proof of identical frames."""
+    matches = db.execute("""SELECT season_name,replay_name,kind,seed,replay_sha256
+        FROM matches""").fetchall()
+    players: dict[tuple[str,str],list[tuple]] = defaultdict(list)
+    for row in db.execute("""SELECT season_name,replay_name,team_slug,placement,
+                            final_length,food_eaten,kills
+                            FROM participants"""):
+        players[(row[0],row[1])].append(tuple(row[2:]))
+    signatures = {}
+    downloaded = set()
+    for season,name,kind,seed,sha in matches:
+        signature = (kind,seed,tuple(sorted(players.get((season,name),[]))))
+        signatures[(season,name)] = signature
+        if sha:
+            downloaded.add(signature)
+    return signatures,downloaded
+
+
 def queued_matches(db: sqlite3.Connection, root: Path, known_seasons: list[str],
                    priority: set[str], limit: int) -> list[tuple[str, str]]:
     """Mix on-arrival trials against local benchmark bots with league games.
@@ -421,6 +453,7 @@ def queued_matches(db: sqlite3.Connection, root: Path, known_seasons: list[str],
     The latest ranked teams are preferred where present, but no bot is assumed
     executable: only the public replay is retrieved.
     """
+    signatures, previously_downloaded = likely_replay_signatures(db)
     per_season: list[list[tuple[str, str]]] = []
     for index, season in enumerate(known_seasons):
         rows = db.execute("""SELECT m.replay_name, m.division, m.kind FROM matches m
@@ -441,7 +474,11 @@ def queued_matches(db: sqlite3.Connection, root: Path, known_seasons: list[str],
                 category = 3 if division == 1 else 4
             buckets[category].append((0 if priority & roster else 1, name))
         for bucket in buckets:
-            bucket.sort()
+            # Prefer unseen outcome/roster/seed combinations; retain lookalikes
+            # as fallbacks, because identical metadata does NOT prove same actions.
+            bucket.sort(key=lambda pair: (
+                signatures.get((season,pair[1])) in previously_downloaded,
+                pair[0], pair[1]))
         # Rotate historical starts to avoid exhausting gauntlet trials only.
         order = ([0,1,2,3] if index == 0
                  else [0,1,2,3][(index-1)%4:] + [0,1,2,3][:(index-1)%4])
@@ -466,12 +503,36 @@ def queued_matches(db: sqlite3.Connection, root: Path, known_seasons: list[str],
             if ix < len(batch):
                 historical.append(batch[ix])
         ix += 1
-    picked = historical[:older_quota]
-    picked.extend(per_season[0][:limit-len(picked)])
-    if len(picked) < limit:
-        seen = set(picked)
-        picked.extend(row for row in historical if row not in seen)
-    return picked[:limit]
+    # First fill historical + current quotas with likely novel examples, then
+    # fall back to lookalikes only if needed. Replays are truly deduplicated
+    # by SHA256 after download in strategy_lab.py.
+    seen_signatures = set(previously_downloaded)
+    picked: list[tuple[str,str]] = []
+    chosen = set()
+    def append_novel(pool: list[tuple[str,str]], capacity: int) -> None:
+        for pair in pool:
+            if len(picked) >= capacity:
+                break
+            signature = signatures.get(pair)
+            if pair in chosen or signature in seen_signatures:
+                continue
+            picked.append(pair)
+            chosen.add(pair)
+            seen_signatures.add(signature)
+    def append_fallback(pool: list[tuple[str,str]], capacity: int) -> None:
+        for pair in pool:
+            if len(picked) >= capacity:
+                break
+            if pair not in chosen:
+                chosen.add(pair)
+                picked.append(pair)
+    append_novel(historical,older_quota)
+    append_fallback(historical,older_quota)
+    append_novel(per_season[0],limit)
+    append_novel(historical,limit)
+    append_fallback(per_season[0],limit)
+    append_fallback(historical,limit)
+    return picked
 
 
 def report(db: sqlite3.Connection, root: Path, season: str) -> None:
@@ -554,7 +615,8 @@ def collect(client: Client, db: sqlite3.Connection, root: Path, max_replays: int
             if name == current:
                 raise
             print(f"Unable to index historical season {name}: {type(exc).__name__}: {exc}")
-    chosen = queued_matches(db, root, seasons, top_slugs(season_data), max_replays)
+    priority = top_slugs(season_data) | promising_trial_slugs(db, current)
+    chosen = queued_matches(db, root, seasons, priority, max_replays)
     completed = 0
     for name, replay in chosen:
         try:
