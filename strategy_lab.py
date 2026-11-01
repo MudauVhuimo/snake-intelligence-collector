@@ -181,9 +181,20 @@ def analyze(root: Path, top: set[str] | None=None, every: int=25, limit: int=0) 
             e["season"]=path.parent.name
             e["replay"]=path.name[:-3]
             cases.append(e)
+    death_causes=defaultdict(Counter)
+    for slug,cause,count in db.execute(
+        """SELECT p.team_slug, COALESCE(e.cause,'unspecified'), COUNT(*)
+           FROM events e JOIN participants p
+             ON p.season_name=e.season_name AND p.replay_name=e.replay_name
+             AND p.slot=e.snake_slot
+           WHERE e.kind='died'
+           GROUP BY p.team_slug, COALESCE(e.cause,'unspecified')"""
+    ).fetchall():
+        death_causes[slug][cause]+=count
     db.close()
     return {"teams":teams,"groups":group,"matches":matches,"cases":cases,
-            "processed":processed,"failed":failed,"top":top,"stride":every}
+            "processed":processed,"failed":failed,"top":top,"stride":every,
+            "death_causes":death_causes}
 
 def markdown(results: dict) -> str:
     teams=results["teams"]; groups=results["groups"]; matches=results["matches"]
@@ -208,7 +219,19 @@ def markdown(results: dict) -> str:
     for n in ranked[:30]:
         x=teams[n]
         lines.append(f"| `{n}` | {matches[n]} | {x['valid']} | {percent(x['greedy'],x['greedy_applicable'])} | {percent(x['roomiest'],x['space_applicable'])} | {x['tradeoff']} | {percent(x['space_over_food'],x['tradeoff'])} |")
-    lines+=["","## Replay-backed tactical situations","",
+    lines+=["","## Observed deaths by cause","",
+            "Counts are actual `died` replay events, unlike static-space estimates.","",
+            "| Group | Self-collision | Body collision | Head-to-head | Other |",
+            "|---|---:|---:|---:|---:|"]
+    for label in ("Current top-10","Other observed"):
+        combined=Counter()
+        for slug,causes in results["death_causes"].items():
+            if (slug in results["top"])==(label=="Current top-10"):
+                combined.update(causes)
+        major=sum(combined.get(k,0) for k in ("self_collision","collision","head_to_head"))
+        lines.append(f"| {label} | {combined['self_collision']} | {combined['collision']} | {combined['head_to_head']} | {sum(combined.values())-major} |")
+    lines+=["","Use the death causes to decide whether to first test tail-reachability, body-avoidance, or head-to-head threat rules. Compare on equivalent unseen matches, not raw unadjusted death totals.","",
+            "## Replay-backed tactical situations","",
             "A tradeoff means the most food-directed static-free move had a reachable-space estimate at least 10 tiles smaller than another static-free option. Space scores are **bounded probes**, not exact guarantees.","",
             "| Replay | Turn | Snake | Body length | Actual move | Food distance after move | Space score (chosen/best) | Favored space? |",
             "|---|---:|---|---:|---|---:|---:|---|"]
