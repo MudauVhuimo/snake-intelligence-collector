@@ -14,6 +14,7 @@ import argparse
 import json
 
 from .joined_datasets import build as prepare, correlations
+from .behavior_by_mode import build as behavior_report
 from .league_comparison import chart
 
 PAIRS=(
@@ -100,6 +101,7 @@ def build(data_dir):
     latest=quality["current_season"]
     if not latest:
         raise RuntimeError("No official season to compare")
+    movement=behavior_report(data_dir)  # Replay evidence stays separate from catalog outcomes.
     paired,results=correlations(data["joined"],latest,division=1,min_league=3)
     champion=next((r["team"] for r in sorted(paired,key=lambda r:
                     r["official_rank"] if r["official_rank"] is not None else 99999)),None)
@@ -181,17 +183,29 @@ def build(data_dir):
             f"{printable(r['trial_mean_kills'],2)} | {r['league_replays']}/{r['trial_replays']} |")
     lines += [
         "",
-        "## 5. Reproducible joined data exports","",
+        "## 5. The same students: *actual replay-derived* behavior","",
+        f"Current-season students with BOTH league and trial full replay behavior: "
+        f"**{movement['paired_student_replays']}**.",
+        "Catalog counts cannot fill in missing replay decisions; only identical,",
+        "verifiable frame-derived definitions can be compared across modes.",
+        "[See the mode-separated behavioral report](behavior_by_mode.md) for",
+        "observed food-event/death rates and their conditional correlations.",
+        "![Student food events per observed move in each mode](charts/observed_food_by_mode.svg)",
+        "![Student deaths per observed move in each mode](charts/observed_deaths_by_mode.svg)",
+        "",
+        "## 6. Reproducible joined data exports","",
         "- [League team-season summaries](../derived/league_team_seasons.csv) —",
         "  the real competition outcomes, including human-opponent counts.",
         "- [Trial team-season summaries](../derived/trial_team_seasons.csv) —",
         "  three controlled benchmark setups, kept separate.",
         "- [Joined student-season dataset](../derived/joined_team_seasons.csv) —",
         "  one row per student and season; missing sides are **missing**, not zero.",
+        "- [Replay-backed behavior, separated by mode](../derived/replay_behavior_by_mode.csv) —",
+        "  only downloaded full match observations.",
         "- [Data validation summary](../derived/quality.json) —",
         "  replay coverage, SHA deduplication and sample sizes.",
         "",
-        "## 6. What needs further evidence","",
+        "## 7. What needs further evidence","",
         "1. Obtain full league replays of top Division 1 students, including both",
         "   winners and losers, and map their exact turns/deaths/food contests.",
         "2. Run the **same replay-derived definitions** separately on league and",
@@ -218,6 +232,8 @@ def build(data_dir):
         "## Supporting studies — with explicitly limited scopes","",
         "- [Official league versus fixed-seed rankings](league_vs_trials.md):",
         "  standings/outcomes, not a replay-derived behavioral model.",
+        "- [Observed league/trial behavior matched by student](behavior_by_mode.md):",
+        "  replay-derived food and death measures; report sample coverage first.",
         "- [League food versus growth retained](league_sweet_spot.md):",
         "  correlation, not proven aggression or optimal policy.",
         "- [On-arrival food contests](food_races.md):",
@@ -238,7 +254,7 @@ def build(data_dir):
         "executables or source code are extracted. No Java snake changes yet.",""
     ]
     (output/"README.md").write_text("\n".join(home),encoding="utf-8")
-    return dict(season=latest,paired_division1=len(paired),
+    return dict(season=latest,replay_paired=movement["paired_student_replays"],paired_division1=len(paired),
                 comparison={r["metric"]:r["rho"] for r in results},
                 reports=[str(dest),str(output/"README.md")])
 
