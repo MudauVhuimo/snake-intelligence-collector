@@ -192,6 +192,34 @@ class CollectorTests(unittest.TestCase):
         self.assertEqual(sum(1 for season, _ in picked if season == old), 2)
         self.assertEqual(sum(1 for season, _ in picked if season == S), 4)
 
+    def test_sampler_reserves_league_with_human_opponents(self):
+        ingest_latest_season(self.db, latest())
+        gameset = {"season": S, "games": []}
+        for i in range(10):
+            gameset["games"].append(dict(
+                replay=f"game-7{i:04d}.rep",kind="league",
+                division=1 if i<8 else 2,seed=70000+i,kept=True,
+                snakes=[dict(name=A,placement=1,length=50+i,food=9,kills=1),
+                        dict(name=B,placement=2,length=20,food=3,kills=0),
+                        dict(name="student-c",placement=3,length=15,food=2,kills=0),
+                        dict(name="student-d",placement=4,length=10,food=1,kills=0)]))
+        for i in range(10):
+            suite=("912000","910000","911000")[i%3]
+            gameset["games"].append(dict(
+                replay=f"trials/t-{i}/trial-{suite}.rep",kind="trial",
+                division=None,seed=int(suite),kept=True,
+                snakes=[dict(name=f"t-{i}",placement=1,length=150+i,food=29,kills=1),
+                        dict(name="~benchmark",placement=2,length=5,food=0,kills=0)]))
+        ingest_games(self.db,S,gameset)
+        selected=queued_matches(self.db,self.root,[S],{A},10)
+        self.assertEqual(len(selected),10)
+        league=sum(name.startswith("game-") for _,name in selected)
+        trial=sum("/trial-" in name for _,name in selected)
+        self.assertEqual((league,trial),(6,4))
+        self.assertTrue(all(name.startswith("game-") and int(name[6:10]) < 8
+                            for _,name in selected[:6]))
+        self.assertEqual(len(set(selected)),10)
+
     def test_failed_replay_is_retryable(self):
         cli = FakeClient()
         def bad(name):
