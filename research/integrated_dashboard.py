@@ -1,0 +1,251 @@
+"""Publish the canonical joined research hub and environment-specific graphics.
+
+Data sources are separate aggregated league and controlled-trial tables;
+the ONLY comparison join key is (season, student). Bot SHA is attached when
+available, but not claimed to identify every game played in that season.
+"""
+from __future__ import annotations
+
+from collections import Counter
+from datetime import datetime, timezone
+from html import escape
+from pathlib import Path
+import argparse
+import json
+
+from .joined_datasets import build as prepare, correlations
+from .league_comparison import chart
+
+PAIRS=(
+    ("mean_food","Mean apples per game","apples"),
+    ("mean_final_length","Mean final body length","length"),
+    ("mean_kills","Mean kills per game","kills"),
+    ("mean_retention","Mean growth retention","retention"),
+)
+COLORS=("#60a5fa","#34d399","#fbbf24","#f472b6")
+
+def printable(value,places=2):
+    if value is None:
+        return "—"
+    return f"{value:.{places}f}"
+
+def points_chart(path,people,key,title,champion):
+    xkey="trial_"+key
+    ykey="league_"+key
+    matched=[r for r in people if r.get(xkey) is not None and r.get(ykey) is not None]
+    if not matched:
+        return chart(path,title,["<text x='55' y='110'>No eligible joined observations</text>"],220)
+    xmin=min(r[xkey] for r in matched)
+    xmax=max(r[xkey] for r in matched)
+    ymin=min(r[ykey] for r in matched)
+    ymax=max(r[ykey] for r in matched)
+    if xmax<=xmin:xmax=xmin+1
+    if ymax<=ymin:ymax=ymin+1
+    dx=(xmax-xmin)*.08
+    dy=(ymax-ymin)*.08
+    xmin,xmax=xmin-dx,xmax+dx
+    ymin,ymax=ymin-dy,ymax+dy
+    X=lambda x:112+735*(x-xmin)/(xmax-xmin)
+    Y=lambda y:412-325*(y-ymin)/(ymax-ymin)
+    body=['<line x1="112" y1="412" x2="847" y2="412" stroke="#64748b"/>',
+          '<line x1="112" y1="87" x2="112" y2="412" stroke="#64748b"/>',
+          '<text x="490" y="464" text-anchor="middle">Controlled trial metric</text>',
+          '<text x="23" y="250" text-anchor="middle" transform="rotate(-90 23 250)">League metric (vs students)</text>',
+          f'<text x="875" y="99">Paired students: {len(matched)}</text>']
+    for i in range(5):
+        yy=412-325*i/4
+        xx=112+735*i/4
+        body.extend([f'<line x1="112" y1="{yy:.1f}" x2="847" y2="{yy:.1f}" stroke="#29364b"/>',
+                     f'<text x="101" y="{yy+4:.1f}" text-anchor="end">{ymin+(ymax-ymin)*i/4:.2f}</text>',
+                     f'<line x1="{xx:.1f}" y1="87" x2="{xx:.1f}" y2="412" stroke="#29364b"/>',
+                     f'<text x="{xx:.1f}" y="435" text-anchor="middle">{xmin+(xmax-xmin)*i/4:.2f}</text>'])
+    for r in matched:
+        own=r["team"]==champion
+        c="#fbbf24" if own else "#60a5fa"
+        xx,yy=X(r[xkey]),Y(r[ykey])
+        body.append(f'<circle cx="{xx:.1f}" cy="{yy:.1f}" r="{8 if own else 4.5}" '
+                    f'fill="{c}" opacity=".9"><title>{escape(r["team"])}: '
+                    f'trial={r[xkey]:.2f}, league={r[ykey]:.2f}, '
+                    f'league games={r["league_games"]}</title></circle>')
+        if own:
+            body.append(f'<text x="{xx+11:.1f}" y="{yy-11:.1f}" fill="#fbbf24">'
+                        f'{escape(r["team"].split("-",1)[-1])}</text>')
+    chart(path,title,body,490)
+
+def rho_chart(path,results):
+    # Spearman may be negative. Bars run outward from zero in either direction.
+    w,h=1000,380
+    center=490
+    max_width=330
+    body=['<line x1="490" y1="76" x2="490" y2="326" stroke="#64748b"/>',
+          '<text x="490" y="355" text-anchor="middle">Spearman correlation (trial metric vs league metric)</text>']
+    for i,item in enumerate(results):
+        yy=100+i*62
+        rho=item["rho"]
+        body.append(f'<text x="18" y="{yy+17}" fill="#cbd5e1">'
+                    f'{escape(item["metric"][:31])} (n={item["n"]})</text>')
+        if rho is None:continue
+        width=abs(rho)*max_width
+        x=center if rho>=0 else center-width
+        body.append(f'<rect x="{x:.1f}" y="{yy}" width="{width:.1f}" height="23" rx="3" '
+                    f'fill="{ "#34d399" if rho>=0 else "#f472b6"}"/>')
+        tx=(center+width+9 if rho>=0 else center-width-9)
+        align="start" if rho>=0 else "end"
+        body.append(f'<text x="{tx:.1f}" y="{yy+17}" text-anchor="{align}" '
+                    f'fill="#f8fafc">{rho:+.3f}</text>')
+    chart(path,"How similarly do students perform in the two environments?",body,h)
+
+def build(data_dir):
+    data,quality=prepare(data_dir)
+    latest=quality["current_season"]
+    if not latest:
+        raise RuntimeError("No official season to compare")
+    paired,results=correlations(data["joined"],latest,division=1,min_league=3)
+    champion=next((r["team"] for r in sorted(paired,key=lambda r:
+                    r["official_rank"] if r["official_rank"] is not None else 99999)),None)
+    charts=data_dir/"reports"/"charts"
+    charts.mkdir(parents=True,exist_ok=True)
+    for key,label,short in PAIRS:
+        points_chart(charts/("joint_"+short+".svg"),paired,key,
+                     "Same student: "+label+" in two environments",champion)
+    rho_chart(charts/"joint_correlations.svg",results)
+    modes=("league","trial")
+    official=[r for r in data["joined"] if r["season"]==latest
+              and r["official_division"]==1]
+    official.sort(key=lambda r:r["official_rank"] if r["official_rank"] is not None else 999)
+    qa=quality
+    output=data_dir/"reports"
+    lines=[
+        "# Snake26: JOINED league + trials study","",
+        "Generated UTC: "+datetime.now(timezone.utc).isoformat(timespec="seconds"),"",
+        f"**Latest official season:** {latest}. This report treats competitive league",
+        "matches and controlled on-arrival trials as **two separate datasets**",
+        "and joins them at the **same season + same student**. The published",
+        "end-of-season code SHA, when known, is attached for auditing, but is",
+        "**not proof that every match in that season used that exact code version**.",
+        "",
+        "## 1. Data provenance and cleaning","",
+        "| Separate data source | Cataloged matches | Full replays | Unique replay hashes |",
+        "|---|---:|---:|---:|"]
+    for kind in modes:
+        lines.append(f"| {kind.title()} | {qa['catalog'].get(kind,0):,} | "
+                     f"{qa['replays'].get(kind,0):,} | {qa['unique'].get(kind,0):,} |")
+    lines += [
+        "",f"**Historical student-season rows:** league {qa['league_team_seasons']:,},",
+        f"trials {qa['trial_team_seasons']:,}, union {qa['joined_rows']:,}.",
+        f"**Current season paired students (at least 2 student-opponent league games",
+        f"plus all 3 trials): {qa['latest_season_paired']}**.",
+        f"**Division 1 study sample (at least 3 league games + all trials): {len(paired)}**.",
+        "",
+        "Important: a cataloged game is not automatically a recorded full replay.",
+        "We do not estimate actions, decisions, deaths or attack policy from aggregate",
+        "placements. Identical SHA replay payloads are counted separately in catalog",
+        "coverage but not as independent unique recordings.",
+        f"**Possible mechanics/data inconsistencies** (final length larger than",
+        f"5 + 5 times apples) among student-game observations: {qa['bad_retention']}.",
+        "Investigate any nonzero cases before interpreting reset behavior.",
+        "",
+        "## 2. Correlations between SAME students in both environments","",
+        "![Joined correlations](charts/joint_correlations.svg)","",
+        "| Paired measurement | Division 1 students | Spearman rho |",
+        "|---|---:|---:|"]
+    for row in results:
+        lines.append(f"| {row['metric']} | {row['n']} | {printable(row['rho'],3)} |")
+    lines+=["",
+        "Correlations are calculated only among students from **the same division",
+        "and season**, to avoid comparing ranks of different divisions. These are",
+        "within-student comparisons across distinct conditions—not claims that",
+        "one environment causes performance in the other.",
+        "",
+        "## 3. Compare actual outcomes side by side","",
+        "![Same students: food acquisition](charts/joint_apples.svg)","",
+        "![Same students: length retained](charts/joint_length.svg)","",
+        "![Same students: kills](charts/joint_kills.svg)","",
+        "![Same students: retention ratio](charts/joint_retention.svg)","",
+        "Every dot represents one matched student-season. The x-axis is the",
+        "three-trial average; y-axis is the actual league average against",
+        "at least two student opponents. Trial seeds are fixed, while league",
+        "match opponents, seats and seeds vary by schedule.",
+        "",
+        "## 4. Current Division 1: actual joined rows","",
+        "| Rank | Student | League games | League wins % | League apples | League retained | League kills | Trial apples | Trial retained | Trial kills | Replay coverage L/T |",
+        "|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|"]
+    for r in official:
+        win=(100*r["league_win_rate"] if r["league_win_rate"] is not None else None)
+        lines.append(
+            f"| {r['official_rank']} | {r['team']} | {r['league_games']} | "
+            f"{printable(win,1)} | {printable(r['league_mean_food'],1)} | "
+            f"{printable(r['league_mean_retention'],2)} | {printable(r['league_mean_kills'],2)} | "
+            f"{printable(r['trial_mean_food'],1)} | {printable(r['trial_mean_retention'],2)} | "
+            f"{printable(r['trial_mean_kills'],2)} | {r['league_replays']}/{r['trial_replays']} |")
+    lines += [
+        "",
+        "## 5. Reproducible joined data exports","",
+        "- [League team-season summaries](../derived/league_team_seasons.csv) —",
+        "  the real competition outcomes, including human-opponent counts.",
+        "- [Trial team-season summaries](../derived/trial_team_seasons.csv) —",
+        "  three controlled benchmark setups, kept separate.",
+        "- [Joined student-season dataset](../derived/joined_team_seasons.csv) —",
+        "  one row per student and season; missing sides are **missing**, not zero.",
+        "- [Data validation summary](../derived/quality.json) —",
+        "  replay coverage, SHA deduplication and sample sizes.",
+        "",
+        "## 6. What needs further evidence","",
+        "1. Obtain full league replays of top Division 1 students, including both",
+        "   winners and losers, and map their exact turns/deaths/food contests.",
+        "2. Run the **same replay-derived definitions** separately on league and",
+        "   on-arrival data: food pursuit, death risk, contest pressure and mobility.",
+        "3. Compare like-for-like length, turn phase, opponent skill and version.",
+        "4. Group uncertainty by complete match/season, not thousands of turns.",
+        "5. Interpret only held-out, version-aware patterns before changing our snake.",
+        "",
+        "This joined report establishes observational associations, not an optimal",
+        "aggression/safety formula. No competition snake code has been modified.",""
+    ]
+    dest=output/"joint_analysis.md"
+    dest.write_text("\n".join(lines),encoding="utf-8")
+    home=[
+        "# Snake26 Research — Start here","",
+        "The **canonical research entry point** is [Joined League + Trials](joint_analysis.md).",
+        "Read this before interpreting the older single-environment reports.",
+        "",
+        "## Source-of-truth datasets","",
+        "- [League outcomes](../derived/league_team_seasons.csv)",
+        "- [Trial outcomes](../derived/trial_team_seasons.csv)",
+        "- [Joined per student-season outcomes](../derived/joined_team_seasons.csv)",
+        "- [Coverage, completeness and quality checks](../derived/quality.json)","",
+        "## Supporting studies — with explicitly limited scopes","",
+        "- [Official league versus fixed-seed rankings](league_vs_trials.md):",
+        "  standings/outcomes, not a replay-derived behavioral model.",
+        "- [League food versus growth retained](league_sweet_spot.md):",
+        "  correlation, not proven aggression or optimal policy.",
+        "- [On-arrival food contests](food_races.md):",
+        "  primarily student-versus-built-in benchmark observations.",
+        "- [On-arrival underdog apple case studies](underdog_study.md):",
+        "  benchmark-specific, NOT evidence about peers in league matches.",
+        "- [Historical replay behavioral proxies](strategy_lab.md):",
+        "  cross-mode exploratory snapshots; treat aggregates as preliminary.",
+        "- [Replay growth/death exploratory plots](data_science.md):",
+        "  mixed-mode student exposure; see mode separation warnings.",
+        "",
+        "## Operating rules","",
+        "Research reports are generated from the repository's SQLite catalogs",
+        "and archived replay frames by one scheduled GitHub Actions collector.",
+        "Research code changes alone do not trigger data downloads. A separate",
+        "read-only validation workflow tests new analysis code.",
+        "All files are private repository research artifacts; no private bot",
+        "executables or source code are extracted. No Java snake changes yet.",""
+    ]
+    (output/"README.md").write_text("\n".join(home),encoding="utf-8")
+    return dict(season=latest,paired_division1=len(paired),
+                comparison={r["metric"]:r["rho"] for r in results},
+                reports=[str(dest),str(output/"README.md")])
+
+def main():
+    p=argparse.ArgumentParser()
+    p.add_argument("--data-dir",type=Path,default=Path("data"))
+    args=p.parse_args()
+    print(json.dumps(build(args.data_dir),indent=2))
+
+if __name__=="__main__":
+    main()
