@@ -11,9 +11,6 @@ on:
       - 'catalog_probe.py'
       - 'trial_leaderboard.py'
       - 'test_trial_leaderboard.py'
-      - 'research/**'
-      - 'test_research_dashboard.py'
-      - 'test_food_races.py'
       - '.github/workflows/collect.yml'
   schedule:
     - cron: '15 * * * *'
@@ -64,6 +61,8 @@ jobs:
         run: python -m research.dashboard --data-dir data --max-files 250
       - name: Analyze confirmed food races and publish charts
         run: python -m research.food_races --data-dir data --max-files 250
+      - name: Analyze underdog apple decisions and spatial paths
+        run: python -m research.underdog_study --data-dir data --max-files 250
       - name: Identify arrival and benchmark match types
         run: python catalog_probe.py || echo 'Catalog discovery temporarily unavailable'
       - name: Commit updated database and compressed replays
