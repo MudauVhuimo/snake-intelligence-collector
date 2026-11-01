@@ -677,6 +677,45 @@ def collect(client: Client, db: sqlite3.Connection, root: Path, max_replays: int
             print(f"Unable to index historical season {name}: {type(exc).__name__}: {exc}")
     priority = top_slugs(season_data) | promising_trial_slugs(db, current)
     chosen = queued_matches(db, root, seasons, priority, max_replays)
+    # Publish exactly which types of replay were chosen, not only the number.
+    # This guards against silently drifting back to benchmark-only analysis.
+    league_count = 0
+    trial_count = 0
+    sampling_lines = [
+        "# Research replay sampling plan", "",
+        f"Generated UTC: {utcnow()}", "",
+        "Selection policy: target 60% league and 40% on-arrival trials",
+        "when enough novel candidates are available. Prefer Division 1 and",
+        "games containing several student submissions; preserve historical coverage.",
+        "",
+        "| Season | Replay | Kind | Division | Student opponents |",
+        "|---|---|---|---:|---:|"
+    ]
+    for season_name, replay_name in chosen:
+        record = db.execute(
+            "SELECT kind,division FROM matches WHERE season_name=? AND replay_name=?",
+            (season_name,replay_name)).fetchone()
+        kind, division = record if record else ("unknown",None)
+        if kind == "trial":
+            trial_count += 1
+        else:
+            league_count += 1
+        humans = db.execute(
+            "SELECT COUNT(*) FROM participants WHERE season_name=? AND replay_name=? "
+            "AND team_slug NOT LIKE '~%'",
+            (season_name,replay_name)).fetchone()[0]
+        sampling_lines.append(
+            f"| {season_name} | {replay_name} | {kind} | "
+            f"{division if division is not None else '—'} | {humans} |")
+    sampling_lines.extend([
+        "", f"Selected league-like games: **{league_count}**.",
+        f"Selected on-arrival trials: **{trial_count}**.",
+        "", "Catalog metadata does not reveal private bot strategy; both game",
+        "environments need actual replay analysis, with duplicates removed.",""
+    ])
+    sampling_path = root / "reports" / "replay_sampling.md"
+    sampling_path.parent.mkdir(parents=True,exist_ok=True)
+    sampling_path.write_text("\n".join(sampling_lines),encoding="utf-8")
     completed = 0
     for name, replay in chosen:
         try:
