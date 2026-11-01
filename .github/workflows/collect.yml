@@ -1,17 +1,6 @@
 name: Collect Snake26 intelligence
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'collector.py'
-      - 'test_collector.py'
-      - 'strategy_lab.py'
-      - 'test_strategy_lab.py'
-      - 'catalog_probe.py'
-      - 'trial_leaderboard.py'
-      - 'test_trial_leaderboard.py'
-      - '.github/workflows/collect.yml'
   schedule:
     - cron: '15 * * * *'
   workflow_dispatch:
@@ -50,7 +39,7 @@ jobs:
         run: python -m unittest discover -s . -p 'test*.py' -v
       - name: Collect metadata and selected replays
         env:
-          MAX_REPLAYS: ${{ github.event_name == 'push' && '24' || inputs.max_replays || '10' }}
+          MAX_REPLAYS: ${{ inputs.max_replays || '10' }}
           LOOKBACK: ${{ inputs.lookback_seasons || '12' }}
         run: python collector.py --max-replays "$MAX_REPLAYS" --lookback-seasons "$LOOKBACK"
       - name: Compare all on-arrival benchmark trials
@@ -69,8 +58,6 @@ jobs:
         run: python -m research.underdog_study --data-dir data --max-files 250
       - name: Analyze snapshot path reversal with clustered bootstrap
         run: python -m research.path_geometry --data-dir data
-      - name: Identify arrival and benchmark match types
-        run: python catalog_probe.py || echo 'Catalog discovery temporarily unavailable'
       - name: Commit updated database and compressed replays
         run: |
           git config user.name 'github-actions[bot]'
