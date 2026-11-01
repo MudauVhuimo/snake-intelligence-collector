@@ -235,16 +235,18 @@ def ingest_games(db: sqlite3.Connection, name: str, catalog: dict[str, Any]) -> 
         if not replay:
             continue
         try:
-            replay = safe_name(replay)
+            replay = safe_replay_name(replay)
         except ValueError:
             continue
-        db.execute("""INSERT INTO matches(season_name,replay_name,round_num,division,seed,map_id,turns,winner,kept)
-            VALUES (?,?,?,?,?,?,?,?,?) ON CONFLICT(season_name,replay_name) DO UPDATE SET
+        db.execute("""INSERT INTO matches(season_name,replay_name,round_num,division,seed,map_id,turns,winner,kept,kind,label)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(season_name,replay_name) DO UPDATE SET
             round_num=excluded.round_num,division=excluded.division,seed=excluded.seed,
-            map_id=excluded.map_id,turns=excluded.turns,winner=excluded.winner,kept=excluded.kept""",
+            map_id=excluded.map_id,turns=excluded.turns,winner=excluded.winner,
+            kept=excluded.kept,kind=excluded.kind,label=excluded.label""",
                    (name, replay, match.get("round"), match.get("division"), match.get("seed"),
                     match.get("map_id"), match.get("turns"), match.get("winner"),
-                    int(match.get("kept") is not False)))
+                    int(match.get("kept") is not False), match.get("kind") or "unknown",
+                    match.get("label")))
         for person in match.get("snakes", []):
             slug = person.get("name")
             if not slug:
@@ -258,6 +260,7 @@ def ingest_games(db: sqlite3.Connection, name: str, catalog: dict[str, Any]) -> 
                        (name, replay, slug, None, person.get("placement"), person.get("length"),
                         person.get("food"), person.get("kills"), person.get("turns")))
         count += 1
+    db.execute("UPDATE seasons SET catalog_version=2 WHERE name=?", (name,))
     db.commit()
     return count
 
@@ -514,7 +517,8 @@ def collect(client: Client, db: sqlite3.Connection, root: Path, max_replays: int
         raise ValueError("/api/season does not match /api/site season; try next run")
     ingest_latest_season(db, season_data)
     for name in seasons:
-        if name != current and db.execute("SELECT 1 FROM matches WHERE season_name=? LIMIT 1", (name,)).fetchone():
+        version = db.execute("SELECT catalog_version FROM seasons WHERE name=?", (name,)).fetchone()
+        if name != current and version and version[0] >= 2:
             continue
         try:
             catalog = client.get_json("games", {"season": name})
