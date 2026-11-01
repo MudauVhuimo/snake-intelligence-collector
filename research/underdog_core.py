@@ -22,6 +22,43 @@ def head_pos(snake):
     p = snake["body"][0]
     return (int(p["x"]), int(p["y"]))
 
+def static_path_length(frame, sid, target, w, h):
+    """Shortest toroidal path if every currently occupied body cell stays blocked.
+
+    This is a snapshot obstruction proxy, NOT an actual time-dependent safe route.
+    Tail cells may vacate, and opposing heads move simultaneously.
+    """
+    from collections import deque
+    who = alive_snake(frame, sid)
+    if not who:
+        return None
+    start = head_pos(who)
+    if start == target:
+        return 0
+    occupied = set()
+    for snake in frame.get("snakes", []):
+        if snake.get("alive"):
+            for p in snake.get("body") or []:
+                occupied.add((int(p["x"]), int(p["y"])))
+    for p in frame.get("obstacles") or []:
+        occupied.add((int(p["x"]), int(p["y"])))
+    if target in occupied:
+        return None
+    queue = deque([(start, 0)])
+    visited = {start}
+    while queue:
+        (x,y),steps = queue.popleft()
+        for neighbour in (((x+1)%w,y),((x-1)%w,y),
+                          (x,(y+1)%h),(x,(y-1)%h)):
+            if neighbour == target:
+                return steps + 1
+            if neighbour in occupied or neighbour in visited:
+                continue
+            visited.add(neighbour)
+            queue.append((neighbour,steps+1))
+    return None
+
+
 def start_case(frame, pos, w, h, replay_name):
     candidates = heads(frame)
     students = sorted((dist(p, pos, w, h), sid, name) for sid, (name, p) in candidates.items()
@@ -39,7 +76,9 @@ def start_case(frame, pos, w, h, replay_name):
                 student_length=len(alive_snake(frame, student_id)["body"]),
                 bench_length=len(alive_snake(frame, bench_id)["body"]),
                 trace=[], student_death=False, bench_death=False,
-                student_respawn=False, bench_respawn=False)
+                student_respawn=False, bench_respawn=False,
+                bench_other_ate=0, student_other_ate=0,
+                student_static=None, bench_static=None)
 
 def sample(case, frame, w, h):
     t = frame.get("turn")
@@ -60,6 +99,11 @@ def death_or_respawn(case, frame):
         if kind == "died":
             if sid == case["student_id"]: case["student_death"] = True
             if sid == case["bench_id"]: case["bench_death"] = True
+        elif kind == "ate":
+            current = heads(frame).get(sid)
+            if current and current[1] != case["pos"]:
+                if sid == case["student_id"]: case["student_other_ate"] += 1
+                if sid == case["bench_id"]: case["bench_other_ate"] += 1
         elif kind == "respawned":
             if sid == case["student_id"]: case["student_respawn"] = True
             if sid == case["bench_id"]: case["bench_respawn"] = True
@@ -80,6 +124,7 @@ def extract(replay, replay_name):
     if w < 3 or h < 3 or not isinstance(frames, list) or len(frames) < 2:
         raise ValueError("Invalid replay")
     active, rows, qc = {}, [], Counter()
+    frame_lookup = {f.get("turn"):f for f in frames if isinstance(f.get("turn"),int)}
     for before, after in zip(frames, frames[1:]):
         turn = before.get("turn")
         if not isinstance(turn, int) or after.get("turn") != turn + 1:
@@ -117,6 +162,13 @@ def extract(replay, replay_name):
             case["bench_p5"] = progress_at(case, "bench")
             case["student_p10"] = progress_at(case, "student", 10)
             case["bench_p10"] = progress_at(case, "bench", 10)
+            if case["advantage"] >= 3:
+                start_frame = frame_lookup.get(case["start_turn"])
+                if start_frame is not None:
+                    case["student_static"] = static_path_length(
+                        start_frame,case["student_id"],pos,w,h)
+                    case["bench_static"] = static_path_length(
+                        start_frame,case["bench_id"],pos,w,h)
             case["study"] = ("benchmark_closer" if case["advantage"] >= 3
                              else "student_closer" if case["advantage"] <= -3
                              else "near_tie")
