@@ -6,6 +6,9 @@ on:
     paths:
       - 'collector.py'
       - 'test_collector.py'
+      - 'strategy_lab.py'
+      - 'test_strategy_lab.py'
+      - 'catalog_probe.py'
       - '.github/workflows/collect.yml'
   schedule:
     - cron: '15 * * * *'
@@ -44,9 +47,13 @@ jobs:
         run: python -m unittest discover -s . -p 'test*.py' -v
       - name: Collect metadata and selected replays
         env:
-          MAX_REPLAYS: ${{ inputs.max_replays || '6' }}
-          LOOKBACK: ${{ inputs.lookback_seasons || '2' }}
+          MAX_REPLAYS: ${{ github.event_name == 'push' && '24' || inputs.max_replays || '6' }}
+          LOOKBACK: ${{ inputs.lookback_seasons || '12' }}
         run: python collector.py --max-replays "$MAX_REPLAYS" --lookback-seasons "$LOOKBACK"
+      - name: Build replay strategy laboratory report
+        run: python strategy_lab.py --stride 25
+      - name: Identify arrival and benchmark match types
+        run: python catalog_probe.py || echo 'Catalog discovery temporarily unavailable'
       - name: Commit updated database and compressed replays
         run: |
           git config user.name 'github-actions[bot]'
