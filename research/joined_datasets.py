@@ -21,7 +21,7 @@ from .league_core import spearman, current_season
 SUITES = ("910000", "911000", "912000")
 METRICS = (
     ("mean_food", "mean_food", "Apples per game"),
-    ("mean_final_length", "mean_final_length", "Final body length"),
+    ("mean_length", "mean_length", "Final body length"),
     ("mean_kills", "mean_kills", "Kills per game"),
     ("mean_retention", "mean_retention", "Retained growth / expected no-reset growth"),
 )
