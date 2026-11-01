@@ -6,6 +6,7 @@ from xml.etree import ElementTree
 from collector import connect,ingest_latest_season,ingest_games
 from research.league_core import build_data,spearman
 from research.league_comparison import build
+from research.league_sweet_spot import build as build_sweet_spot
 
 S="2026-11-01-205859-season"
 LEADER="league-champion"
@@ -90,6 +91,15 @@ class Tests(unittest.TestCase):
         self.assertIn("League champion",doc)
         self.assertIn("trial-champion",doc)
         self.assertIn("built-in filler",doc)
+
+    def test_food_retention_research_is_descriptive(self):
+        result=build_sweet_spot(self.data,min_matches=2)
+        self.assertEqual(result["leader"],LEADER)
+        self.assertEqual(result["students"],3)
+        ElementTree.parse(self.data/"reports"/"charts"/"league_food_retention.svg")
+        doc=(self.data/"reports"/"league_sweet_spot.md").read_text()
+        self.assertIn("cannot yet declare a sweet spot",doc)
+        self.assertIn("league-champion",doc)
 
     def test_spearman_handles_ties(self):
         self.assertEqual(spearman([1,2,3,4],[1,2,3,4]),1)
