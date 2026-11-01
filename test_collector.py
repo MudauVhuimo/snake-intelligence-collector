@@ -9,7 +9,7 @@ from unittest.mock import patch
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from collector import (connect, ingest_latest_season, ingest_games, install_replay,
-                       analyze_replay, direction, collect, replay_location, safe_name, queued_matches)
+                       analyze_replay, direction, collect, replay_location, safe_name, safe_replay_name, queued_matches)
 
 S = "2026-11-01-195859-season"
 A, B = "top-snake", "other-snake"
@@ -93,6 +93,27 @@ class CollectorTests(unittest.TestCase):
     def tearDown(self):
         self.db.close()
         self.tmp.cleanup()
+
+    def test_nested_trial_replay_paths_and_catalog(self):
+        trial="trials/top-snake/trial-912000.rep"
+        self.assertEqual(safe_replay_name(trial),trial)
+        for bad in ("../escape.rep","trials/../evil.rep","/trials/x.rep",
+                    "trials//x.rep","trials/secret\\x.rep","trials/x.json"):
+            with self.assertRaises(ValueError):
+                safe_replay_name(bad)
+        self.assertEqual(replay_location(self.root,S,trial),
+                         self.root/"replays"/S/"trials"/"top-snake"/"trial-912000.rep.gz")
+        catalog={"season":S,"games":[{
+            "replay":trial,"kind":"trial","label":"top-snake on arrival",
+            "round":None,"division":None,"seed":912000,"kept":True,
+            "snakes":[{"name":A,"placement":1,"length":25,"food":4,"kills":0,"turns":2000},
+                      {"name":"~gauntlet_1","placement":2,"length":5,"food":0,"kills":0,"turns":2000}]}]}
+        ingest_games(self.db,S,catalog)
+        data=self.db.execute("SELECT kind,label FROM matches WHERE replay_name=?",(trial,)).fetchone()
+        self.assertEqual(data,("trial","top-snake on arrival"))
+        chosen=queued_matches(self.db,self.root,[S],{A},3)
+        self.assertEqual(chosen,[(S,trial)])
+        self.assertEqual(self.db.execute("SELECT catalog_version FROM seasons WHERE name=?",(S,)).fetchone()[0],2)
 
     def test_validation_and_torus(self):
         for name in ("../secret", "foo/bar", "..", "x?z"):
