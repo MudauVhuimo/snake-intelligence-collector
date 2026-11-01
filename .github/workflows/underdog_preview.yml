@@ -18,17 +18,21 @@ jobs:
       - name: Checkout archived public replays
         uses: actions/checkout@v4
       - name: Test turn-by-turn underdog analysis
-        run: python -m unittest -v test_underdog_study
+        run: python -m unittest -v test_underdog_study test_path_geometry
       - name: Analyze real archived apple races
         run: |
           python -m research.underdog_study --data-dir data --max-files 250
           sed -n '1,125p' data/reports/underdog_study.md
+          python -m research.path_geometry --data-dir data
+          sed -n '1,100p' data/reports/path_geometry.md
       - name: Archive cases, figures, and report
         uses: actions/upload-artifact@v4
         with:
           name: snake26-underdog-investigation
           path: |
             data/reports/underdog_study.md
+            data/reports/path_geometry.md
+            data/reports/charts/static_path_reversal.svg
             data/reports/underdog_episodes.csv
             data/reports/underdog_examples.json
             data/reports/charts/underdog_*.svg
