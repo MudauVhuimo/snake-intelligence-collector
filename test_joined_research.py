@@ -35,7 +35,7 @@ class JoinedResearchTests(unittest.TestCase):
             snakes=[]
             for i,n in enumerate(NAMES[:4]):
                 snakes.append(dict(name=n,placement=i+1,
-                    length=55+(3-i)*10+round_no*5,
+                    length=50+(3-i)*8+round_no*5,
                     food=10+(3-i)*2+round_no,kills=3-i,
                     turns=2000))
             games.append(dict(replay=f"game-7{round_no}000.rep",kind="league",
