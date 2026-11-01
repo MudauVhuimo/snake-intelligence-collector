@@ -36,6 +36,15 @@ def summarize(rows):
                 paired5=len(paired),
                 student_progress_mean=mean_or_none([x["student_p5"] for x in paired]),
                 bench_progress_mean=mean_or_none([x["bench_p5"] for x in paired]),
+                bench_other_ate_count=sum(x["bench_other_ate"]>0 for x in batch),
+                student_other_ate_count=sum(x["student_other_ate"]>0 for x in batch),
+                bench_static_blocked=sum(x["bench_static"] is None for x in batch if x["study"]=="benchmark_closer"),
+                student_static_blocked=sum(x["student_static"] is None for x in batch if x["study"]=="benchmark_closer"),
+                both_static_reachable=sum(x["bench_static"] is not None and x["student_static"] is not None
+                                          for x in batch if x["study"]=="benchmark_closer"),
+                student_shorter_static=sum(x["bench_static"] is not None and x["student_static"] is not None
+                                           and x["student_static"]<x["bench_static"]
+                                           for x in batch if x["study"]=="benchmark_closer"),
                 student_approach_share=round(100*sum(x["student_p5"]>0 for x in paired)/len(paired),1) if paired else None,
                 bench_approach_share=round(100*sum(x["bench_p5"]>0 for x in paired)/len(paired),1) if paired else None)
     return summary
@@ -64,7 +73,8 @@ def write_csv(rows,path):
     names=("path","start_turn","pos_x","pos_y","lag","winner","winner_name",
            "student_name","bench_name","student_start","bench_start","advantage",
            "study","student_p5","bench_p5","student_p10","bench_p10",
-           "student_death","bench_death","student_length","bench_length")
+           "student_death","bench_death","student_length","bench_length",
+           "student_other_ate","bench_other_ate","student_static","bench_static")
     with path.open("w",newline="",encoding="utf-8") as f:
         writer=csv.DictWriter(f,fieldnames=names)
         writer.writeheader()
@@ -106,7 +116,10 @@ def build(data_dir: Path,max_files=250):
                              student=r["student_name"],nearest_benchmark=r["bench_name"],
                              initial_student_distance=r["student_start"],
                              initial_benchmark_distance=r["bench_start"],
-                             winner=r["winner_name"],duration=r["lag"],trace=r["trace"]))
+                             winner=r["winner_name"],duration=r["lag"],
+                             bench_other_ate=r["bench_other_ate"],
+                             student_static=r["student_static"],
+                             benchmark_static=r["bench_static"],trace=r["trace"]))
     (folder/"underdog_examples.json").write_text(json.dumps(examples,indent=2)+"\n",encoding="utf-8")
     our=results[("benchmark_closer","Student")]
     their=results[("benchmark_closer","Benchmark")]
@@ -138,6 +151,11 @@ def build(data_dir: Path,max_files=250):
       f"- Verified captures: **{our['count']}**; benchmark wins while initially closer: **{their['count']}**.",
       f"- In student wins, initially nearest benchmark died before capture: **{our['nearest_benchmark_died']}**.",
       f"- In student wins, student died before capture: **{our['student_died']}**.",
+      f"- In student wins, nearest benchmark consumed another apple before this capture: **{our['bench_other_ate_count']}**.",
+      f"- In student wins, benchmark had NO static path at first sight (all occupied bodies frozen): **{our['bench_static_blocked']}**.",
+      f"- In student wins, student had no static path under the same approximation: **{our['student_static_blocked']}**.",
+      f"- In student wins, both static paths existed: **{our['both_static_reachable']}**.",
+      f"- Of those, the student's static path was SHORTER despite longer Manhattan distance: **{our['student_shorter_static']}**.",
       f"- Median apple lifetime, student wins: **{our['lag_median']} turns**; benchmark wins: **{their['lag_median']} turns**.","",
       "![Food capture times](charts/underdog_lag.svg)","",
       "## First five turns: movement toward apple","",
@@ -168,9 +186,20 @@ def build(data_dir: Path,max_files=250):
       "unable to reach the apple along a safe path. Other opponents can affect both.",
       "Next: calculate **actual route efficiency and obstacle-aware distance at first sight**;",
       "compare traced examples, then produce spatial board/path visualizations.",
+      "Static path is a conservative snapshot BFS with all snake bodies frozen in place;",
+      "tails can vacate, so an unreachable static path does NOT mean a truly impossible route.",
+      "A benchmark eating another apple is observed diversion, not proof of its objective.",
       "No competition bot has been modified.",""])
     dest=folder/"underdog_study.md"
     dest.write_text("\n".join(lines),encoding="utf-8")
+    from .underdog_case_chart import build as build_case_charts
+    n_charts = build_case_charts(data_dir)
+    if n_charts:
+        with dest.open("a",encoding="utf-8") as f:
+            f.write("\n## Observed spatial paths and distance histories\n\n")
+            for index in range(1,n_charts+1):
+                f.write(f"![Recorded underdog race {index}](charts/underdog_case_{index}.svg)\n\n")
+            f.write("Paths follow actual recorded heads; wraparound edges are not drawn as teleports.\n")
     return dict(unique=q["unique_trial_replays"],eligible=q["eligible_episodes"],
                 confirmed=q["matched"],underdog_student_wins=our["count"],
                 closest_benchmark_died=our["nearest_benchmark_died"],
