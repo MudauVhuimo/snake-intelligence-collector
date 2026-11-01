@@ -152,7 +152,9 @@ def analyze(root: Path, top: set[str] | None=None, every: int=25, limit: int=0) 
         top={x[0] for x in db.execute(
             "SELECT team_slug FROM standings WHERE season_name=? AND division=1 AND division_rank<=10",
             (latest[0],))} if latest else set()
-    files=sorted((root/"replays").glob("*/*.rep.gz"),reverse=True)
+    files=sorted((root/"replays").rglob("*.rep.gz"),reverse=True)
+    hashes={(s,n):sha for s,n,sha in db.execute(
+        "SELECT season_name,replay_name,replay_sha256 FROM matches WHERE replay_sha256 IS NOT NULL")}
     if limit:
         files=files[:limit]
     teams=defaultdict(Counter)
@@ -161,7 +163,17 @@ def analyze(root: Path, top: set[str] | None=None, every: int=25, limit: int=0) 
     cases=[]
     processed=0
     failed=0
+    duplicates=0
+    seen_hashes=set()
+    processed_keys=[]
     for path in files:
+        rel=path.relative_to(root/"replays")
+        season=rel.parts[0]
+        replay_name="/".join(rel.parts[1:])[:-3]
+        sha=hashes.get((season,replay_name))
+        if sha and sha in seen_hashes:
+            duplicates+=1
+            continue
         try:
             with gzip.open(path,"rt",encoding="utf-8") as fh:
                 replay=json.load(fh)
@@ -171,6 +183,9 @@ def analyze(root: Path, top: set[str] | None=None, every: int=25, limit: int=0) 
             print(f"Skipping {path}: {type(err).__name__}: {err}")
             continue
         processed+=1
+        processed_keys.append((season,replay_name))
+        if sha:
+            seen_hashes.add(sha)
         for name,obs in summary.items():
             teams[name].update(obs)
             matches[name]+=1
@@ -178,29 +193,31 @@ def analyze(root: Path, top: set[str] | None=None, every: int=25, limit: int=0) 
         for e in examples:
             if len(cases)>=100:
                 break
-            e["season"]=path.parent.name
-            e["replay"]=path.name[:-3]
+            e["season"]=season
+            e["replay"]=replay_name
             cases.append(e)
     death_causes=defaultdict(Counter)
-    for slug,cause,count in db.execute(
-        """SELECT p.team_slug, COALESCE(e.cause,'unspecified'), COUNT(*)
-           FROM events e JOIN participants p
-             ON p.season_name=e.season_name AND p.replay_name=e.replay_name
-             AND p.slot=e.snake_slot
-           WHERE e.kind='died'
-           GROUP BY p.team_slug, COALESCE(e.cause,'unspecified')"""
-    ).fetchall():
-        death_causes[slug][cause]+=count
+    for season,replay in processed_keys:
+        for slug,cause,count in db.execute(
+            """SELECT p.team_slug, COALESCE(e.cause,'unspecified'), COUNT(*)
+               FROM events e JOIN participants p
+                 ON p.season_name=e.season_name AND p.replay_name=e.replay_name
+                 AND p.slot=e.snake_slot
+               WHERE e.kind='died' AND e.season_name=? AND e.replay_name=?
+               GROUP BY p.team_slug, COALESCE(e.cause,'unspecified')""",
+            (season,replay)).fetchall():
+            death_causes[slug][cause]+=count
     db.close()
     return {"teams":teams,"groups":group,"matches":matches,"cases":cases,
-            "processed":processed,"failed":failed,"top":top,"stride":every,
+            "processed":processed,"failed":failed,"duplicates":duplicates,
+            "top":top,"stride":every,
             "death_causes":death_causes}
 
 def markdown(results: dict) -> str:
     teams=results["teams"]; groups=results["groups"]; matches=results["matches"]
     lines=["# Snake26 strategy laboratory","",
            f"Updated UTC: {utcnow()}",
-           f"Replays analyzed: **{results['processed']}** (unreadable: {results['failed']})",
+           f"Unique replays analyzed: **{results['processed']}** (duplicate hashes skipped: {results['duplicates']}; unreadable: {results['failed']})",
            f"Sampling: every **{results['stride']}th** turn per match, not independent observations.","",
            "## What the data can and cannot tell us","",
            "This is **behavioral observation**, not a live match simulator. Candidate moves use a conservative **static occupancy** approximation: snake tails may vacate, opponents move simultaneously, and outcomes could change. Therefore percentages are descriptive proxies, not guaranteed-safe decisions or win probabilities.","",
