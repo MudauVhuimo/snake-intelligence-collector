@@ -9,7 +9,8 @@ This private repository collects publicly accessible Wits Snake26 match catalogs
 1. **[Research dashboard and report index](data/reports/README.md)** — the entry point for all studies
 2. **[Canonical joint league–trial report](data/reports/joint_analysis.md)** — same student, same season, cross-environment correlations
 3. **[Full replay behavior separated by environment](data/reports/behavior_by_mode.md)** — real observed decisions, not inferred from match scores
-   - **[Opponent head pressure and escape-space study](data/reports/threat_windows.md)** — future 10-turn death outcomes from actual league/trial replay frames
+   - **[Opponent head pressure and escape-space study](data/reports/threat_windows.md)**
+   - **[Matched death autopsies versus observed escapes](data/reports/escape_autopsies.md)** — same-mode, same-starting-risk comparisons across real league and trial replays — future 10-turn death outcomes from actual league/trial replay frames
 4. **[Historical peer-game versus trial study](data/reports/historical_peer_comparison.md)** — actual archived student league placements where official old standings are missing
 5. **[Historical league/trial specialists](data/reports/seasonal_disagreement.md)** — comparable division rank gaps with explicit snapshot/version caveats
 6. **[Joined data exports](data/derived/joined_team_seasons.csv)** and **[quality audit](data/derived/quality.json)** — reproducible inputs and coverage
