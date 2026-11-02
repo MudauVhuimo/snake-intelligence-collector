@@ -22,7 +22,7 @@ import gzip
 import hashlib
 import json
 
-from .escape_autopsy_core import review_replay, first_death_by_id, snapshots_at
+from .escape_autopsy_core import review_replay, first_death_by_id, snapshots_at, stable_target_food
 from .threat_windows_core import board_shape, coord, distance, heads, unoccupied_neighbors
 
 HORIZONS=(10,20,30)
@@ -122,6 +122,15 @@ def observed_followup(replay, season, replay_name, mode, sha):
         actual_first_action=(observed_first_action(start,frames[t+1],sid,w,h)
             if status[10]=="alive" or outcome_status(t,sid,deaths,contiguous,1)=="alive"
             else None)
+        # A real first movement toward the same apple visible in BOTH frames.
+        # Missing if the apple was eaten/disappeared or the snake died.
+        progress_food1=None
+        if actual_first_action is not None:
+            before_head=heads(start).get(sid)
+            after_head=heads(frames[t+1]).get(sid)
+            if before_head and after_head:
+                progress_food1=stable_target_food(
+                    start,frames[t+1],before_head[1],after_head[1],w,h)
         start_count=row["neighbor_exits"]
         start_nearest=row["nearest_head"]
         for step in STEPS:
@@ -164,6 +173,7 @@ def observed_followup(replay, season, replay_name, mode, sha):
             status10=status[10],status20=status[20],status30=status[30],
             measurements=measurements,
             first_action=actual_first_action,
+            stable_food_progress1=progress_food1,
             all_death_events=deaths.get(sid,())))
         qc["long_horizon_baselines"]+=1
         qc["censored_30"]+=status[30]=="censored"
