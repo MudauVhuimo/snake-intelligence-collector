@@ -37,13 +37,15 @@ def study(rows,minimum=10):
         trial_rank=midranks([-r["trial_mean_length"] for r in batch])
         n=len(batch)
         official=[r["official_rank"] for r in batch]
+        official_cohort_rank=midranks(official)
         rho=spearman(official,trial_rank)
         by_season[season,division]=dict(season=season,division=division,
                     n=n,rho=rho,latest=season==max(x[0] for x in groups),
                     paired_student_seasons=n)
-        for r,rank in zip(batch,trial_rank):
-            # Normalized zero is strongest, 1 weakest.
-            official_pct=(r["official_rank"]-1)/max(1,n-1)
+        for r,rank,cohort_rank in zip(batch,trial_rank,official_cohort_rank):
+            # Both percentiles refer to the SAME eligible student cohort.
+            # Raw official position remains separately available in the export.
+            official_pct=(cohort_rank-1)/max(1,n-1)
             trial_pct=(rank-1)/max(1,n-1)
             episodes.append(dict(
                 season=season,division=division,student=r["team"],
@@ -157,8 +159,10 @@ def build(data_dir):
       "Generated UTC: "+datetime.now(timezone.utc).isoformat(timespec="seconds"),"",
       "## Design and guardrails","",
       "League ranks are official division-specific rankings; we rerank students",
-      "inside the SAME division by their average final length across the three",
-      "fixed on-arrival trials. We require at least three cataloged peer league",
+      "inside the SAME eligible division cohort by their average final length",
+      "across the three fixed on-arrival trials. Official positions are separately",
+      "reranked within this eligible cohort before computing percentile gaps.",
+      "We require at least three cataloged peer league",
       "games, all three on-arrival trials, and at least 10 students per division.",
       "A normalized rank difference of +1 means excellent trials relative to",
       "league, and -1 means excellent league performance relative to trials.",
