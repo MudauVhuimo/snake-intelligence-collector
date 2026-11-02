@@ -168,7 +168,11 @@ def fmt(v):
     return "insufficient" if v is None else f"{v:.2f}%"
 
 def plot(path,groups):
+    eligible=[groups[m,c]["death10_pct"] for m in ("league","trial")
+              for c in COHORTS if groups[m,c]["death10_pct"] is not None]
+    high=max(2.0,max(eligible,default=0)*1.2)
     body=['<line x1="107" y1="372" x2="919" y2="372" stroke="#64748b"/>',
+          f'<text x="900" y="118" text-anchor="end">Vertical scale: 0 to {high:.1f}%</text>',
           '<text x="105" y="81">Observed deaths in next 10 turns, measured per danger window</text>',
           '<text x="105" y="99">Ranked by same-season official Division 1 standings</text>']
     for i,c in enumerate(COHORTS):
@@ -182,7 +186,7 @@ def plot(path,groups):
             if val is None:
                 body.append(f'<text x="{x+27}" y="348">n/a</text>')
                 continue
-            height=255*min(100,val)/100
+            height=255*min(high,val)/high
             # chart uses a 0..100 scale, not an exaggerated percent axis
             body.append(f'<rect x="{x}" y="{372-height:.1f}" width="54" '
                         f'height="{height:.1f}" rx="3" fill="{color}"/>')
