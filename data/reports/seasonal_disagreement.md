@@ -1,6 +1,6 @@
 # Snake26: historical league versus trial specialization
 
-Generated UTC: 2026-11-02T16:20:26+00:00
+Generated UTC: 2026-11-02T23:45:14+00:00
 
 ## Design and guardrails
 
@@ -14,10 +14,10 @@ A normalized rank difference of +1 means excellent trials relative to
 league, and -1 means excellent league performance relative to trials.
 These are ranks, NOT inferred policy scores or match-level causal effects.
 
-Current season: **2026-11-02-145901-season**.
-Eligible historical Division 1 standings snapshots: **6**.
-Positive league/trial rank correlation: **6** snapshots.
-Median Division 1 correlation: **+0.378**.
+Current season: **2026-11-02-225901-season**.
+Eligible historical Division 1 standings snapshots: **7**.
+Positive league/trial rank correlation: **7** snapshots.
+Median Division 1 correlation: **+0.401**.
 
 Hourly seasons, repeated seeds, and unchanged bot versions are strongly
 correlated. The history is a trajectory of recorded competition snapshots,
@@ -29,6 +29,7 @@ correlated. The history is a trajectory of recorded competition snapshots,
 
 | Season | Division 1 students | Spearman rho: league rank vs trial growth rank |
 |---|---:|---:|
+| 2026-11-02-225901-season | 32 | +0.488 |
 | 2026-11-02-145901-season | 32 | +0.354 |
 | 2026-11-02-045859-season | 32 | +0.417 |
 | 2026-11-01-235859-season | 32 | +0.401 |
@@ -45,23 +46,23 @@ correlated. The history is a trajectory of recorded competition snapshots,
 
 | Trial specialists (Division 1) | League rank | Trial rank within Division 1 | Gap | League games | League full replays |
 |---|---:|---:|---:|---:|---:|
-| 413538-lelethuthando-nikelo | 25 | 3.0 | +0.71 | 5 | 1 |
-| 403339-david-ndambo | 26 | 8.0 | +0.58 | 5 | 0 |
-| 419636-jason-chen | 16 | 4.0 | +0.39 | 5 | 0 |
-| 419342-ayeshan-puckree | 29 | 18.0 | +0.35 | 5 | 0 |
-| 388060-tshepang-tshabalala | 12 | 2.0 | +0.32 | 4 | 0 |
-| 423436-ntobeko-zondi | 28 | 19.0 | +0.29 | 6 | 0 |
-| 388828-ngcebo-methula | 18 | 10.0 | +0.26 | 5 | 2 |
+| 402334-angile-saho | 20 | 1.0 | +0.61 | 6 | 0 |
+| 407318-deo-kabunda | 28 | 14.0 | +0.45 | 6 | 0 |
+| 419342-ayeshan-puckree | 31 | 19.0 | +0.39 | 4 | 1 |
+| 421538-tshifhiwa-bvumbi | 16 | 4.0 | +0.39 | 4 | 0 |
+| 388060-tshepang-tshabalala | 13 | 2.0 | +0.35 | 5 | 1 |
+| 409997-utayan-naidoo | 23 | 12.0 | +0.35 | 5 | 0 |
+| 420285-kgotlelelo-aphane | 26 | 15.5 | +0.34 | 6 | 0 |
 
 | League specialists (Division 1) | League rank | Trial rank within Division 1 | Gap | League games | League full replays |
 |---|---:|---:|---:|---:|---:|
-| 404721-khensani-maluleke | 6 | 28.5 | -0.73 | 6 | 1 |
-| 408070-collen-mthombeni | 9 | 30.5 | -0.69 | 4 | 0 |
-| 428954-njabulo-ndlozi | 5 | 22.0 | -0.55 | 6 | 1 |
-| 428786-marvellous-sambo | 13 | 25.0 | -0.39 | 4 | 0 |
-| 421462-alexander-palmer | 3 | 14.0 | -0.35 | 4 | 0 |
-| 424820-elisha-mundalamo | 1 | 12.0 | -0.35 | 5 | 4 |
-| 406000-mulimisi-rammela | 14 | 23.5 | -0.31 | 5 | 0 |
+| 404721-khensani-maluleke | 11 | 28.0 | -0.55 | 6 | 0 |
+| 408070-collen-mthombeni | 15 | 29.0 | -0.45 | 5 | 0 |
+| 408501-asher-urison | 10 | 21.0 | -0.35 | 5 | 0 |
+| 410193-vhugala-makhwathane | 12 | 22.5 | -0.34 | 6 | 0 |
+| 421462-alexander-palmer | 3 | 13.0 | -0.32 | 4 | 0 |
+| 424820-elisha-mundalamo | 2 | 11.0 | -0.29 | 6 | 0 |
+| 426895-mpho-ramasakona | 18 | 27.0 | -0.29 | 5 | 0 |
 
 ## 3. Repeated snapshots and bot changes
 
@@ -72,14 +73,14 @@ new independent evidence.
 
 | Student | Eligible Division 1 snapshots | Distinct snapshot hashes | Median rank gap |
 |---|---:|---:|---:|
-| 413538-lelethuthando-nikelo | 6 | 1 | +0.29 |
-| 403339-david-ndambo | 6 | 1 | +0.06 |
-| 419636-jason-chen | 4 | 1 | +0.61 |
-| 419342-ayeshan-puckree | 6 | 1 | +0.08 |
-| 404721-khensani-maluleke | 6 | 1 | -0.44 |
-| 408070-collen-mthombeni | 6 | 1 | -0.56 |
-| 428954-njabulo-ndlozi | 6 | 1 | -0.28 |
-| 428786-marvellous-sambo | 6 | 1 | -0.61 |
+| 402334-angile-saho | 7 | 2 | +0.39 |
+| 407318-deo-kabunda | 1 | 1 | +0.45 |
+| 419342-ayeshan-puckree | 7 | 1 | +0.19 |
+| 421538-tshifhiwa-bvumbi | 3 | 1 | +0.39 |
+| 404721-khensani-maluleke | 7 | 1 | -0.53 |
+| 408070-collen-mthombeni | 7 | 1 | -0.47 |
+| 408501-asher-urison | 5 | 1 | +0.03 |
+| 410193-vhugala-makhwathane | 4 | 1 | -0.03 |
 
 ## 4. What this changes in our replay investigation
 

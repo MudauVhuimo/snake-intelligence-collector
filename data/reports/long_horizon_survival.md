@@ -1,6 +1,6 @@
 # Snake26: Do escapes stay safe for the next 20–30 turns?
 
-Generated UTC: 2026-11-02T16:19:43+00:00
+Generated UTC: 2026-11-02T23:44:28+00:00
 
 ## Study design
 Actual student replay frames are sampled every 25 turns when the nearest
@@ -14,11 +14,11 @@ covers longer than the 25-turn sampling stride, windows from the same
 snake and match can overlap; resample entire replay clusters.
 
 ## Data quality
-Files scanned: **190** / 190.
-Unique replay payloads: **123** (league 65, trials 58).
+Files scanned: **200** / 200.
+Unique replay payloads: **133** (league 71, trials 62).
 Duplicate payloads: **67**.
 Unreadable files: **0**.
-Dangerous starting positions: **2,836**.
+Dangerous starting positions: **3,093**.
 Silent snake disappearances censored: **0**.
 
 ## 1. Actual death-free followup
@@ -26,8 +26,8 @@ Silent snake disappearances censored: **0**.
 
 | Mode | Baseline danger windows | Dead by +10 | Survived +10 | Alive at +20 after +10 (known only) | Alive at +30 after +10 (known only) | Censored before +30 |
 |---|---:|---:|---:|---|---|---:|
-| league | 2368 | 68 | 2300 | 2267/2300 (98.57%) | 2210/2268 (97.44%) | 32 |
-| trial | 468 | 4 | 464 | 461/464 (99.35%) | 455/460 (98.91%) | 4 |
+| league | 2584 | 78 | 2506 | 2473/2506 (98.68%) | 2409/2470 (97.53%) | 36 |
+| trial | 509 | 4 | 505 | 502/505 (99.41%) | 496/501 (99.00%) | 4 |
 
 The +20 and +30 percentages condition on first-ten survival AND having
 a known future outcome. Never confuse them with unconditional survival.
@@ -39,10 +39,10 @@ Analyze only snakes surviving to +10. Exits are an immediate geometry
 proxy, not guaranteed legal directions or long-horizon path safety.
 | Mode | +3 escape-space change | Survived first 10 | Known outcome at +30 | Dead in +11..+30 | Conditional death % | Censored |
 |---|---|---:|---:|---:|---:|---:|
-| league | Gained at least one exit | 863 | 846 | 14 | 1.65% | 17 |
-| league | No new exit | 1437 | 1422 | 44 | 3.09% | 15 |
-| trial | Gained at least one exit | 139 | 137 | 2 | 1.46% | 2 |
-| trial | No new exit | 325 | 323 | 3 | 0.93% | 2 |
+| league | Gained at least one exit | 960 | 939 | 15 | 1.60% | 21 |
+| league | No new exit | 1546 | 1531 | 46 | 3.00% | 15 |
+| trial | Gained at least one exit | 158 | 156 | 2 | 1.28% | 2 |
+| trial | No new exit | 347 | 345 | 3 | 0.87% | 2 |
 
 ## 3. Match-cluster bootstrap for late death difference
 Difference is exit-GAINERS minus NON-gainers, in percentage points.
@@ -51,8 +51,8 @@ This is observational and subject to selection and opponent confounding.
 
 | Mode | Observed difference (percentage points) | Exploratory 95% replay-bootstrap CI | Replay clusters |
 |---|---:|---:|---:|
-| league | -1.44 | [-2.52, -0.33] | 65 |
-| trial | 0.53 | [-1.52, 3.12] | 57 |
+| league | -1.41 | [-2.50, -0.36] | 71 |
+| trial | 0.41 | [-1.47, 2.77] | 61 |
 
 ## 4. Palmer compared with actual students in the same league games
 Unique league replays with Palmer danger windows: **18**.

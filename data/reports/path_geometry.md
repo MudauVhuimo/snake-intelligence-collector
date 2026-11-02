@@ -1,6 +1,6 @@
 # Snake26: does occupied-space geometry explain underdog apples?
 
-Generated UTC: 2026-11-02T16:17:03+00:00
+Generated UTC: 2026-11-02T23:41:36+00:00
 
 ## Critical definition
 
@@ -17,13 +17,13 @@ Exclude episodes with no static path for either head, which can bias results.
 
 | Frozen-body path ordering | Student captures | Benchmark captures | Student capture share |
 |---|---:|---:|---:|
-| Student shortest | 277 | 304 | 47.7% |
-| Benchmark shortest or tied | 212 | 3178 | 6.3% |
+| Student shortest | 293 | 312 | 48.4% |
+| Benchmark shortest or tied | 220 | 3361 | 6.1% |
 
-Observed difference in student capture share: **41.4 percentage points**.
+Observed difference in student capture share: **42.3 percentage points**.
 Exploratory 95% **match-cluster bootstrap** interval for the difference:
-**36.5 to 46.4 percentage points**
-(4000 valid bootstrap draws, resampling 58 complete replay matches).
+**37.3 to 47.2 percentage points**
+(4000 valid bootstrap draws, resampling 62 complete replay matches).
 This interval reflects match-level resampling variability in this selected archive;
 it does not adjust for bot version, different opponent skill or hidden strategy choices.
 
@@ -31,12 +31,12 @@ it does not adjust for bot version, different opponent skill or hidden strategy 
 
 | Initially closest benchmark | Reversal: student captures / all | Not reversed: student captures / all |
 |---|---:|---:|
-| ~benchmark | 81/161 (50.3%) | 30/1022 (2.9%) |
-| ~gauntlet_1 | 35/77 (45.5%) | 16/347 (4.6%) |
-| ~hungry | 29/53 (54.7%) | 11/364 (3.0%) |
-| ~hunter | 35/70 (50.0%) | 8/348 (2.3%) |
-| ~survivor | 75/168 (44.6%) | 49/866 (5.7%) |
-| ~wander | 22/52 (42.3%) | 98/443 (22.1%) |
+| ~benchmark | 83/166 (50.0%) | 33/1081 (3.1%) |
+| ~gauntlet_1 | 40/83 (48.2%) | 17/376 (4.5%) |
+| ~hungry | 29/54 (53.7%) | 11/381 (2.9%) |
+| ~hunter | 36/71 (50.7%) | 8/367 (2.2%) |
+| ~survivor | 82/178 (46.1%) | 49/912 (5.4%) |
+| ~wander | 23/53 (43.4%) | 102/464 (22.0%) |
 
 ## What this does and DOES NOT establish
 

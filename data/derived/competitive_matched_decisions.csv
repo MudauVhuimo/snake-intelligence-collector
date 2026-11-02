@@ -1,5 +1,6 @@
 season,replay_sha,top_student,bottom_student,top_turn,bottom_turn,top_length,bottom_length,top_head_dist,bottom_head_dist,top_free_exits,bottom_free_exits,top_first_move,bottom_first_move,top_apple_progress1,bottom_apple_progress1,top_exit_gain3,bottom_exit_gain3,top_outcome10,bottom_outcome10
 2026-11-01-225859-season,07d20efbdbaf05c147eb4b532756cfef357836d310020ac093976aa633ad60d3,413538-lelethuthando-nikelo,427417-phophi-shavhani,550,550,60,70,3,3,3,3,turn,straight,1,1,0,0,alive,alive
+2026-11-02-225901-season,29b9cd275cc45f86caa3109353b3f72a0353c5ca595f92bd81794856a50998ed,421349-phathutshedzo-mudzanani,419342-ayeshan-puckree,275,275,35,25,2,2,2,3,turn,straight,1,-1,1,0,alive,alive
 2026-11-01-205859-season,31ab36ff22671aaf4dbcb16b2f5f172c21bf58aed9f97f0f26c49e4636fd229a,424820-elisha-mundalamo,423436-ntobeko-zondi,1725,1525,115,125,13,11,1,1,turn,straight,-1,0,2,1,alive,alive
 2026-11-01-205859-season,31ab36ff22671aaf4dbcb16b2f5f172c21bf58aed9f97f0f26c49e4636fd229a,424820-elisha-mundalamo,423436-ntobeko-zondi,1800,1700,115,130,10,12,1,0,straight,turn,1,1,1,2,alive,alive
 2026-11-01-205859-season,31ab36ff22671aaf4dbcb16b2f5f172c21bf58aed9f97f0f26c49e4636fd229a,424820-elisha-mundalamo,423436-ntobeko-zondi,1925,1775,130,130,8,4,1,1,turn,turn,-1,1,2,1,alive,alive
@@ -22,8 +23,11 @@ season,replay_sha,top_student,bottom_student,top_turn,bottom_turn,top_length,bot
 2026-11-01-225859-season,4cfe616035edb09c6ce0a0da4e53cf3b1e7333db4fd100c665db02848db5381b,403339-david-ndambo,428798-oratile-molefe,1500,1600,150,110,10,28,1,1,turn,turn,-1,-1,1,0,alive,alive
 2026-11-01-225859-season,4cfe616035edb09c6ce0a0da4e53cf3b1e7333db4fd100c665db02848db5381b,403339-david-ndambo,428798-oratile-molefe,1775,1775,160,120,3,3,3,3,turn,straight,-1,-1,-1,-1,alive,alive
 2026-11-01-225859-season,4cfe616035edb09c6ce0a0da4e53cf3b1e7333db4fd100c665db02848db5381b,403339-david-ndambo,428798-oratile-molefe,1825,1825,160,120,2,2,3,3,straight,straight,,,0,0,alive,alive
+2026-11-02-225901-season,5409fba8727da2fda591c3839e88f14f0d9b06ad6b07732bde743d69c4cfc819,421349-phathutshedzo-mudzanani,408008-bradley-buys,550,550,60,55,2,3,3,3,straight,straight,-1,1,0,0,alive,alive
 2026-11-01-225859-season,54cb536af957e88705166c66335c2114526268ab1744516e6429020ed4f3a03b,427039-sameeha-miabala,428464-madalitso-mnqanqeni,950,750,80,60,24,11,1,1,straight,turn,-1,1,0,1,alive,alive
 2026-11-01-225859-season,54cb536af957e88705166c66335c2114526268ab1744516e6429020ed4f3a03b,413538-lelethuthando-nikelo,428464-madalitso-mnqanqeni,600,825,60,65,3,3,3,2,straight,straight,1,-1,0,0,alive,alive
+2026-11-02-225901-season,59dd9030473312cebb5a551ccec00df3b467cb28d1e043870d38521d349924ac,421349-phathutshedzo-mudzanani,408008-bradley-buys,1400,1350,110,120,10,11,1,1,straight,straight,0,-1,1,0,alive,alive
+2026-11-02-225901-season,59dd9030473312cebb5a551ccec00df3b467cb28d1e043870d38521d349924ac,421349-phathutshedzo-mudzanani,408008-bradley-buys,275,275,25,40,3,3,3,3,straight,straight,-1,1,0,0,alive,alive
 2026-11-02-045859-season,5f83feb7bc6ee0421c2741f48415109777056abb0e3b4bc0f19128b7c12fa74b,421462-alexander-palmer,388060-tshepang-tshabalala,1175,1050,5,20,3,2,3,3,turn,straight,-1,1,-1,0,alive,alive
 2026-11-02-045859-season,5f83feb7bc6ee0421c2741f48415109777056abb0e3b4bc0f19128b7c12fa74b,421462-alexander-palmer,388060-tshepang-tshabalala,1775,1750,75,65,2,2,2,3,straight,straight,1,1,1,0,alive,alive
 2026-11-02-045859-season,5f83feb7bc6ee0421c2741f48415109777056abb0e3b4bc0f19128b7c12fa74b,421462-alexander-palmer,388060-tshepang-tshabalala,1750,1775,75,65,2,2,1,1,straight,straight,1,-1,1,0,alive,dead

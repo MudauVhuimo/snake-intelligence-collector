@@ -1,17 +1,17 @@
 # Snake26 Food Races: Observational Study
 
-Generated UTC: 2026-11-02T16:16:46+00:00
+Generated UTC: 2026-11-02T23:41:19+00:00
 
 ## Data validity FIRST
 
-- Replay files scanned: **190** of 190; unique content: **123**.
+- Replay files scanned: **200** of 200; unique content: **133**.
 - Exact duplicates skipped: **67**; unreadable replays: **0**.
-- First-visible apple episodes: **14798**.
-- Apples disappearing between adjacent states: **14680**.
-- Captures matched to next-head position AND explicit eat event: **14676**.
+- First-visible apple episodes: **15971**.
+- Apples disappearing between adjacent states: **15843**.
+- Captures matched to next-head position AND explicit eat event: **15839**.
 - Unmatched disappearances: **4**.
 - Confirmation rate among disappeared apples: **100.0%**.
-- On-arrival matched apple events: **7161**; league matched events: **7515**.
+- On-arrival matched apple events: **7575**; league matched events: **8264**.
 
 > The measurement is conservative. A disappearing apple without BOTH
 > a matching eat event and next-frame head is not assigned a winner.
@@ -41,9 +41,9 @@ Unconsumed/censored opportunities are not included in the lifetime histogram.
 We call an apple initially contested when the student versus benchmark
 nearest-head distances differ by at most two cells, and at least one head
 is at toroidal Manhattan distance ten or less at first appearance.
-Observed matched contested captures: **420**.
-- Student captured: **231**.
-- Built-in benchmark captured: **189**.
+Observed matched contested captures: **446**.
+- Student captured: **243**.
+- Built-in benchmark captured: **203**.
 
 That is an operational distance-based definition, not proof of
 the actual safe paths, intentions or likelihood of winning.
@@ -52,8 +52,8 @@ the actual safe paths, intentions or likelihood of winning.
 
 | Mode | Matched apple captures | Student captures | Benchmark captures |
 |---|---:|---:|---:|
-| On-arrival | 7161 | 2503 | 4658 |
-| League | 7515 | 7515 | 0 |
+| On-arrival | 7575 | 2643 | 4932 |
+| League | 8264 | 8264 | 0 |
 
 ## Next research questions
 
