@@ -19,6 +19,7 @@ from .threat_windows import build as threat_report
 from .escape_autopsies import build as autopsy_report
 from .long_horizon_survival import build as long_horizon_report
 from .competitive_cohorts import build as competitive_cohorts_report
+from .rulebook import build as render_rulebook
 from .seasonal_disagreement import build as seasonal_report
 from .historical_peer_comparison import build as historical_peer_report
 from .league_comparison import chart
@@ -112,6 +113,7 @@ def build(data_dir):
     autopsies=autopsy_report(data_dir)  # Baseline-matched recorded death/escape trajectories.
     long_horizon=long_horizon_report(data_dir)  # Censor-aware +10/+20/+30 followups.
     cohorts=competitive_cohorts_report(data_dir)  # Same-season Division 1 top/middle/bottom cohort study.
+    candidate_rules=render_rulebook(data_dir)  # Evidence-gated hypotheses for a NEW agent.
     history=seasonal_report(data_dir)  # Longitudinal matched ranking differences, not independent trials.
     peer_history=historical_peer_report(data_dir)  # Older peer-game catalogs without official standings.
     paired,results=correlations(data["joined"],latest,division=1,min_league=3)
@@ -227,6 +229,11 @@ def build(data_dir):
         "cells. Later-turn comparisons exclude early deaths and are subject",
         "to survivorship selection, not a proof of causal protection.",
         "![Matched death versus escape movements](charts/escape_case_control.svg)",
+        "### Research-to-algorithm decision registry",
+        "Our [falsifiable rulebook](algorithm_rulebook.md) tracks",
+        f"**{candidate_rules['rules']} proposed state-to-action hypotheses** with",
+        "supporting studies, counterexamples and required validation.",
+        "NO observational rule is automatically promoted into the new agent.",
         "### All competitors: strong, middle, and struggling league cohorts",
         "[Compare all three performance cohorts](competitive_cohorts.md)",
         "using official standings from the SAME replay season, with body-length",
@@ -317,6 +324,8 @@ def build(data_dir):
         "  works without older official standings; **game-derived proxy** only.",
         "- [League/trial specialists across historical snapshots](seasonal_disagreement.md):",
         "  matched division ranks, tracked across recorded seasons and bot hashes.",
+        "- [Evidence-gated algorithm rulebook](algorithm_rulebook.md):",
+        "  falsifiable state-to-action hypotheses for a NEW agent, not code fixes.",
         "- [All competitors: strong/middle/struggling cohorts](competitive_cohorts.md):",
         "  same-season rank-matched danger outcomes, separated league vs trials.",
         "- [Palmer league danger decision sequences](palmer_casebook.md):",
@@ -349,7 +358,7 @@ def build(data_dir):
         "executables or source code are extracted. No Java snake changes yet.",""
     ]
     (output/"README.md").write_text("\n".join(home),encoding="utf-8")
-    return dict(season=latest,competitive_cohort_ranked_league_windows=cohorts["ranked_league_windows"],long_horizon_windows=long_horizon["league"]["baseline"]+long_horizon["trial"]["baseline"],matched_autopsies_league=autopsies["matched_league"],matched_autopsies_trial=autopsies["matched_trial"],head_pressure_windows=threat["windows"],peer_history_div1_snapshots=peer_history["div1_snapshots"],historical_div1_snapshots=history["division1_snapshots"],replay_paired=movement["paired_student_replays"],paired_division1=len(paired),
+    return dict(season=latest,candidate_rules=candidate_rules["rules"],competitive_cohort_ranked_league_windows=cohorts["ranked_league_windows"],long_horizon_windows=long_horizon["league"]["baseline"]+long_horizon["trial"]["baseline"],matched_autopsies_league=autopsies["matched_league"],matched_autopsies_trial=autopsies["matched_trial"],head_pressure_windows=threat["windows"],peer_history_div1_snapshots=peer_history["div1_snapshots"],historical_div1_snapshots=history["division1_snapshots"],replay_paired=movement["paired_student_replays"],paired_division1=len(paired),
                 comparison={r["metric"]:r["rho"] for r in results},
                 reports=[str(dest),str(output/"README.md")])
 
