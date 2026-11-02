@@ -16,6 +16,8 @@ This private repository collects publicly accessible Wits Snake26 match catalogs
    - **[Opponent head pressure and escape-space study](data/reports/threat_windows.md)**
    - **[Matched death autopsies versus observed escapes](data/reports/escape_autopsies.md)** — same-mode, same-starting-risk comparisons across real league and trial replays
    - **[30-turn danger survival](data/reports/long_horizon_survival.md)** — after the first successful escape, does the snake remain alive?
+   - **[Real student-vs-student apple contests](data/reports/league_food_contests.md)** — verified apple captures with Palmer subset and explicit censoring
+   - **[Apple prediction tie-break audit](data/reports/league_food_prediction.md)** — replay-cluster comparison of closer-head versus length-at-distance-tie predictors
    - **[Palmer's actual league danger decisions](data/reports/palmer_casebook.md)** — one strong competitor's real movement casebook, supporting (not replacing) population-wide comparisons
 5. **[Historical peer-game versus trial study](data/reports/historical_peer_comparison.md)** — actual archived student league placements where official old standings are missing
 6. **[Historical league/trial specialists](data/reports/seasonal_disagreement.md)** — comparable division rank gaps with explicit snapshot/version caveats

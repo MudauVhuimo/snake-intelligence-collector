@@ -38,6 +38,10 @@ Read this before interpreting the older single-environment reports.
   replay-derived food and death measures; report sample coverage first.
 - [League food versus growth retained](league_sweet_spot.md):
   correlation, not proven aggression or optimal policy.
+- [Peer-league apple contests](league_food_contests.md): confirmed captures,
+  observed first steps and Palmer-only descriptive subset.
+- [Apple capturer prediction audit](league_food_prediction.md): fixed nearest-distance
+  baseline versus exact-distance length tie-break, with replay-cluster intervals.
 - [On-arrival food contests](food_races.md):
   primarily student-versus-built-in benchmark observations.
 - [On-arrival underdog apple case studies](underdog_study.md):
