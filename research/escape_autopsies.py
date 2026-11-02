@@ -316,6 +316,50 @@ def build(data_dir,max_files=250):
                      f"{fmt(r['cases'])} | {fmt(r['controls'])} | "
                      f"{fmt(r['difference'])} | {ci} |")
     lines+=["",
+        "## 2a. Sensitivity checks: what if comparisons are stricter?","",
+        "| League comparison subset | Baseline matched pairs | Both alive/observed at +1 | Mean +1 free-exit gain difference (survivor − case) |",
+        "|---|---:|---:|---:|"]
+    league_pairs=[p for p in matches if p["case"]["mode"]=="league"]
+    subsets=[
+        ("All baseline-matched league pairs",league_pairs),
+        ("Same replay ONLY",[p for p in league_pairs if p["same_replay"]]),
+        ("Same 500-turn phase",[p for p in league_pairs if p["level"]=="exact"]),
+        ("Exact starting free-exit count",[p for p in league_pairs
+             if p["case"]["neighbor_exits"]==p["control"]["neighbor_exits"]]),
+        ("Exact free exits AND head distance",[p for p in league_pairs
+             if p["case"]["neighbor_exits"]==p["control"]["neighbor_exits"]
+             and p["case"]["nearest_head"]==p["control"]["nearest_head"]]),
+        ("Opponent head <=3 cells",[p for p in league_pairs
+             if p["case"]["nearest_head"]<=3]),
+        ("At most one free neighboring cell",[p for p in league_pairs
+             if p["case"]["neighbor_exits"]<=1]),
+    ]
+    for title,subset in subsets:
+        d=paired_deltas(subset,"league",1,"exits_gain")
+        delta=mean(x["control_minus_case"] for x in d) if d else None
+        lines.append(f"| {title} | {len(subset)} | {len(d)} | {fmt(delta)} |")
+    lines+=["",
+        "These are nested exploratory subsets, NOT independent confirmations.",
+        "If a strict subset has few pairs, its mean is especially unstable.",
+        "The original matching is retrospective. A shared 500-turn phase is",
+        "not proof of identical maps, opponents or goals.",
+        "",
+        "## 2b. Check baseline balance rather than assuming matching is perfect","",
+        "| League baseline comparison | Death case average | Survivor control average |",
+        "|---|---:|---:|"]
+    for key,label in (("neighbor_exits","Free adjacent cells"),
+                      ("nearest_head","Opponent head distance"),
+                      ("length","Body length"),
+                      ("start_turn","Game turn")):
+        a=mean(p["case"][key] for p in league_pairs) if league_pairs else None
+        b=mean(p["control"][key] for p in league_pairs) if league_pairs else None
+        lines.append(f"| {label} | {fmt(a)} | {fmt(b)} |")
+    lines+=["",
+        "Our matching enforces body LENGTH BAND, head PRESSURE BAND and",
+        "limited-exit BAND, but individual numerical values can still differ.",
+        "Baseline imbalance is a remaining confounding source.",""]
+
+    lines+=["",
         "The +1 and +3 means include only pairs for which BOTH actual states",
         "were observable and the death case was still alive at that step.",
         "Therefore later steps suffer **survivorship selection**: do not",
