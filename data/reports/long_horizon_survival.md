@@ -1,6 +1,6 @@
 # Snake26: Do escapes stay safe for the next 20–30 turns?
 
-Generated UTC: 2026-11-02T07:48:22+00:00
+Generated UTC: 2026-11-02T07:53:47+00:00
 
 ## Study design
 Actual student replay frames are sampled every 25 turns when the nearest

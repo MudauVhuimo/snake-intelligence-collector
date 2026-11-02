@@ -1,6 +1,6 @@
 # Snake26: Strong, middle, and struggling league competitors — comparison
 
-Generated UTC: 2026-11-02T07:48:22+00:00
+Generated UTC: 2026-11-02T07:53:48+00:00
 
 ## Scientific question
 
@@ -73,12 +73,40 @@ actual observations; we do not extrapolate outside overlap.
 | trial | top_quartile | 52 | 12 | 0.00% | 30.77% | 69.23% | 56.25% |
 | trial | bottom_quartile | 8 | 1 | 0.00% | 37.50% | 62.50% | 62.50% |
 
+## 3. Strong versus struggling snakes in the SAME real match
+
+Each pair uses one top-quartile and one bottom-quartile student
+from the SAME actual replay, SAME body-length band, near-head
+condition, confined/unconfined condition, and 500-turn game phase.
+Pairing uses only BASELINE variables, and no observed window is reused.
+This is a harder comparison than grouping results across unrelated
+games, but pairs may still differ in exact body location, apples,
+opponent responses and how much time passes between snapshots.
+
+Matched dangerous-position pairs: **66**.
+Distinct league replays with strict matched pairs: **20**.
+
+| Measured outcome (bottom minus top) | Both decisions observable | Replay clusters | Difference (percentage points) | Replay-resampled 95% interval |
+|---|---:|---:|---:|---|
+| Died in next 10 turns | 66 | 20 | +4.55 | [+0.00, +9.68] |
+| First step was a turn/reversal rather than straight | 66 | 20 | -10.61 | [-27.78, +5.33] |
+| Moved toward same still-visible apple | 61 | 20 | -6.56 | [-26.79, +11.59] |
+| Gained 1+ neighboring cell by turn 3, among +10 survivors | 63 | 20 | -7.94 | [-20.63, +4.00] |
+
+Positive values mean the bottom cohort exhibited the behavior or
+death more frequently; negative values mean the top did.
+Match-level bootstrap uncertainty addresses repeated episodes in
+one replay, NOT repeated student versions across snapshots.
+Even equal baseline categories are NOT identical legal choices;
+none of these contrasts alone tells us which action caused survival.
+[Auditable non-reused matched pairs](../derived/competitive_matched_decisions.csv).
+
 These are COMMON-STRATUM comparisons but they are NOT reweighted
 to identical distributions within the overlap. Even same-game cohorts
 may occupy different locations and face unequal threats. No p-value
 or effect-size certainty is claimed from individual windows.
 
-## 3. What would make a useful algorithm rule?
+## 4. What would make a useful algorithm rule?
 
 Test the hypothesis that top league competitors select routes with
 better safe future mobility after controlling for starting length,
