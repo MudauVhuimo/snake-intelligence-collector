@@ -152,15 +152,22 @@ def build(data_dir):
         "",
         "## 2. Correlations between SAME students in both environments","",
         "![Joined correlations](charts/joint_correlations.svg)","",
-        "| Paired measurement | Division 1 students | Spearman rho |",
-        "|---|---:|---:|"]
+        "| Paired measurement | Division 1 students | Spearman rho | Exploratory 95% paired-student bootstrap interval |",
+        "|---|---:|---:|---:|"]
     for row in results:
-        lines.append(f"| {row['metric']} | {row['n']} | {printable(row['rho'],3)} |")
+        interval=(f"[{row['ci_low']:+.3f}, {row['ci_high']:+.3f}]"
+                  if row.get("ci_low") is not None and row.get("ci_high") is not None
+                  else "insufficient")
+        lines.append(f"| {row['metric']} | {row['n']} | {printable(row['rho'],3)} | {interval} |")
     lines+=["",
         "Correlations are calculated only among students from **the same division",
         "and season**, to avoid comparing ranks of different divisions. These are",
         "within-student comparisons across distinct conditions—not claims that",
         "one environment causes performance in the other.",
+        "The exploratory 95% percentile intervals resample complete paired STUDENTS",
+        "(2,000 draws per metric), not frames or individual games. They do NOT",
+        "adjust for league schedule differences, opponent difficulty, code changes",
+        "or selection bias. This is one time-specific Division 1 cohort.",
         "",
         "## 3. Compare actual outcomes side by side","",
         "![Same students: food acquisition](charts/joint_apples.svg)","",
