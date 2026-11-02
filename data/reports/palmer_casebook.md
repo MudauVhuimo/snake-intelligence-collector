@@ -30,6 +30,7 @@ If no frame or an unexplained absence is observed, +30 is censored.
 | [game-72007.rep.gz](../replays/2026-11-01-205859-season/game-72007.rep.gz) | 375 | 45 | 2 | 3 → 3 | -x / straight | alive | 402334-angile-saho |
 | [game-72003.rep.gz](../replays/2026-11-01-205859-season/game-72003.rep.gz) | 525 | 90 | 2 | 3 → 2 | -y / turn | alive | 423546-ndabenhle-shabangu |
 | [game-71001.rep.gz](../replays/2026-11-01-205859-season/game-71001.rep.gz) | 525 | 60 | 3 | 3 → 3 | +x / turn | alive | 428786-marvellous-sambo |
+| [game-71000.rep.gz](../replays/2026-10-23-235858-season/game-71000.rep.gz) | 250 | 40 | 2 | 2 → 3 | +x / turn | alive | 403501-mashau-mudzanani |
 
 ## How to compare a genuine decision sequence
 

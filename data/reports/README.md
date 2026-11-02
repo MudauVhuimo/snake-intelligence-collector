@@ -18,10 +18,6 @@ Read this before interpreting the older single-environment reports.
   works without older official standings; **game-derived proxy** only.
 - [League/trial specialists across historical snapshots](seasonal_disagreement.md):
   matched division ranks, tracked across recorded seasons and bot hashes.
-- [Actual 2026 safety mechanics](safety_mechanics.md): replay-based movement,
-  tail-vacating, head-on victim and growth audit; observational, not a legal-move oracle.
-- [Length/crowding/phase adaptation](adaptive_context.md): actual 10-turn deaths and
-  pre-death apple events by pre-action strata, league versus trials separated.
 - [Evidence-gated algorithm rulebook](algorithm_rulebook.md):
   falsifiable state-to-action hypotheses for a NEW agent, not code fixes.
 - [All competitors: opponent head-contest possibilities](opponent_cones.md):
@@ -42,10 +38,6 @@ Read this before interpreting the older single-environment reports.
   replay-derived food and death measures; report sample coverage first.
 - [League food versus growth retained](league_sweet_spot.md):
   correlation, not proven aggression or optimal policy.
-- [Peer-league apple contests](league_food_contests.md): confirmed captures,
-  observed first steps and Palmer-only descriptive subset.
-- [Apple capturer prediction audit](league_food_prediction.md): fixed nearest-distance
-  baseline versus exact-distance length tie-break, with replay-cluster intervals.
 - [On-arrival food contests](food_races.md):
   primarily student-versus-built-in benchmark observations.
 - [On-arrival underdog apple case studies](underdog_study.md):

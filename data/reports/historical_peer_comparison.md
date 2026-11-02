@@ -1,6 +1,6 @@
 # Snake26 historical league outcomes versus fixed trials
 
-Generated UTC: 2026-11-02T08:44:01+00:00
+Generated UTC: 2026-11-02T16:20:27+00:00
 
 ## Why this analysis exists
 
@@ -19,11 +19,11 @@ NOT a series of independent replications.
 
 ## Coverage
 
-- Season/division cohorts with at least 10 eligible students: **97**.
-- Distinct seasons represented: **58**.
-- Division 1 snapshots: **58**.
-- Eligible student/season/division records: **2475**.
-- Excluded student-seasons with fewer than 3 peer league games: **19**.
+- Season/division cohorts with at least 10 eligible students: **119**.
+- Distinct seasons represented: **69**.
+- Division 1 snapshots: **69**.
+- Eligible student/season/division records: **3106**.
+- Excluded student-seasons with fewer than 3 peer league games: **24**.
 - Excluded student-seasons with conflicting match divisions: **0**.
 - Excluded student-seasons without all three trial suites: **21**.
 
@@ -38,6 +38,8 @@ It does NOT establish that benchmark growth causes league success.
 
 | Indexed season | Division 1 students | Spearman rho | Avg peer matches/student | Official ranks saved? |
 |---|---:|---:|---:|---:|
+| 2026-11-02-145901-season | 32 | +0.182 | 4.9 | 32/32 |
+| 2026-11-02-135859-season | 32 | +0.086 | 5 | 0/32 |
 | 2026-11-02-045859-season | 32 | +0.381 | 5.4 | 32/32 |
 | 2026-11-02-035859-season | 31 | +0.194 | 5.0 | 0/31 |
 | 2026-11-01-235859-season | 32 | +0.328 | 4.6 | 32/32 |
@@ -45,23 +47,21 @@ It does NOT establish that benchmark growth causes league success.
 | 2026-11-01-215859-season | 32 | +0.062 | 5.6 | 32/32 |
 | 2026-11-01-205859-season | 32 | +0.113 | 4.5 | 32/32 |
 | 2026-11-01-195859-season | 32 | +0.377 | 4.5 | 0/32 |
+| 2026-10-28-185900-season | 32 | +0.388 | 5 | 0/32 |
 | 2026-10-28-115857-season | 32 | +0.231 | 5 | 0/32 |
 | 2026-10-28-075857-season | 32 | +0.281 | 4.6 | 0/32 |
 | 2026-10-28-065857-season | 32 | -0.050 | 4.5 | 0/32 |
 | 2026-10-28-055857-season | 32 | +0.263 | 4.4 | 0/32 |
+| 2026-10-23-235858-season | 32 | +0.534 | 4.9 | 0/32 |
 | 2026-10-23-185857-season | 32 | +0.509 | 4.5 | 0/32 |
 | 2026-10-23-155859-season | 32 | +0.446 | 4.6 | 0/32 |
 | 2026-10-23-145906-season | 32 | +0.400 | 4.9 | 0/32 |
+| 2026-10-19-045859-season | 32 | +0.469 | 4.8 | 0/32 |
 | 2026-10-19-015858-season | 32 | +0.549 | 4.8 | 0/32 |
 | 2026-10-19-005858-season | 32 | +0.447 | 4.9 | 0/32 |
 | 2026-10-18-235859-season | 31 | +0.442 | 4.8 | 0/31 |
-| 2026-10-16-095859-season | 26 | +0.525 | 6 | 0/26 |
-| 2026-10-16-085900-season | 25 | +0.573 | 5.8 | 0/25 |
-| 2026-10-16-075858-season | 24 | +0.505 | 6 | 0/24 |
-| 2026-10-16-065857-season | 24 | +0.509 | 6 | 0/24 |
-| 2026-10-16-055857-season | 24 | +0.463 | 6 | 0/24 |
-| 2026-10-16-045857-season | 24 | +0.428 | 6 | 0/24 |
-| 2026-10-16-035857-season | 24 | +0.594 | 6 | 0/24 |
+| 2026-10-16-155857-season | 27 | +0.489 | 6 | 0/27 |
+| 2026-10-16-145900-season | 27 | +0.446 | 6 | 0/27 |
 
 ## Interpretation and responsible next actions
 

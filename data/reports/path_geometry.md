@@ -1,6 +1,6 @@
 # Snake26: does occupied-space geometry explain underdog apples?
 
-Generated UTC: 2026-11-02T06:09:55+00:00
+Generated UTC: 2026-11-02T16:17:03+00:00
 
 ## Critical definition
 
@@ -17,13 +17,13 @@ Exclude episodes with no static path for either head, which can bias results.
 
 | Frozen-body path ordering | Student captures | Benchmark captures | Student capture share |
 |---|---:|---:|---:|
-| Student shortest | 254 | 270 | 48.5% |
-| Benchmark shortest or tied | 197 | 2992 | 6.2% |
+| Student shortest | 277 | 304 | 47.7% |
+| Benchmark shortest or tied | 212 | 3178 | 6.3% |
 
-Observed difference in student capture share: **42.3 percentage points**.
+Observed difference in student capture share: **41.4 percentage points**.
 Exploratory 95% **match-cluster bootstrap** interval for the difference:
-**37.0 to 47.6 percentage points**
-(4000 valid bootstrap draws, resampling 54 complete replay matches).
+**36.5 to 46.4 percentage points**
+(4000 valid bootstrap draws, resampling 58 complete replay matches).
 This interval reflects match-level resampling variability in this selected archive;
 it does not adjust for bot version, different opponent skill or hidden strategy choices.
 
@@ -31,12 +31,12 @@ it does not adjust for bot version, different opponent skill or hidden strategy 
 
 | Initially closest benchmark | Reversal: student captures / all | Not reversed: student captures / all |
 |---|---:|---:|
-| ~benchmark | 75/144 (52.1%) | 28/958 (2.9%) |
-| ~gauntlet_1 | 31/68 (45.6%) | 13/318 (4.1%) |
-| ~hungry | 27/47 (57.4%) | 11/340 (3.2%) |
-| ~hunter | 33/64 (51.6%) | 7/336 (2.1%) |
-| ~survivor | 69/153 (45.1%) | 48/815 (5.9%) |
-| ~wander | 19/48 (39.6%) | 90/422 (21.3%) |
+| ~benchmark | 81/161 (50.3%) | 30/1022 (2.9%) |
+| ~gauntlet_1 | 35/77 (45.5%) | 16/347 (4.6%) |
+| ~hungry | 29/53 (54.7%) | 11/364 (3.0%) |
+| ~hunter | 35/70 (50.0%) | 8/348 (2.3%) |
+| ~survivor | 75/168 (44.6%) | 49/866 (5.7%) |
+| ~wander | 22/52 (42.3%) | 98/443 (22.1%) |
 
 ## What this does and DOES NOT establish
 

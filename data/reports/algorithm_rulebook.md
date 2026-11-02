@@ -1,44 +1,44 @@
 # Snake26 — Evidence-gated algorithm rulebook
 
-Generated UTC: 2026-11-02T08:44:00+00:00
+Generated UTC: 2026-11-02T16:20:25+00:00
 
 **Purpose:** build a NEW snake from cross-competitor research, NOT
 fix the existing submission or clone a particular league leader.
 Strong snakes (including Palmer), mid-field snakes, struggling
 snakes and benchmark specialists are all evidence sources.
 
-Registered questions: **8**. Open: **2**. Observed association: **6**. Controlled / promoted: **0**.
+Registered questions: **8**. Open: **0**. Observed association: **8**. Controlled / promoted: **0**.
 
 ## Candidate decisions and evidence stages
 
 | ID | Decision | Applicable evidence | Stage | Why still provisional |
 |---|---|---|---|---|
-| SAFETY-01 | Avoid provably fatal next actions | both | Open question | Inspect actual current 2026 engine collision order and run replay-transition tests; recorded head-to-head victim events are all shorter or equal to the cited opponent (444 shorter, 28 equal), but they do not alone establish all engine mechanics. |
+| SAFETY-01 | Avoid provably fatal next actions | both | Observed association | Directly compare chosen move-pair transitions, tail release during growth, and respawn/kill ordering against the authoritative current 2026 compiled game engine before certifying a deterministic fatal-action filter. |
 | DANGER-02 | Estimate head threat jointly with escape-space scarcity | league | Observed association | Test empirically observed head-to-head and opponent next-move frequencies by body length, exact heading, position, and contested apple state in fresh whole league games; compare calibrated risk predictors and agent ablations. |
 | ROUTE-03 | Preserve future routes rather than maximize immediate free neighbors | league | Observed association | Validate whether opponent-aware route scores improve independent later-season league AUC (the current +0.015 held-out advantage is uncertain), then compare simpler frozen flood-fill, moving-tail and head-cone features in controlled opponent-diverse ablations. |
-| FOOD-04 | Target contest-adjusted safe food, not simply nearest apple | trial | Observed association | Run food appearance event study on actual league student-student contests, with action-level routes and apple-capture outcomes. |
+| FOOD-04 | Target contest-adjusted safe food, not simply nearest apple | both | Observed association | Use body-aware path and opponent intercept timing on held-out league games, then controlled paired-seed agents; a length tie-break improved predicted captured-by accuracy, but is not an action reward. |
 | RETENTION-05 | Optimize retained growth and competitive placement, not raw apple count | league | Observed association | Estimate food capture, death/reset hazard and final retained length conditional on body length, phase, opponents and available actions. |
 | CONTEST-06 | Use relative strength and opponent paths when contesting cells | league | Observed association | Separate opportunities from decisions, stratify by exact relative body length, opponent heading and alive-at-next-frame censoring, audit 2026 head-to-head collision transitions and contested apples, then validate across fresh league seasons. |
-| ADAPT-07 | Change priorities with body size, density and game phase | both | Open question | Estimate interaction effects on risk/retained reward by length, density and phase; test controlled small ablations on fresh seeds. |
+| ADAPT-07 | Change priorities with body size, density and game phase | both | Observed association | Check pre-action interaction predictions on fully held-out whole games/seasons, then perform adaptive versus fixed-weight agent ablations across diverse fresh opponents and paired seeds. |
 | ROBUST-08 | Promote only decisions that transfer to diverse league opposition | both | Observed association | Design a frozen diverse peer-opponent panel and held-out seeds; benchmark first-place frequency, retained growth, death rate and timeout. |
 
 ## State-to-action hypotheses, counterexamples and falsification tests
 
 ### SAFETY-01 — Avoid provably fatal next actions
 
-**Evidence stage:** 0 — Open question. **Domain:** mechanics. **Scope:** both.
+**Evidence stage:** 1 — Observed association. **Domain:** mechanics. **Scope:** both.
 
-**When:** A move collides under engine-verified simultaneous-turn, moving-tail and head-on rules.
+**When:** A candidate step enters a currently occupied body/tail cell, or two heads may reach one destination, under 2026 simultaneous game mechanics.
 
-**Then, HYPOTHESIS only:** Remove only actions verified fatal, not cells that appear blocked on a frozen frame.
+**Then, HYPOTHESIS only:** Separate engine-verified certain collision from probabilistic head exposure, and account for simultaneously moving tails; do not ban every current tail cell.
 
-**Known counterexample / limitation:** A current tail cell may vacate before collision resolution; a frozen occupancy map may incorrectly ban it.
+**Known counterexample / limitation:** A surviving snake can move onto its own OLD tail coordinate when that segment vacates; recorded victim events do not expose the dead snake's attempted move.
 
-**Next needed measurement:** Inspect actual current 2026 engine collision order and run replay-transition tests; recorded head-to-head victim events are all shorter or equal to the cited opponent (444 shorter, 28 equal), but they do not alone establish all engine mechanics.
+**Next needed measurement:** Directly compare chosen move-pair transitions, tail release during growth, and respawn/kill ordering against the authoritative current 2026 compiled game engine before certifying a deterministic fatal-action filter.
 
-**Falsify if:** Rule-based predicted next-state legality disagrees with validated replay transitions.
+**Falsify if:** An engine-verifiable transition contradicts the chosen-move safety prediction (including simultaneous tail vacating or contested apple growth).
 
-**Supporting reports:** [opponent_cones](opponent_cones.md)
+**Supporting reports:** [safety_mechanics](safety_mechanics.md), [opponent_cones](opponent_cones.md)
 
 ### DANGER-02 — Estimate head threat jointly with escape-space scarcity
 
@@ -74,7 +74,7 @@ Registered questions: **8**. Open: **2**. Observed association: **6**. Controlle
 
 ### FOOD-04 — Target contest-adjusted safe food, not simply nearest apple
 
-**Evidence stage:** 1 — Observed association. **Domain:** growth. **Scope:** trial.
+**Evidence stage:** 1 — Observed association. **Domain:** growth. **Scope:** both.
 
 **When:** Two snakes can reach a visible apple, and static safe-path ordering differs from toroidal geometric distance.
 
@@ -82,11 +82,11 @@ Registered questions: **8**. Open: **2**. Observed association: **6**. Controlle
 
 **Known counterexample / limitation:** Static path distances can misidentify future routes because opponent and own body cells move; trial relationships may not transfer to league.
 
-**Next needed measurement:** Run food appearance event study on actual league student-student contests, with action-level routes and apple-capture outcomes.
+**Next needed measurement:** Use body-aware path and opponent intercept timing on held-out league games, then controlled paired-seed agents; a length tie-break improved predicted captured-by accuracy, but is not an action reward.
 
 **Falsify if:** Contest-aware arrival calculations do not improve held-out league prediction or controlled capture/retained-growth rates.
 
-**Supporting reports:** [path_geometry](path_geometry.md), [food_races](food_races.md)
+**Supporting reports:** [path_geometry](path_geometry.md), [food_races](food_races.md), [league_food_contests](league_food_contests.md), [league_food_prediction](league_food_prediction.md)
 
 ### RETENTION-05 — Optimize retained growth and competitive placement, not raw apple count
 
@@ -122,19 +122,19 @@ Registered questions: **8**. Open: **2**. Observed association: **6**. Controlle
 
 ### ADAPT-07 — Change priorities with body size, density and game phase
 
-**Evidence stage:** 0 — Open question. **Domain:** adaptation. **Scope:** both.
+**Evidence stage:** 1 — Observed association. **Domain:** adaptation. **Scope:** both.
 
-**When:** Board occupancy, snake length, remaining turns or opponent skill changes materially.
+**When:** Current length, percent of occupied arena, nearest head distance and elapsed turn change the distribution of observed 10-turn deaths and pre-death food events.
 
-**Then, HYPOTHESIS only:** Use state-dependent tradeoffs rather than fixed food/escape/aggression weights.
+**Then, HYPOTHESIS only:** Evaluate adaptive length/occupancy/phase priorities against simpler fixed weights, not presume a particular weight schedule from observational rate differences.
 
-**Known counterexample / limitation:** A complex adaptive policy can overfit recurring seeds and specific opponents or exceed runtime budget.
+**Known counterexample / limitation:** Long snakes are typically present in crowded boards, and strong opponents differ across games: an apparent state effect can be a length, skill or scheduling confounder. No observed grouping identifies a winning intervention.
 
-**Next needed measurement:** Estimate interaction effects on risk/retained reward by length, density and phase; test controlled small ablations on fresh seeds.
+**Next needed measurement:** Check pre-action interaction predictions on fully held-out whole games/seasons, then perform adaptive versus fixed-weight agent ablations across diverse fresh opponents and paired seeds.
 
-**Falsify if:** Dynamic policy fails to beat a simpler constant-weight policy across held-out league-like match mixes.
+**Falsify if:** Adaptive priorities fail to improve first place, retained length and death rate on fresh league-like matches relative to a fixed-weight agent.
 
-**Supporting reports:** none yet — mechanics or behavioral research needed
+**Supporting reports:** [adaptive_context](adaptive_context.md), [long_horizon_survival](long_horizon_survival.md), [competitive_cohorts](competitive_cohorts.md)
 
 ### ROBUST-08 — Promote only decisions that transfer to diverse league opposition
 
