@@ -46,6 +46,47 @@ def outcome_status(t, sid, death_by_id, contiguous, horizon):
         return "dead"
     return "alive" if contiguous>=horizon else "censored"
 
+def axial_step(start,finish,w,h):
+    """Recorded toroidal one-cell move, never a hypothetical legal option."""
+    dx=(finish[0]-start[0])%w
+    dy=(finish[1]-start[1])%h
+    if (dx,dy)==(1,0):return (1,0)
+    if (dx,dy)==(w-1,0):return (-1,0)
+    if (dx,dy)==(0,1):return (0,1)
+    if (dx,dy)==(0,h-1):return (0,-1)
+    return None
+
+def observed_first_action(frame0,frame1,sid,w,h):
+    """Determine the actual first movement and straight/turn class."""
+    snakes0=[s for s in frame0.get("snakes",())
+             if s.get("id")==sid and s.get("alive")]
+    snakes1=[s for s in frame1.get("snakes",())
+             if s.get("id")==sid and s.get("alive")]
+    if len(snakes0)!=1 or len(snakes1)!=1:
+        return None
+    old=snakes0[0].get("body") or []
+    new=snakes1[0].get("body") or []
+    if len(old)<2 or not new:
+        return None
+    head,neck,after=coord(old[0]),coord(old[1]),coord(new[0])
+    if head is None or neck is None or after is None:
+        return None
+    previous=axial_step(neck,head,w,h)
+    move=axial_step(head,after,w,h)
+    if move is None:
+        return None
+    movement={(1,0):"+x",(-1,0):"-x",(0,1):"+y",(0,-1):"-y"}[move]
+    if previous is None:
+        style="unknown_heading"
+    elif move==previous:
+        style="straight"
+    elif move==(-previous[0],-previous[1]):
+        style="reverse"
+    else:
+        style="turn"
+    return dict(movement=movement,turn_type=style)
+
+
 def observed_followup(replay, season, replay_name, mode, sha):
     """One real danger state with explicitly censored future outcomes."""
     w,h=board_shape(replay)
@@ -78,6 +119,9 @@ def observed_followup(replay, season, replay_name, mode, sha):
             assert all(status[h]=="dead" for h in HORIZONS)
         start=frames[t]
         measurements={}
+        actual_first_action=(observed_first_action(start,frames[t+1],sid,w,h)
+            if status[10]=="alive" or outcome_status(t,sid,deaths,contiguous,1)=="alive"
+            else None)
         start_count=row["neighbor_exits"]
         start_nearest=row["nearest_head"]
         for step in STEPS:
@@ -119,6 +163,7 @@ def observed_followup(replay, season, replay_name, mode, sha):
             continuous_followup=contiguous,
             status10=status[10],status20=status[20],status30=status[30],
             measurements=measurements,
+            first_action=actual_first_action,
             all_death_events=deaths.get(sid,())))
         qc["long_horizon_baselines"]+=1
         qc["censored_30"]+=status[30]=="censored"
