@@ -12,17 +12,18 @@
     {
       "id": "SAFETY-01",
       "title": "Avoid provably fatal next actions",
-      "stage": 0,
+      "stage": 1,
       "domain": "mechanics",
       "mode": "both",
-      "if_state": "A move collides under engine-verified simultaneous-turn, moving-tail and head-on rules.",
-      "then_hypothesis": "Remove only actions verified fatal, not cells that appear blocked on a frozen frame.",
+      "if_state": "A candidate step enters a currently occupied body/tail cell, or two heads may reach one destination, under 2026 simultaneous game mechanics.",
+      "then_hypothesis": "Separate engine-verified certain collision from probabilistic head exposure, and account for simultaneously moving tails; do not ban every current tail cell.",
       "evidence": [
+        "data/reports/safety_mechanics.md",
         "data/reports/opponent_cones.md"
       ],
-      "counterexample": "A current tail cell may vacate before collision resolution; a frozen occupancy map may incorrectly ban it.",
-      "next_experiment": "Inspect actual current 2026 engine collision order and run replay-transition tests; recorded head-to-head victim events are all shorter or equal to the cited opponent (444 shorter, 28 equal), but they do not alone establish all engine mechanics.",
-      "falsification": "Rule-based predicted next-state legality disagrees with validated replay transitions."
+      "counterexample": "A surviving snake can move onto its own OLD tail coordinate when that segment vacates; recorded victim events do not expose the dead snake's attempted move.",
+      "next_experiment": "Directly compare chosen move-pair transitions, tail release during growth, and respawn/kill ordering against the authoritative current 2026 compiled game engine before certifying a deterministic fatal-action filter.",
+      "falsification": "An engine-verifiable transition contradicts the chosen-move safety prediction (including simultaneous tail vacating or contested apple growth)."
     },
     {
       "id": "DANGER-02",
@@ -63,15 +64,17 @@
       "title": "Target contest-adjusted safe food, not simply nearest apple",
       "stage": 1,
       "domain": "growth",
-      "mode": "trial",
+      "mode": "both",
       "if_state": "Two snakes can reach a visible apple, and static safe-path ordering differs from toroidal geometric distance.",
       "then_hypothesis": "Estimate safe arrival times, contested landing-head risks, and post-apple escape space before committing.",
       "evidence": [
         "data/reports/path_geometry.md",
-        "data/reports/food_races.md"
+        "data/reports/food_races.md",
+        "data/reports/league_food_contests.md",
+        "data/reports/league_food_prediction.md"
       ],
       "counterexample": "Static path distances can misidentify future routes because opponent and own body cells move; trial relationships may not transfer to league.",
-      "next_experiment": "Run food appearance event study on actual league student-student contests, with action-level routes and apple-capture outcomes.",
+      "next_experiment": "Use body-aware path and opponent intercept timing on held-out league games, then controlled paired-seed agents; a length tie-break improved predicted captured-by accuracy, but is not an action reward.",
       "falsification": "Contest-aware arrival calculations do not improve held-out league prediction or controlled capture/retained-growth rates."
     },
     {
@@ -108,15 +111,19 @@
     {
       "id": "ADAPT-07",
       "title": "Change priorities with body size, density and game phase",
-      "stage": 0,
+      "stage": 1,
       "domain": "adaptation",
       "mode": "both",
-      "if_state": "Board occupancy, snake length, remaining turns or opponent skill changes materially.",
-      "then_hypothesis": "Use state-dependent tradeoffs rather than fixed food/escape/aggression weights.",
-      "evidence": [],
-      "counterexample": "A complex adaptive policy can overfit recurring seeds and specific opponents or exceed runtime budget.",
-      "next_experiment": "Estimate interaction effects on risk/retained reward by length, density and phase; test controlled small ablations on fresh seeds.",
-      "falsification": "Dynamic policy fails to beat a simpler constant-weight policy across held-out league-like match mixes."
+      "if_state": "Current length, percent of occupied arena, nearest head distance and elapsed turn change the distribution of observed 10-turn deaths and pre-death food events.",
+      "then_hypothesis": "Evaluate adaptive length/occupancy/phase priorities against simpler fixed weights, not presume a particular weight schedule from observational rate differences.",
+      "evidence": [
+        "data/reports/adaptive_context.md",
+        "data/reports/long_horizon_survival.md",
+        "data/reports/competitive_cohorts.md"
+      ],
+      "counterexample": "Long snakes are typically present in crowded boards, and strong opponents differ across games: an apparent state effect can be a length, skill or scheduling confounder. No observed grouping identifies a winning intervention.",
+      "next_experiment": "Check pre-action interaction predictions on fully held-out whole games/seasons, then perform adaptive versus fixed-weight agent ablations across diverse fresh opponents and paired seeds.",
+      "falsification": "Adaptive priorities fail to improve first place, retained length and death rate on fresh league-like matches relative to a fixed-weight agent."
     },
     {
       "id": "ROBUST-08",

@@ -80,6 +80,11 @@ jobs:
         run: |
           python -m research.league_food_contests --data-dir data --max-files 250
           python -m research.league_food_outcomes --data-dir data
+      - name: Audit 2026 mechanics and adaptive risk windows
+        if: steps.freshness.outputs.collect == 'true'
+        run: |
+          python -m research.safety_mechanics --data-dir data --max-files 250
+          python -m research.adaptive_context --data-dir data --max-files 250
       - name: Build canonical joined league and trial research dashboard
         if: steps.freshness.outputs.collect == 'true'
         run: python -m research.integrated_dashboard --data-dir data
