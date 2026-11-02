@@ -53,6 +53,8 @@ jobs:
       - name: Study league apple contests (read-only replay analysis)
         run: |
           python -m research.league_food_contests --data-dir data
+          python -m research.league_food_outcomes --data-dir data
+          sed -n '1,120p' data/reports/league_food_prediction.md
           sed -n '1,120p' data/reports/league_food_contests.md
       - name: Save validated report and charts (never commits data)
         uses: actions/upload-artifact@v4
@@ -88,6 +90,7 @@ jobs:
             data/derived/route_choice_cohorts.csv
             data/reports/algorithm_rulebook.md
             data/reports/league_food_contests.md
+            data/reports/league_food_prediction.md
             data/derived/league_food_contests.csv
             data/reports/charts/cohort_danger_outcomes.svg
             data/derived/competitive_cohort_danger.csv
