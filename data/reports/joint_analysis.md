@@ -1,6 +1,6 @@
 # Snake26: JOINED league + trials study
 
-Generated UTC: 2026-11-02T08:22:22+00:00
+Generated UTC: 2026-11-02T08:40:32+00:00
 
 **Latest official season:** 2026-11-02-045859-season. This report treats competitive league
 matches and controlled on-arrival trials as **two separate datasets**
@@ -148,6 +148,14 @@ The model freezes opponents and assumes no growth; its routes are
 NOT engine-verified safe paths or counterfactual outcomes.
 Replay-sampled danger positions with route features: **2637**.
 ![Recorded high-route-space first moves by cohort](charts/route_choice_cohorts.svg)
+### Which first steps could become opponent head contests?
+The [whole-field head-cone analysis](opponent_cones.md) models all
+opponents' next-head REACHABLE cells from current geometry, compares
+them with each alternative route and audits real next-frame
+moves and head-to-head victim events. Separate league and trial
+outcomes remain visible; these are NOT verified engine-legal moves.
+Actual league danger positions with cone features: **2196**.
+![Observed head-contest choices by group](charts/opponent_contests.svg)
 ### Does the snake remain safe after its first escape?
 [Palmer's audited danger-response casebook](palmer_casebook.md) gives
 one earliest dangerous position per unique league replay and
