@@ -18,6 +18,8 @@ Read this before interpreting the older single-environment reports.
   works without older official standings; **game-derived proxy** only.
 - [League/trial specialists across historical snapshots](seasonal_disagreement.md):
   matched division ranks, tracked across recorded seasons and bot hashes.
+- [Head pressure, local exits, and future deaths](threat_windows.md):
+  actual replay frames; mode- and length-stratified, not a proven policy.
 - [Observed league/trial behavior matched by student](behavior_by_mode.md):
   replay-derived food and death measures; report sample coverage first.
 - [League food versus growth retained](league_sweet_spot.md):

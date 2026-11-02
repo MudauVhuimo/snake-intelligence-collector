@@ -1,6 +1,6 @@
 # Snake26: JOINED league + trials study
 
-Generated UTC: 2026-11-02T06:14:41+00:00
+Generated UTC: 2026-11-02T06:36:51+00:00
 
 **Latest official season:** 2026-11-02-045859-season. This report treats competitive league
 matches and controlled on-arrival trials as **two separate datasets**
@@ -112,6 +112,14 @@ verifiable frame-derived definitions can be compared across modes.
 observed food-event/death rates and their conditional correlations.
 ![Student food events per observed move in each mode](charts/observed_food_by_mode.svg)
 ![Student deaths per observed move in each mode](charts/observed_deaths_by_mode.svg)
+### Forward-looking head pressure and escape space
+Unique replays with complete frame-based pressure analysis: **113**
+(league **59**, trial **54**).
+Measure danger BEFORE the outcome: each living student's nearest
+opponent head, free adjacent cells, then death events in the NEXT
+ten turns. See [head-pressure and escape study](threat_windows.md)
+for length-stratified results, per-replay counts and uncertainty.
+![10-turn death frequencies by head proximity](charts/head_pressure_vs_death.svg)
 
 ## 6. Longitudinal disagreement: league specialists vs trial specialists
 
@@ -144,6 +152,8 @@ match-derived outcomes, never represented as official league rank.
   actual archived matches; does NOT imply missing official rank.
 - [Historical league–trial student rank gaps](../derived/seasonal_rank_gaps.csv) —
   comparable within-division student-season ranks; snapshots not independent.
+- [Head-pressure and local-exit exposures](../derived/threat_window_student_seasons.csv) —
+  sampled from actual replay frames, with next-10-turn outcomes.
 - [Replay-backed behavior, separated by mode](../derived/replay_behavior_by_mode.csv) —
   only downloaded full match observations.
 - [Data validation summary](../derived/quality.json) —
