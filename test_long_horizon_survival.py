@@ -79,6 +79,7 @@ class LongHorizonTests(unittest.TestCase):
         self.assertIn(30,row["measurements"])
         self.assertEqual(row["first_action"]["movement"],"+x")
         self.assertEqual(row["first_action"]["turn_type"],"straight")
+        self.assertEqual(row["stable_food_progress1"],1)
         c=survival_counts([row],"league")
         self.assertEqual(c["known30"],1)
         self.assertEqual(c["alive30"],1)
