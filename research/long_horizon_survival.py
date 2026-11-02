@@ -104,6 +104,7 @@ def plot_recovery(path,rates):
 
 def export_rows(rows):
     for r in rows:
+        action=r.get("first_action") or {}
         step=r["measurements"].get(3) or {}
         after10=r["measurements"].get(10) or {}
         after30=r["measurements"].get(30) or {}
@@ -114,6 +115,9 @@ def export_rows(rows):
             pressure=r["head_pressure"],confined=r["confined"],
             outcome10=r["status10"],outcome20=r["status20"],outcome30=r["status30"],
             contiguous_followup=r["continuous_followup"],
+            first_move_axis=action.get("movement"),
+            first_move_style=action.get("turn_type"),
+            food_progress_same_apple1=r.get("stable_food_progress1"),
             exit_gain3=step.get("exit_change"),
             head_distance_gain3=step.get("head_distance_change"),
             apples10=after10.get("apples"),apples30=after30.get("apples"),
