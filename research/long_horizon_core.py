@@ -23,7 +23,7 @@ import hashlib
 import json
 
 from .escape_autopsy_core import review_replay, first_death_by_id, snapshots_at
-from .threat_windows_core import board_shape, distance, heads, unoccupied_neighbors
+from .threat_windows_core import board_shape, coord, distance, heads, unoccupied_neighbors
 
 HORIZONS=(10,20,30)
 STEPS=(1,3,10,20,30)
