@@ -303,7 +303,7 @@ def build(data_dir,max_files=250):
     unseen={mode:eval_records(holdout(part)) for mode,part in
             (("league",all_league),("trial",all_trial))}
     holdouts={mode:holdout(part) for mode,part in
-              (("league",all_league),("trial",all_trial)}
+              (("league",all_league),("trial",all_trial))}
     matches=pair_source_decisions(data_dir,rows)
     paired={key:pair_contrast(matches,key) for key in
             ("chosen_tail_rank","chosen_frozen_rank",
