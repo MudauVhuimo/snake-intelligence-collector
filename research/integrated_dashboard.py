@@ -15,6 +15,7 @@ import json
 
 from .joined_datasets import build as prepare, correlations
 from .behavior_by_mode import build as behavior_report
+from .seasonal_disagreement import build as seasonal_report
 from .league_comparison import chart
 
 PAIRS=(
@@ -102,6 +103,7 @@ def build(data_dir):
     if not latest:
         raise RuntimeError("No official season to compare")
     movement=behavior_report(data_dir)  # Replay evidence stays separate from catalog outcomes.
+    history=seasonal_report(data_dir)  # Longitudinal matched ranking differences, not independent trials.
     paired,results=correlations(data["joined"],latest,division=1,min_league=3)
     champion=next((r["team"] for r in sorted(paired,key=lambda r:
                     r["official_rank"] if r["official_rank"] is not None else 99999)),None)
@@ -193,19 +195,31 @@ def build(data_dir):
         "![Student food events per observed move in each mode](charts/observed_food_by_mode.svg)",
         "![Student deaths per observed move in each mode](charts/observed_deaths_by_mode.svg)",
         "",
-        "## 6. Reproducible joined data exports","",
+        "## 6. Longitudinal disagreement: league specialists vs trial specialists","",
+        f"Historical Division 1 snapshots with matched outcome comparisons: "
+        f"**{history['division1_snapshots']}**.",
+        "We rank the same eligible students within each official division and",
+        "season, then compare league versus trial percentiles. Repeated hourly",
+        "snapshots are correlated and do not form independent experiments.",
+        "[Open the historical disagreement study](seasonal_disagreement.md).",
+        "![Historical rank agreement](charts/historical_rank_alignment.svg)",
+        "![Students specializing in league or trials](charts/league_trial_outliers.svg)",
+        "",
+        "## 7. Reproducible joined data exports","",
         "- [League team-season summaries](../derived/league_team_seasons.csv) —",
         "  the real competition outcomes, including human-opponent counts.",
         "- [Trial team-season summaries](../derived/trial_team_seasons.csv) —",
         "  three controlled benchmark setups, kept separate.",
         "- [Joined student-season dataset](../derived/joined_team_seasons.csv) —",
         "  one row per student and season; missing sides are **missing**, not zero.",
+        "- [Historical league–trial student rank gaps](../derived/seasonal_rank_gaps.csv) —",
+        "  comparable within-division student-season ranks; snapshots not independent.",
         "- [Replay-backed behavior, separated by mode](../derived/replay_behavior_by_mode.csv) —",
         "  only downloaded full match observations.",
         "- [Data validation summary](../derived/quality.json) —",
         "  replay coverage, SHA deduplication and sample sizes.",
         "",
-        "## 7. What needs further evidence","",
+        "## 8. What needs further evidence","",
         "1. Obtain full league replays of top Division 1 students, including both",
         "   winners and losers, and map their exact turns/deaths/food contests.",
         "2. Run the **same replay-derived definitions** separately on league and",
@@ -232,6 +246,8 @@ def build(data_dir):
         "## Supporting studies — with explicitly limited scopes","",
         "- [Official league versus fixed-seed rankings](league_vs_trials.md):",
         "  standings/outcomes, not a replay-derived behavioral model.",
+        "- [League/trial specialists across historical snapshots](seasonal_disagreement.md):",
+        "  matched division ranks, tracked across recorded seasons and bot hashes.",
         "- [Observed league/trial behavior matched by student](behavior_by_mode.md):",
         "  replay-derived food and death measures; report sample coverage first.",
         "- [League food versus growth retained](league_sweet_spot.md):",
@@ -254,7 +270,7 @@ def build(data_dir):
         "executables or source code are extracted. No Java snake changes yet.",""
     ]
     (output/"README.md").write_text("\n".join(home),encoding="utf-8")
-    return dict(season=latest,replay_paired=movement["paired_student_replays"],paired_division1=len(paired),
+    return dict(season=latest,historical_div1_snapshots=history["division1_snapshots"],replay_paired=movement["paired_student_replays"],paired_division1=len(paired),
                 comparison={r["metric"]:r["rho"] for r in results},
                 reports=[str(dest),str(output/"README.md")])
 
