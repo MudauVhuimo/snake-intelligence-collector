@@ -183,15 +183,56 @@ def extract(data_dir,max_files=250):
     return results,quality
 
 def auc(records,feature):
-    """Exact univariate ROC AUC with ties, higher scores = higher death risk."""
-    eligible=[(r[feature],int(r["death10"]=="dead"))
-              for r in records if r["death10"] in ("alive","dead")
-              and r[feature] is not None]
-    cases=[v for v,d in eligible if d]
-    controls=[v for v,d in eligible if not d]
-    if not cases or not controls:return None
-    wins=sum((x>y)+.5*(x==y) for x in cases for y in controls)
-    return wins/(len(cases)*len(controls))
+    """Exact tie-corrected Mann–Whitney ROC AUC: higher => more death risk.
+
+    Sorting avoids quadratic death x survival comparisons in a match bootstrap.
+    """
+    ordered=sorted((r[feature],int(r["death10"]=="dead"))
+                   for r in records if r["death10"] in ("alive","dead")
+                   and r[feature] is not None)
+    npos=sum(label for value,label in ordered)
+    nneg=len(ordered)-npos
+    if not npos or not nneg:return None
+    rank_sum=0.0
+    i=0
+    while i<len(ordered):
+        j=i+1
+        while j<len(ordered) and ordered[j][0]==ordered[i][0]:
+            j+=1
+        positive=sum(label for value,label in ordered[i:j])
+        rank_sum+=positive*(i+1+j)/2
+        i=j
+    return (rank_sum-npos*(npos+1)/2)/(npos*nneg)
+
+def replay_bootstrap_auc_difference(rows,first,second,draws=1000,seed=2026):
+    """Bootstrap WHOLE replay clusters for paired univariate AUC difference.
+
+    Comparisons are on identical observed windows; scores fixed before outcomes.
+    Intervals do NOT adjust repeated bot versions or hypothesis selection.
+    """
+    grouped=defaultdict(list)
+    for r in rows:grouped[r["replay_sha"]].append(r)
+    shas=sorted(grouped)
+    result=dict(replay_clusters=len(shas),draws=0,low=None,high=None,
+                observed=None)
+    risk=lambda records,key:[{**r,"risk":-r[key]} for r in records]
+    a=auc(risk(rows,first),"risk")
+    b=auc(risk(rows,second),"risk")
+    result["observed"]=a-b if a is not None and b is not None else None
+    if len(shas)<8:return result
+    rng=random.Random(seed)
+    samples=[]
+    for _ in range(draws):
+        rs=[r for sha in rng.choices(shas,k=len(shas)) for r in grouped[sha]]
+        a=auc(risk(rs,first),"risk")
+        b=auc(risk(rs,second),"risk")
+        if a is not None and b is not None:samples.append(a-b)
+    samples.sort()
+    if len(samples)>=draws//2:
+        result["draws"]=len(samples)
+        result["low"]=samples[int(.025*(len(samples)-1))]
+        result["high"]=samples[int(.975*(len(samples)-1))]
+    return result
 
 def eval_records(rows):
     """Negative sign converts bigger mobility to lower predicted risk."""
@@ -308,6 +349,11 @@ def build(data_dir,max_files=250):
             (("league",all_league),("trial",all_trial))}
     holdouts={mode:holdout(part) for mode,part in
               (("league",all_league),("trial",all_trial))}
+    bootstrap={label:replay_bootstrap_auc_difference(holdouts["league"],left,right)
+               for label,left,right in (
+                   ("tail_minus_frozen","best_tail","best_frozen"),
+                   ("tail_minus_neighbors","best_tail","free_exits"),
+                   ("frozen_minus_neighbors","best_frozen","free_exits"))}
     matches=pair_source_decisions(data_dir,rows)
     paired={key:pair_contrast(matches,key) for key in
             ("chosen_tail_rank","chosen_frozen_rank",
@@ -405,7 +451,46 @@ def build(data_dir,max_files=250):
                          f"{fmt(whole[mode][key])} | {fmt(unseen[mode][key])} | "
                          f"{len(test)} | {sum(r['death10']=='dead' for r in test)} |")
     lines+=["",
-        "Univariate AUC is NOT a calibrated hazard model. Match/body length,",
+        "## 2a. Whole-game bootstrap: how reliable is the holdout difference?","",
+        "Use exactly the SAME held-out dangerous league frames for both",
+        "predictors. Repeatedly sample entire replay games, preserving",
+        "within-match correlation instead of resampling individual turns.",
+        "Intervals are exploratory and do not control for repeated bot versions",
+        "or feature engineering influenced by this historical archive.",
+        "",
+        "| Holdout league contrast | Observed AUC advantage | Replay-bootstrap 95% interval | Games |",
+        "|---|---:|---|---:|"]
+    for label,title in (
+        ("tail_minus_frozen","Moving-tail reach minus frozen flood-fill"),
+        ("tail_minus_neighbors","Moving-tail reach minus free neighbors"),
+        ("frozen_minus_neighbors","Frozen flood-fill minus free neighbors")
+    ):
+        b=bootstrap[label]
+        ci=(f"[{b['low']:+.3f}, {b['high']:+.3f}]"
+            if b["low"] is not None else "insufficient replay clusters")
+        lines.append(f"| {title} | {fmt(b['observed'],precision=3)} | "
+                     f"{ci} | {b['replay_clusters']} |")
+    lines += ["",
+        "A confidence interval crossing ZERO means the data do not establish",
+        "that a more complicated feature is actually superior.",
+        "",
+        "## 2b. Sensitivity to current body length","",
+        "Length can change the meaning of 'room to move'; report all bins",
+        "rather than assuming one universally useful mobility estimator.","",
+        "| League body length | Observed danger windows | 10-turn deaths | Free neighbors AUC | Frozen flood-fill AUC | Moving-tail reach AUC |",
+        "|---|---:|---:|---:|---:|---:|"]
+    for length in ("5-24","25-49","50-99","100+"):
+        part=[r for r in all_league if r["length_band"]==length]
+        values=eval_records(part)
+        lines.append(f"| {length} | {len(part)} | "
+                     f"{sum(r['death10']=='dead' for r in part)} | "
+                     f"{fmt(values['free_exits'])} | "
+                     f"{fmt(values['best_frozen'])} | {fmt(values['best_tail'])} |")
+    lines+=["",
+        "Small snakes and long snakes can differ; individual bins have few",
+        "death events, so these figures are NOT verified optimal thresholds.",
+        "",
+        "Univariate AUC is NOT a calibrated hazard model. Match/body length,
         "food density, opponent strength and available routes affect every",
         "candidate feature. A test with no deaths cannot produce an AUC.",
         "",
@@ -457,7 +542,8 @@ def build(data_dir,max_files=250):
                 observed_moves=qc["league_first_moves_measured"]+
                                qc["trial_first_moves_measured"],
                 same_game_pairs=len(matches),cohorts=cohorts,auc=whole,
-                holdout_auc=unseen,quality=dict(qc),report=str(path))
+                holdout_auc=unseen,bootstrap_auc=bootstrap,
+                quality=dict(qc),report=str(path))
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
