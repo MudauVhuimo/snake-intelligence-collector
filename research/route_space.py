@@ -131,7 +131,9 @@ def extract(data_dir,max_files=250):
     """Reuse existing audited deduplicated danger windows, no re-sampling."""
     raw=read_csv(data_dir/"derived"/"long_horizon_danger_windows.csv")
     if not raw:
-        raise ValueError("First generate censored long-horizon danger windows")
+        # Some integration fixtures contain catalogs but no full replay files.
+        # Publish explicitly empty/insufficient results rather than fabricate.
+        return [],Counter(source_danger_windows=0,modeled_rows=0,unique_replays=0)
     from .competitive_cohorts import ranks
     with sqlite3.connect(data_dir/"snake.db") as db:
         official=ranks(db)
