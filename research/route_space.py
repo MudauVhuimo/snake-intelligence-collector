@@ -22,6 +22,10 @@ from .league_comparison import chart
 from .route_space_core import (
     scene_from_frame,scene_metrics,rank_choice,validate_plain_transition)
 from .threat_windows_core import coord
+from .opponent_cone_core import (
+    opponent_cones,summarize_candidates,candidate_profile,
+    actual_choice_risk,check_opponent_next_heads,audit_next_head_death,
+    head_to_head_lengths)
 
 FEATURES=(("static","Frozen-body flood-fill"),("tail","Own-tail 8-step beam reach"))
 MEASURES=(("free_exits","Current unoccupied neighbors"),
@@ -52,7 +56,7 @@ def get_next_head(frame,sid):
           and s.get("alive") and s.get("body")]
     return (hits[0] if len(hits)==1 else None)
 
-def one_window(replay,frames,window,cohort,quality):
+def one_window(replay,frames,window,cohort,quality,audited_opponents=None):
     t=int(window["turn"])
     frame=frames.get(t)
     if frame is None:
@@ -70,9 +74,26 @@ def one_window(replay,frames,window,cohort,quality):
     if len(set(scene.own))!=len(scene.own):
         quality["repeated_tail_accepted"]+=1
     alternatives=scene_metrics(scene)
+    # Opponent reach sets use ONLY present-frame head/neck and length.
+    cones=opponent_cones(frame,sid,scene.width,scene.height)
+    options=summarize_candidates(alternatives,cones,len(scene.own))
+    profile=candidate_profile(options)
     following=frames.get(t+1)
     after=get_next_head(following,sid)
     observed_head=coord(after["body"][0]) if after else None
+    selected_risk=actual_choice_risk(options,observed_head)
+    first_death=audit_next_head_death(following,sid)
+    quality["first_step_"+first_death]+=1
+    if audited_opponents is not None:
+        fresh={opp_id:c for opp_id,c in cones.items()
+               if (t,opp_id) not in audited_opponents}
+        audited_opponents.update((t,opp_id) for opp_id in fresh)
+        excluded={e.get("snake") for e in (following or {}).get("events",())
+                  if e.get("kind") in ("died","respawned")}
+        quality.update(check_opponent_next_heads(fresh,following,excluded))
+    quality["candidate_threatened"]+=sum(x["head_cone"] for x in options)
+    quality["candidate_total"]+=len(options)
+    quality["unknown_heading_opponents"]+=sum(not x["known_heading"] for x in cones.values())
     observed=(rank_choice(alternatives,observed_head,"frozen"),
               rank_choice(alternatives,observed_head,"tail"))
     if observed_head is not None and any(x is None for x in observed):
@@ -111,6 +132,24 @@ def one_window(replay,frames,window,cohort,quality):
         free_exits=int(window["free_exits"]),
         phase=t//500,death10=death10,death30=death30,
         candidate_count=modelable,
+        opponent_heads=len(cones),
+        unknown_opponent_headings=sum(not c["known_heading"] for c in cones.values()),
+        threatened_count=profile["threatened_count"],
+        nonweaker_threatened_count=profile["nonweaker_threatened_count"],
+        uncontested_count=profile["uncontested_count"],
+        nonweaker_free_count=profile["nonweaker_free_count"],
+        all_cone=profile["all_cone"],
+        all_nonweaker_cone=profile["all_nonweaker_cone"],
+        best_uncontested_tail=profile["best_uncontested_tail"],
+        best_nonweaker_free_tail=profile["best_nonweaker_free_tail"],
+        tail_best_requires_cone=profile["tail_best_requires_cone"],
+        top_tail_has_uncontested=profile["top_tail_has_uncontested"],
+        first_step_death_cause=first_death,
+        chosen_cone=(selected_risk.get("chosen_cone") if selected_risk["observed"] else None),
+        chosen_nonweaker_cone=(selected_risk.get("chosen_nonweaker_cone")
+                              if selected_risk["observed"] else None),
+        chosen_longer_cone=(selected_risk.get("chosen_longer_cone")
+                           if selected_risk["observed"] else None),
         best_frozen=max(frozen,default=0),
         best_tail=max(moving,default=0),
         frozen_spread=max(frozen,default=0)-min(frozen,default=0),
@@ -170,10 +209,21 @@ def extract(data_dir,max_files=250):
         seen_sha.add(digest)
         mode=windows[0]["mode"]
         quality[mode+"_unique_replays"]+=1
+        # Every recorded head-on victim event is counted once per unique replay.
+        for after_frame in replay.get("frames",()):
+            turn=after_frame.get("turn")
+            prev=frames.get(turn-1) if isinstance(turn,int) else None
+            for event in after_frame.get("events",()):
+                outcome=head_to_head_lengths(prev,event)
+                if outcome is not None:
+                    quality[mode+"_h2h_victim_events"]+=1
+                    quality["head_on_"+outcome["relation"]]+=1
+        audited_opponents=set()
         for win in windows:
             try:
                 rank=official.get((win["season"],win["student"]))
-                row=one_window(replay,frames,win,rank["cohort"] if rank else None,quality)
+                row=one_window(replay,frames,win,rank["cohort"] if rank else None,
+                               quality,audited_opponents)
                 if row:
                     results.append(row)
             except (KeyError,ValueError,TypeError):
