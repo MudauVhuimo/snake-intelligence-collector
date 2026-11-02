@@ -40,6 +40,10 @@ jobs:
           path: |
             data/derived/*.csv
             data/derived/quality.json
+            data/derived/seasonal_rank_gaps.csv
+            data/reports/seasonal_disagreement.md
+            data/reports/charts/historical_rank_alignment.svg
+            data/reports/charts/league_trial_outliers.svg
             data/reports/README.md
             data/reports/joint_analysis.md
             data/reports/behavior_by_mode.md
