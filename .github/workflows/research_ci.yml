@@ -56,6 +56,14 @@ jobs:
           python -m research.league_food_outcomes --data-dir data
           sed -n '1,120p' data/reports/league_food_prediction.md
           sed -n '1,120p' data/reports/league_food_contests.md
+      - name: Validate remaining safety and adaptive evidence studies
+        run: |
+          python -m research.safety_mechanics --data-dir data --max-files 250
+          python -m research.adaptive_context --data-dir data --max-files 250
+          python -m research.rulebook --data-dir data
+          sed -n '1,100p' data/reports/safety_mechanics.md
+          sed -n '1,125p' data/reports/adaptive_context.md
+          sed -n '1,26p' data/reports/algorithm_rulebook.md
       - name: Save validated report and charts (never commits data)
         uses: actions/upload-artifact@v4
         with:
@@ -89,6 +97,9 @@ jobs:
             data/derived/route_choice_windows.csv
             data/derived/route_choice_cohorts.csv
             data/reports/algorithm_rulebook.md
+            data/reports/safety_mechanics.md
+            data/reports/adaptive_context.md
+            data/derived/adaptive_state_windows.csv
             data/reports/league_food_contests.md
             data/reports/league_food_prediction.md
             data/derived/league_food_contests.csv
