@@ -17,9 +17,11 @@
       "mode": "both",
       "if_state": "A move collides under engine-verified simultaneous-turn, moving-tail and head-on rules.",
       "then_hypothesis": "Remove only actions verified fatal, not cells that appear blocked on a frozen frame.",
-      "evidence": [],
+      "evidence": [
+        "data/reports/opponent_cones.md"
+      ],
       "counterexample": "A current tail cell may vacate before collision resolution; a frozen occupancy map may incorrectly ban it.",
-      "next_experiment": "Confirm official collision timing and run transition-validation on real multi-agent replay frames.",
+      "next_experiment": "Inspect actual current 2026 engine collision order and run replay-transition tests; recorded head-to-head victim events are all shorter or equal to the cited opponent (444 shorter, 28 equal), but they do not alone establish all engine mechanics.",
       "falsification": "Rule-based predicted next-state legality disagrees with validated replay transitions."
     },
     {
@@ -31,10 +33,11 @@
       "if_state": "An opponent head is <=3 toroidal cells away, especially with <=1 presently unoccupied neighboring cell.",
       "then_hypothesis": "Include opponent-head reach and locally available escape directions as joint danger features; do not automatically flee.",
       "evidence": [
-        "data/reports/threat_windows.md"
+        "data/reports/threat_windows.md",
+        "data/reports/opponent_cones.md"
       ],
-      "counterexample": "Strong snakes sometimes safely move into apparently fewer free adjacent cells; moving tails and corridors matter.",
-      "next_experiment": "Compare threats by relative length, heading, body geometry and future opponent reach across whole-game holdouts.",
+      "counterexample": "Simple one-step head cones cover normal observed movements, but adding them to route-area predictors improved held-out league AUC only marginally with interval crossing zero. A geometric reach cone includes collision-impossible moves and can overstate actual opponent risk.",
+      "next_experiment": "Test empirically observed head-to-head and opponent next-move frequencies by body length, exact heading, position, and contested apple state in fresh whole league games; compare calibrated risk predictors and agent ablations.",
       "falsification": "In matched held-out league states the joint features do not predict death or loss of safe routes over simpler baselines."
     },
     {
@@ -48,10 +51,11 @@
       "evidence": [
         "data/reports/escape_autopsies.md",
         "data/reports/long_horizon_survival.md",
-        "data/reports/route_space.md"
+        "data/reports/route_space.md",
+        "data/reports/opponent_cones.md"
       ],
       "counterexample": "Moving-tail search showed only a small, uncertain held-out AUC gain over frozen flood-fill; top, middle and bottom snakes selected highest-score modeled moves at similar rates. High predicted reachable area is NOT a proven best first action.",
-      "next_experiment": "Validate route-score prediction across later independent league seasons, include opponent-head reachable sets and growth-aware collision timing; run ablations of the new agent against a locked diverse peer panel.",
+      "next_experiment": "Validate whether opponent-aware route scores improve independent later-season league AUC (the current +0.015 held-out advantage is uncertain), then compare simpler frozen flood-fill, moving-tail and head-cone features in controlled opponent-diverse ablations.",
       "falsification": "Dynamic connectivity fails to predict survival or gives poorer league results than a static or simpler heuristic."
     },
     {
@@ -89,14 +93,16 @@
     {
       "id": "CONTEST-06",
       "title": "Use relative strength and opponent paths when contesting cells",
-      "stage": 0,
+      "stage": 1,
       "domain": "opponents",
       "mode": "league",
       "if_state": "An opponent can approach the same cell or apple in the next few turns.",
-      "then_hypothesis": "Condition contest or withdrawal decisions on legal head-on mechanics, relative size, projected opponent actions and post-contact escape.",
-      "evidence": [],
-      "counterexample": "Aggressive attacks can be fatal or strand the attacker; kills per game do not reveal intent or proper opportunity.",
-      "next_experiment": "Build head-to-head encounter cohorts from league matches with relative length, heading, predicted cell conflict and outcome.",
+      "then_hypothesis": "Measure each possible move's exposure to reachable opponent heads and relative length; consider state-dependent confrontation versus retreat, but do not infer intent, legality or an approved attack rule.",
+      "evidence": [
+        "data/reports/opponent_cones.md"
+      ],
+      "counterexample": "Top-ranked snakes entered possible head-contest cells more frequently overall, but once conditioned on having a shorter-only contest opportunity, top 68.2% and bottom 73.7% (only 19 eligible bottom moves). Growth and opportunity confound apparent aggression; dead-on-first-step choices are missing.",
+      "next_experiment": "Separate opportunities from decisions, stratify by exact relative body length, opponent heading and alive-at-next-frame censoring, audit 2026 head-to-head collision transitions and contested apples, then validate across fresh league seasons.",
       "falsification": "Contest-aware decisions degrade league rankings or cannot be predicted across different opponent styles."
     },
     {
