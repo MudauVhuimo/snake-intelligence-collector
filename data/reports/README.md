@@ -14,6 +14,10 @@ Read this before interpreting the older single-environment reports.
 
 - [Official league versus fixed-seed rankings](league_vs_trials.md):
   standings/outcomes, not a replay-derived behavioral model.
+- [Historical actual peer-match outcomes vs trials](historical_peer_comparison.md):
+  works without older official standings; **game-derived proxy** only.
+- [League/trial specialists across historical snapshots](seasonal_disagreement.md):
+  matched division ranks, tracked across recorded seasons and bot hashes.
 - [Observed league/trial behavior matched by student](behavior_by_mode.md):
   replay-derived food and death measures; report sample coverage first.
 - [League food versus growth retained](league_sweet_spot.md):

@@ -1,6 +1,6 @@
 # Snake26: JOINED league + trials study
 
-Generated UTC: 2026-11-02T06:09:56+00:00
+Generated UTC: 2026-11-02T06:14:41+00:00
 
 **Latest official season:** 2026-11-02-045859-season. This report treats competitive league
 matches and controlled on-arrival trials as **two separate datasets**
@@ -35,17 +35,21 @@ Investigate any nonzero cases before interpreting reset behavior.
 
 ![Joined correlations](charts/joint_correlations.svg)
 
-| Paired measurement | Division 1 students | Spearman rho |
-|---|---:|---:|
-| Apples per game | 32 | 0.469 |
-| Final body length | 32 | 0.164 |
-| Kills per game | 32 | 0.010 |
-| Retained growth / expected no-reset growth | 32 | 0.215 |
+| Paired measurement | Division 1 students | Spearman rho | Exploratory 95% paired-student bootstrap interval |
+|---|---:|---:|---:|
+| Apples per game | 32 | 0.469 | [+0.118, +0.714] |
+| Final body length | 32 | 0.164 | [-0.227, +0.510] |
+| Kills per game | 32 | 0.010 | [-0.403, +0.438] |
+| Retained growth / expected no-reset growth | 32 | 0.215 | [-0.144, +0.538] |
 
 Correlations are calculated only among students from **the same division
 and season**, to avoid comparing ranks of different divisions. These are
 within-student comparisons across distinct conditions—not claims that
 one environment causes performance in the other.
+The exploratory 95% percentile intervals resample complete paired STUDENTS
+(2,000 draws per metric), not frames or individual games. They do NOT
+adjust for league schedule differences, opponent difficulty, code changes
+or selection bias. This is one time-specific Division 1 cohort.
 
 ## 3. Compare actual outcomes side by side
 
@@ -109,7 +113,26 @@ observed food-event/death rates and their conditional correlations.
 ![Student food events per observed move in each mode](charts/observed_food_by_mode.svg)
 ![Student deaths per observed move in each mode](charts/observed_deaths_by_mode.svg)
 
-## 6. Reproducible joined data exports
+## 6. Longitudinal disagreement: league specialists vs trial specialists
+
+Historical Division 1 snapshots with matched outcome comparisons: **5**.
+We rank the same eligible students within each official division and
+season, then compare league versus trial percentiles. Repeated hourly
+snapshots are correlated and do not form independent experiments.
+[Open the historical disagreement study](seasonal_disagreement.md).
+![Historical rank agreement](charts/historical_rank_alignment.svg)
+![Students specializing in league or trials](charts/league_trial_outliers.svg)
+
+## 7. Older seasons with actual peer games but no saved standings
+
+Historical seasons comparable by match-derived Division 1 outcomes: **58** snapshots.
+This study uses cataloged student-versus-student placements when old
+OFFICIAL rankings were not archived. These are explicitly labeled
+match-derived outcomes, never represented as official league rank.
+[Open historical peer-game versus trial results](historical_peer_comparison.md).
+![Old league match outcomes and trial growth](charts/historical_peer_vs_trial.svg)
+
+## 8. Reproducible joined data exports
 
 - [League team-season summaries](../derived/league_team_seasons.csv) —
   the real competition outcomes, including human-opponent counts.
@@ -117,12 +140,16 @@ observed food-event/death rates and their conditional correlations.
   three controlled benchmark setups, kept separate.
 - [Joined student-season dataset](../derived/joined_team_seasons.csv) —
   one row per student and season; missing sides are **missing**, not zero.
+- [Historical game-based peer performance comparisons](../derived/historical_peer_trial_correlations.csv) —
+  actual archived matches; does NOT imply missing official rank.
+- [Historical league–trial student rank gaps](../derived/seasonal_rank_gaps.csv) —
+  comparable within-division student-season ranks; snapshots not independent.
 - [Replay-backed behavior, separated by mode](../derived/replay_behavior_by_mode.csv) —
   only downloaded full match observations.
 - [Data validation summary](../derived/quality.json) —
   replay coverage, SHA deduplication and sample sizes.
 
-## 7. What needs further evidence
+## 9. What needs further evidence
 
 1. Obtain full league replays of top Division 1 students, including both
    winners and losers, and map their exact turns/deaths/food contests.

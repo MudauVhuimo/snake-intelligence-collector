@@ -23,22 +23,34 @@
     {
       "metric": "Apples per game",
       "n": 32,
-      "rho": 0.469
+      "rho": 0.469,
+      "ci_low": 0.118,
+      "ci_high": 0.714,
+      "ci_draws": 2000
     },
     {
       "metric": "Final body length",
       "n": 32,
-      "rho": 0.164
+      "rho": 0.164,
+      "ci_low": -0.227,
+      "ci_high": 0.51,
+      "ci_draws": 2000
     },
     {
       "metric": "Kills per game",
       "n": 32,
-      "rho": 0.01
+      "rho": 0.01,
+      "ci_low": -0.403,
+      "ci_high": 0.438,
+      "ci_draws": 2000
     },
     {
       "metric": "Retained growth / expected no-reset growth",
       "n": 32,
-      "rho": 0.215
+      "rho": 0.215,
+      "ci_low": -0.144,
+      "ci_high": 0.538,
+      "ci_draws": 2000
     }
   ]
 }
