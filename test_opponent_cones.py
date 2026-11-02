@@ -126,6 +126,26 @@ class OpponentConesTests(unittest.TestCase):
             self.assertEqual(report["league_windows"],0)
             self.assertIn("insufficient",(Path(tmp)/"reports"/"opponent_cones.md").read_text())
 
+    def test_conditional_shorter_opportunity_rate_prevents_overinterpretation(self):
+        base=dict(replay_sha="one",student="student-1",
+                  candidate_count=2,death10="alive",
+                  first_step_death_cause="no_recorded_death",
+                  length=100,all_cone=False,
+                  chosen_cone=False,chosen_nonweaker_cone=False)
+        options=[
+            dict(base,student="student-a",threatened_count=1,
+                 nonweaker_threatened_count=0,
+                 chosen_cone=True,chosen_nonweaker_cone=False),
+            dict(base,student="student-b",threatened_count=1,
+                 nonweaker_threatened_count=1,
+                 chosen_cone=False,chosen_nonweaker_cone=False),
+        ]
+        result=counts(options)
+        self.assertEqual(result["shorter_opportunity_choices"],1)
+        self.assertEqual(result["shorter_only_selected"],1)
+        self.assertEqual(result["pct_shorter_selected"],100.0)
+        self.assertEqual(result["observed_moves"],2)
+
     def test_holdout_uncertainty_requires_multiple_games(self):
         rows=[
             dict(death10="dead",free_exits=1,best_tail=2,
