@@ -10,7 +10,8 @@ from research.route_space_core import (
     scene_from_frame
 )
 from research.route_space import (
-    extract,build,auc,eval_records,holdout,cohort_metrics,pair_contrast
+    extract,build,auc,eval_records,holdout,cohort_metrics,pair_contrast,
+    replay_bootstrap_auc_difference
 )
 
 SEASON="2026-11-02-045859-season"
@@ -136,6 +137,19 @@ class RouteTests(unittest.TestCase):
             ElementTree.parse(data/"reports"/"charts"/"route_choice_cohorts.svg")
             with (data/"derived"/"route_choice_windows.csv").open() as f:
                 self.assertEqual(len(list(csv.DictReader(f))),1)
+
+    def test_auc_midrank_ties_and_replay_cluster_validation(self):
+        rows=[
+            dict(risk=1.0,death10="alive",replay_sha="a",
+                 best_tail=1,best_frozen=1),
+            dict(risk=1.0,death10="dead",replay_sha="a",
+                 best_tail=1,best_frozen=1),
+        ]
+        self.assertAlmostEqual(auc(rows,"risk"),0.5)
+        self.assertEqual(replay_bootstrap_auc_difference(
+            rows,"best_tail","best_frozen")["replay_clusters"],1)
+        self.assertIsNone(replay_bootstrap_auc_difference(
+            rows,"best_tail","best_frozen")["low"])
 
     def test_auc_and_same_replay_bootstrap_guard(self):
         sample=[dict(death10="dead",free_exits=1,best_frozen=1,best_tail=1),
