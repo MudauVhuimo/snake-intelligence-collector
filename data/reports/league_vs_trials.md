@@ -1,7 +1,7 @@
 # Snake26: League versus on-arrival trials
 
-Generated UTC: 2026-11-02T00:42:14+00:00
-Latest season with official standings: 2026-11-01-235859-season
+Generated UTC: 2026-11-02T06:08:32+00:00
+Latest season with official standings: 2026-11-02-045859-season
 
 ## 1. Are league and benchmark results consistent?
 
@@ -9,11 +9,11 @@ Latest season with official standings: 2026-11-01-235859-season
 
 | Division | Students with all trials | Official rank vs mean trial length (Spearman) | Official rank vs gauntlet length (Spearman) |
 |---|---:|---:|---:|
-| 1 | 32 | 0.401 | 0.321 |
-| 2 | 32 | 0.074 | 0.267 |
-| 3 | 32 | 0.309 | 0.201 |
-| 4 | 32 | -0.095 | -0.085 |
-| 5 | 18 | 0.710 | 0.650 |
+| 1 | 32 | 0.417 | 0.394 |
+| 2 | 32 | 0.522 | 0.556 |
+| 3 | 32 | 0.361 | 0.176 |
+| 4 | 32 | 0.098 | -0.059 |
+| 5 | 17 | 0.890 | 0.815 |
 
 Positive correlation means better official ranking tends to align with better trial lengths.
 Never compare division-specific rank numbers across divisions: Division 2 rank 1 is not Division 1 rank 1.
@@ -25,7 +25,7 @@ Official standings can reflect accumulated scoring; these are cross-sectional as
 |---|---|---|---:|---:|---:|
 | League champion | 421462-alexander-palmer | 1/1 | 19 | 190.0 | 215 |
 | Best combined trials | 422453-mauricetshepo-frost | 2/20 | 1 | 248.3 | 235 |
-| Best gauntlet_1 | 409997-utayan-naidoo | 1/29 | 17 | 193.3 | 255 |
+| Best gauntlet_1 | 409997-utayan-naidoo | 2/12 | 17 | 193.3 | 255 |
 
 ## 3. What do REAL league match results reveal?
 
@@ -35,7 +35,8 @@ with at least two actual students.
 
 | Latest league format | Games cataloged | Full replays saved |
 |---|---:|---:|
-| student-only / 4 students | 170 | 4 |
+| mixed / 1 students | 2 | 0 |
+| student-only / 4 students | 168 | 8 |
 
 League metrics below use official match catalog outcomes, not any assumed
 strategy inferred from replay. Win rate and mean placement are per-game observations.
@@ -44,38 +45,38 @@ indicate growth lost to resets but cannot identify the number or timing of death
 
 | Div 1 rank | Student | League matches | Win % | Mean place | Mean apples | Mean kills | Mean length | Retained ratio | League replays | Trial rank |
 |---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 1 | 421462-alexander-palmer | 6 | 66.7 | 1.3 | 36.8 | 0.7 | 143.3 | 0.77 | 4 | 19 |
-| 2 | 403339-david-ndambo | 5 | 60.0 | 1.4 | 31.6 | 0.8 | 51.0 | 0.30 | 0 | 8 |
-| 3 | 427064-khodani-netili | 4 | 50.0 | 2.0 | 27.5 | 1.2 | 127.5 | 0.89 | 0 | 6 |
-| 4 | 426895-mpho-ramasakona | 4 | 50.0 | 2.0 | 28.8 | 1.5 | 116.2 | 0.76 | 1 | 60 |
-| 5 | 423436-ntobeko-zondi | 4 | 50.0 | 2.0 | 26.5 | 1.5 | 106.2 | 0.78 | 0 | 27 |
-| 6 | 388828-ngcebo-methula | 4 | 25.0 | 2.2 | 27.2 | 0.5 | 120.0 | 0.82 | 1 | 10 |
-| 7 | 424820-elisha-mundalamo | 5 | 40.0 | 2.2 | 29.2 | 1.2 | 111.0 | 0.71 | 0 | 16 |
-| 8 | 428786-marvellous-sambo | 5 | 40.0 | 2.2 | 31.2 | 0.0 | 25.0 | 0.17 | 0 | 95 |
-| 9 | 388060-tshepang-tshabalala | 4 | 50.0 | 1.8 | 29.8 | 0.8 | 115.0 | 0.81 | 0 | 2 |
-| 10 | 427039-sameeha-miabala | 5 | 60.0 | 2.0 | 31.4 | 0.4 | 110.0 | 0.70 | 0 | 14 |
-| 11 | 413538-lelethuthando-nikelo | 4 | 25.0 | 2.8 | 29.5 | 1.0 | 95.0 | 0.65 | 1 | 3 |
-| 12 | 429782-maseeha-seedat | 5 | 40.0 | 2.4 | 26.6 | 0.8 | 78.0 | 0.58 | 0 | 70 |
-| 13 | 428954-njabulo-ndlozi | 4 | 25.0 | 2.0 | 33.5 | 1.5 | 83.8 | 0.49 | 0 | 44 |
-| 14 | 421349-phathutshedzo-mudzanani | 6 | 33.3 | 2.3 | 30.5 | 0.5 | 108.3 | 0.66 | 0 | 7 |
-| 15 | 406000-mulimisi-rammela | 4 | 0.0 | 2.2 | 20.5 | 0.0 | 107.5 | 1.00 | 0 | 50 |
-| 16 | 403501-mashau-mudzanani | 4 | 25.0 | 2.0 | 37.0 | 0.2 | 57.5 | 0.30 | 0 | 37 |
-| 17 | 402334-angile-saho | 5 | 20.0 | 2.6 | 30.6 | 1.4 | 88.0 | 0.50 | 1 | 12 |
-| 18 | 404721-khensani-maluleke | 6 | 0.0 | 2.7 | 31.0 | 0.5 | 76.7 | 0.49 | 1 | 68 |
-| 19 | 419926-mphile-nchabeleng | 5 | 20.0 | 2.8 | 29.0 | 1.4 | 76.0 | 0.49 | 1 | 24 |
-| 20 | 419636-jason-chen | 5 | 0.0 | 2.8 | 28.6 | 0.2 | 72.0 | 0.48 | 0 | 4 |
-| 21 | 422777-thandile-mamiana | 5 | 0.0 | 2.8 | 18.2 | 1.0 | 14.0 | 0.31 | 1 | 45 |
-| 22 | 426650-babongile-mafantiri | 5 | 20.0 | 2.6 | 29.4 | 0.4 | 63.0 | 0.45 | 0 | 29 |
-| 23 | 420236-nathan-gebremichael | 4 | 25.0 | 2.8 | 22.8 | 1.2 | 92.5 | 0.73 | 1 | 13 |
-| 24 | 408501-asher-urison | 5 | 0.0 | 2.8 | 26.6 | 0.0 | 60.0 | 0.45 | 0 | 41 |
-| 25 | 419342-ayeshan-puckree | 6 | 16.7 | 3.0 | 28.2 | 0.3 | 70.8 | 0.50 | 1 | 32 |
-| 26 | 423258-muhammed-dar | 3 | 33.3 | 2.7 | 31.0 | 1.0 | 106.7 | 0.64 | 0 | 35 |
-| 27 | 389160-lwandle-ramanugu | 5 | 20.0 | 2.8 | 28.2 | 0.8 | 68.0 | 0.48 | 0 | 98 |
-| 28 | 403754-vhuimo-mudau | 5 | 20.0 | 2.8 | 27.4 | 0.2 | 39.0 | 0.32 | 2 | 23 |
-| 29 | 409997-utayan-naidoo | 5 | 0.0 | 3.0 | 32.0 | 0.0 | 20.0 | 0.11 | 1 | 17 |
-| 30 | 408070-collen-mthombeni | 4 | 0.0 | 3.5 | 29.0 | 0.0 | 41.2 | 0.27 | 0 | 69 |
-| 31 | 423135-mpho-muremi | 4 | 0.0 | 3.8 | 22.5 | 0.5 | 42.5 | 0.37 | 0 | 46 |
-| 32 | 427417-phophi-shavhani | 3 | 0.0 | 3.7 | 25.7 | 0.3 | 25.0 | 0.19 | 0 | 76 |
+| 1 | 421462-alexander-palmer | 6 | 83.3 | 1.2 | 38.2 | 0.5 | 147.5 | 0.74 | 6 | 19 |
+| 2 | 427064-khodani-netili | 5 | 60.0 | 1.4 | 30.2 | 0.8 | 126.0 | 0.84 | 2 | 6 |
+| 3 | 427039-sameeha-miabala | 6 | 66.7 | 1.5 | 26.3 | 1.2 | 114.2 | 0.84 | 0 | 14 |
+| 4 | 424820-elisha-mundalamo | 4 | 50.0 | 2.0 | 30.0 | 0.5 | 123.8 | 0.77 | 0 | 16 |
+| 5 | 428786-marvellous-sambo | 5 | 60.0 | 1.8 | 30.8 | 2.6 | 115.0 | 0.71 | 1 | 95 |
+| 6 | 403339-david-ndambo | 5 | 40.0 | 1.8 | 31.6 | 0.6 | 108.0 | 0.71 | 1 | 8 |
+| 7 | 419926-mphile-nchabeleng | 5 | 40.0 | 2.0 | 31.6 | 0.8 | 66.0 | 0.44 | 1 | 24 |
+| 8 | 428954-njabulo-ndlozi | 6 | 33.3 | 1.8 | 27.7 | 0.8 | 59.2 | 0.42 | 1 | 43 |
+| 9 | 388828-ngcebo-methula | 5 | 60.0 | 1.8 | 36.8 | 0.6 | 81.0 | 0.39 | 2 | 10 |
+| 10 | 402334-angile-saho | 6 | 33.3 | 2.2 | 29.3 | 0.2 | 99.2 | 0.63 | 1 | 12 |
+| 11 | 408070-collen-mthombeni | 5 | 40.0 | 2.2 | 29.0 | 4.0 | 132.0 | 0.86 | 0 | 68 |
+| 12 | 403754-vhuimo-mudau | 6 | 16.7 | 2.3 | 28.7 | 2.0 | 112.5 | 0.78 | 1 | 23 |
+| 13 | 423135-mpho-muremi | 5 | 0.0 | 2.2 | 24.2 | 1.2 | 104.0 | 0.81 | 0 | 45 |
+| 14 | 413538-lelethuthando-nikelo | 6 | 16.7 | 2.5 | 28.3 | 3.3 | 88.3 | 0.58 | 2 | 3 |
+| 15 | 419342-ayeshan-puckree | 6 | 33.3 | 2.5 | 28.3 | 0.2 | 95.0 | 0.65 | 2 | 32 |
+| 16 | 421349-phathutshedzo-mudzanani | 6 | 33.3 | 2.5 | 29.5 | 0.5 | 48.3 | 0.31 | 0 | 7 |
+| 17 | 389160-lwandle-ramanugu | 6 | 0.0 | 2.5 | 26.8 | 0.5 | 55.0 | 0.44 | 1 | 98 |
+| 18 | 423436-ntobeko-zondi | 4 | 25.0 | 2.5 | 25.5 | 0.5 | 82.5 | 0.62 | 0 | 27 |
+| 19 | 408501-asher-urison | 5 | 20.0 | 2.8 | 24.2 | 3.0 | 85.0 | 0.72 | 0 | 41 |
+| 20 | 426895-mpho-ramasakona | 4 | 25.0 | 2.5 | 25.8 | 0.5 | 111.2 | 0.89 | 0 | 59 |
+| 21 | 404721-khensani-maluleke | 5 | 0.0 | 2.6 | 35.2 | 0.4 | 58.0 | 0.32 | 0 | 67 |
+| 22 | 403501-mashau-mudzanani | 6 | 16.7 | 2.8 | 32.8 | 0.3 | 40.8 | 0.22 | 1 | 37 |
+| 23 | 406000-mulimisi-rammela | 5 | 20.0 | 2.6 | 19.6 | 0.8 | 87.0 | 0.83 | 1 | 49 |
+| 24 | 419636-jason-chen | 5 | 20.0 | 3.0 | 25.2 | 0.0 | 42.0 | 0.27 | 0 | 4 |
+| 25 | 388060-tshepang-tshabalala | 6 | 0.0 | 3.0 | 32.5 | 0.0 | 54.2 | 0.32 | 2 | 2 |
+| 26 | 422777-thandile-mamiana | 5 | 0.0 | 3.2 | 17.6 | 1.6 | 83.0 | 0.91 | 1 | 44 |
+| 27 | 419222-asisipho-ngaba | 6 | 0.0 | 3.2 | 23.0 | 0.3 | 52.5 | 0.40 | 0 | 50 |
+| 28 | 419810-sokhna-diop | 6 | 16.7 | 3.2 | 21.2 | 0.2 | 31.7 | 0.31 | 1 | 53 |
+| 29 | 408008-bradley-buys | 6 | 0.0 | 3.3 | 25.0 | 0.2 | 29.2 | 0.23 | 1 | 31 |
+| 30 | 425488-zinhle-zitha | 5 | 0.0 | 3.4 | 26.2 | 0.2 | 39.0 | 0.29 | 0 | 52 |
+| 31 | 429782-maseeha-seedat | 5 | 0.0 | 3.4 | 31.4 | 0.2 | 47.0 | 0.29 | 1 | 69 |
+| 32 | 428464-madalitso-mnqanqeni | 6 | 0.0 | 3.5 | 32.0 | 0.3 | 46.7 | 0.29 | 3 | 63 |
 
 ## 4. How biased is our replay collection?
 
@@ -83,8 +84,8 @@ indicate growth lost to resets but cannot identify the number or timing of death
 
 | Mode | Catalog records | Downloaded replays | Unique byte-identical replay payloads | Coverage |
 |---|---:|---:|---:|---:|
-| league | 3,018 | 101 | 50 | 3.35% |
-| trial | 21,462 | 59 | 46 | 0.27% |
+| league | 3,966 | 113 | 59 | 2.85% |
+| trial | 26,280 | 67 | 54 | 0.25% |
 
 The total number of historical catalogs is NOT the count of independent bot matches;
 replays, opponents, seeds and bot versions may repeat across seasons.

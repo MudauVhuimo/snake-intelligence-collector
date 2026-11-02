@@ -1,17 +1,17 @@
 # Snake26 Food Races: Observational Study
 
-Generated UTC: 2026-11-02T00:43:16+00:00
+Generated UTC: 2026-11-02T06:09:41+00:00
 
 ## Data validity FIRST
 
-- Replay files scanned: **160** of 160; unique content: **96**.
-- Exact duplicates skipped: **64**; unreadable replays: **0**.
-- First-visible apple episodes: **11490**.
-- Apples disappearing between adjacent states: **11397**.
-- Captures matched to next-head position AND explicit eat event: **11395**.
-- Unmatched disappearances: **2**.
+- Replay files scanned: **180** of 180; unique content: **113**.
+- Exact duplicates skipped: **67**; unreadable replays: **0**.
+- First-visible apple episodes: **13581**.
+- Apples disappearing between adjacent states: **13473**.
+- Captures matched to next-head position AND explicit eat event: **13469**.
+- Unmatched disappearances: **4**.
 - Confirmation rate among disappeared apples: **100.0%**.
-- On-arrival matched apple events: **5705**; league matched events: **5690**.
+- On-arrival matched apple events: **6705**; league matched events: **6764**.
 
 > The measurement is conservative. A disappearing apple without BOTH
 > a matching eat event and next-frame head is not assigned a winner.
@@ -41,9 +41,9 @@ Unconsumed/censored opportunities are not included in the lifetime histogram.
 We call an apple initially contested when the student versus benchmark
 nearest-head distances differ by at most two cells, and at least one head
 is at toroidal Manhattan distance ten or less at first appearance.
-Observed matched contested captures: **317**.
-- Student captured: **175**.
-- Built-in benchmark captured: **142**.
+Observed matched contested captures: **391**.
+- Student captured: **220**.
+- Built-in benchmark captured: **171**.
 
 That is an operational distance-based definition, not proof of
 the actual safe paths, intentions or likelihood of winning.
@@ -52,8 +52,8 @@ the actual safe paths, intentions or likelihood of winning.
 
 | Mode | Matched apple captures | Student captures | Benchmark captures |
 |---|---:|---:|---:|
-| On-arrival | 5705 | 1999 | 3706 |
-| League | 5690 | 5690 | 0 |
+| On-arrival | 6705 | 2361 | 4344 |
+| League | 6764 | 6764 | 0 |
 
 ## Next research questions
 
