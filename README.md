@@ -9,6 +9,8 @@ This private repository collects publicly accessible Wits Snake26 match catalogs
 1. **[Research dashboard and report index](data/reports/README.md)** — the entry point for all studies
 2. **[Canonical joint league–trial report](data/reports/joint_analysis.md)** — same student, same season, cross-environment correlations
 3. **[Competition-wide decisions: strong/middle/struggling snakes](data/reports/competitive_cohorts.md)** — same-season league rank, actual recorded choices, matched same-game comparisons
+   - **[2026 collision/movement evidence](data/reports/safety_mechanics.md)** — observed wrap, tail, head-on deaths, and apple growth; formal move legality still requires engine verification
+   - **[Adaptive survival/food contexts](data/reports/adaptive_context.md)** — league/trial death and apple rates by body length, occupancy, game phase and head proximity
    - **[Future route-space investigation](data/reports/route_space.md)** — frozen flood-fill versus moving own-tail prediction, with replay-holdout ROC AUC and cluster-bootstrap uncertainty
    - **[Opponent head-reach investigation](data/reports/opponent_cones.md)** — one-turn geometric threat sets, actual head-on event audit, league-vs-trial comparisons, and a critical shorter-opponent opportunity adjustment
    - **[Evidence-gated algorithm rulebook](data/reports/algorithm_rulebook.md)** — state-to-action hypotheses, counterexamples, tests for a completely NEW agent
