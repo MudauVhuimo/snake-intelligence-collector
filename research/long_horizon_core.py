@@ -59,6 +59,16 @@ def observed_followup(replay, season, replay_name, mode, sha):
         if contiguous<10:
             qc["unexpected_incomplete_10"]+=1
             continue
+        # A snake missing from a complete frame with NO earlier recorded death
+        # is not safely surviving. Censor it rather than guessing its cause.
+        for dt in range(1,contiguous+1):
+            prior_death=any(t<death_turn<=t+dt for death_turn,cause in deaths.get(sid,()))
+            if prior_death:
+                break  # Once death is known, all later horizons are failed.
+            if sid not in heads(frames[t+dt]):
+                contiguous=dt-1
+                qc["unexplained_disappearance_censored"]+=1
+                break
         status={h:outcome_status(t,sid,deaths,contiguous,h) for h in HORIZONS}
         if (status[10]=="dead") != bool(row["death_next_10"]):
             qc["death_flag_disagreement"]+=1
