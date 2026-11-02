@@ -98,10 +98,10 @@ def actual_choice_risk(options,observed_next_head):
                 chosen_tail=chosen["tail"],
                 chosen_avoided_risk=not chosen["head_cone"])
 
-def check_opponent_next_heads(cones,following,dying_ids):
+def check_opponent_next_heads(cones,following,excluded_ids):
     """Audit observed surviving opponents against PREVIOUS-frame cones.
 
-    Missing or dead opponents are NOT classified as predicted moves.
+    Exclude both deaths AND new respawns. A teleport is not a normal move.
     This validates geometry, not that all enumerated moves are legal.
     """
     counters=Counter()
@@ -115,7 +115,7 @@ def check_opponent_next_heads(cones,following,dying_ids):
         pos=coord(s["body"][0])
         if pos is not None:now[s["id"]]=pos
     for sid,cone in cones.items():
-        if sid in dying_ids:
+        if sid in excluded_ids:
             counters["opponent_dead"]+=1
             continue
         if sid not in now:
