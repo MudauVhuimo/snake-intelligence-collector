@@ -390,6 +390,10 @@ def draw_chart(path,cohorts):
 def build(data_dir,max_files=250):
     data_dir=Path(data_dir)
     rows,qc=extract(data_dir,max_files)
+    quality_file=data_dir/"derived"/"route_cone_quality.json"
+    quality_file.parent.mkdir(parents=True,exist_ok=True)
+    quality_file.write_text(json.dumps(dict(qc),indent=2,sort_keys=True)+"\n",
+                            encoding="utf-8")
     cohorts=cohort_metrics(rows)
     all_league=[r for r in rows if r["mode"]=="league"]
     all_trial=[r for r in rows if r["mode"]=="trial"]
