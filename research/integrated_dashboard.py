@@ -16,6 +16,7 @@ import json
 from .joined_datasets import build as prepare, correlations
 from .behavior_by_mode import build as behavior_report
 from .seasonal_disagreement import build as seasonal_report
+from .historical_peer_comparison import build as historical_peer_report
 from .league_comparison import chart
 
 PAIRS=(
@@ -104,6 +105,7 @@ def build(data_dir):
         raise RuntimeError("No official season to compare")
     movement=behavior_report(data_dir)  # Replay evidence stays separate from catalog outcomes.
     history=seasonal_report(data_dir)  # Longitudinal matched ranking differences, not independent trials.
+    peer_history=historical_peer_report(data_dir)  # Older peer-game catalogs without official standings.
     paired,results=correlations(data["joined"],latest,division=1,min_league=3)
     champion=next((r["team"] for r in sorted(paired,key=lambda r:
                     r["official_rank"] if r["official_rank"] is not None else 99999)),None)
@@ -212,13 +214,24 @@ def build(data_dir):
         "![Historical rank agreement](charts/historical_rank_alignment.svg)",
         "![Students specializing in league or trials](charts/league_trial_outliers.svg)",
         "",
-        "## 7. Reproducible joined data exports","",
+        "## 7. Older seasons with actual peer games but no saved standings","",
+        f"Historical seasons comparable by match-derived Division 1 outcomes: "
+        f"**{peer_history['div1_snapshots']}** snapshots.",
+        "This study uses cataloged student-versus-student placements when old",
+        "OFFICIAL rankings were not archived. These are explicitly labeled",
+        "match-derived outcomes, never represented as official league rank.",
+        "[Open historical peer-game versus trial results](historical_peer_comparison.md).",
+        "![Old league match outcomes and trial growth](charts/historical_peer_vs_trial.svg)",
+        "",
+        "## 8. Reproducible joined data exports","",
         "- [League team-season summaries](../derived/league_team_seasons.csv) —",
         "  the real competition outcomes, including human-opponent counts.",
         "- [Trial team-season summaries](../derived/trial_team_seasons.csv) —",
         "  three controlled benchmark setups, kept separate.",
         "- [Joined student-season dataset](../derived/joined_team_seasons.csv) —",
         "  one row per student and season; missing sides are **missing**, not zero.",
+        "- [Historical game-based peer performance comparisons](../derived/historical_peer_trial_correlations.csv) —",
+        "  actual archived matches; does NOT imply missing official rank.",
         "- [Historical league–trial student rank gaps](../derived/seasonal_rank_gaps.csv) —",
         "  comparable within-division student-season ranks; snapshots not independent.",
         "- [Replay-backed behavior, separated by mode](../derived/replay_behavior_by_mode.csv) —",
@@ -226,7 +239,7 @@ def build(data_dir):
         "- [Data validation summary](../derived/quality.json) —",
         "  replay coverage, SHA deduplication and sample sizes.",
         "",
-        "## 8. What needs further evidence","",
+        "## 9. What needs further evidence","",
         "1. Obtain full league replays of top Division 1 students, including both",
         "   winners and losers, and map their exact turns/deaths/food contests.",
         "2. Run the **same replay-derived definitions** separately on league and",
@@ -253,6 +266,8 @@ def build(data_dir):
         "## Supporting studies — with explicitly limited scopes","",
         "- [Official league versus fixed-seed rankings](league_vs_trials.md):",
         "  standings/outcomes, not a replay-derived behavioral model.",
+        "- [Historical actual peer-match outcomes vs trials](historical_peer_comparison.md):",
+        "  works without older official standings; **game-derived proxy** only.",
         "- [League/trial specialists across historical snapshots](seasonal_disagreement.md):",
         "  matched division ranks, tracked across recorded seasons and bot hashes.",
         "- [Observed league/trial behavior matched by student](behavior_by_mode.md):",
@@ -277,7 +292,7 @@ def build(data_dir):
         "executables or source code are extracted. No Java snake changes yet.",""
     ]
     (output/"README.md").write_text("\n".join(home),encoding="utf-8")
-    return dict(season=latest,historical_div1_snapshots=history["division1_snapshots"],replay_paired=movement["paired_student_replays"],paired_division1=len(paired),
+    return dict(season=latest,peer_history_div1_snapshots=peer_history["div1_snapshots"],historical_div1_snapshots=history["division1_snapshots"],replay_paired=movement["paired_student_replays"],paired_division1=len(paired),
                 comparison={r["metric"]:r["rho"] for r in results},
                 reports=[str(dest),str(output/"README.md")])
 
