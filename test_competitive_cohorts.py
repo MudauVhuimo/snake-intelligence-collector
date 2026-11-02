@@ -8,7 +8,7 @@ from xml.etree import ElementTree
 
 from research.competitive_cohorts import (
     COHORTS, ranks, classify, matching_stratum, common_support,
-    same_game_support, rates, build
+    same_game_support, rates, matched_same_game_episodes,paired_contrast,build
 )
 
 SEASON="2026-11-02-045859-season"
@@ -79,6 +79,13 @@ class CohortTests(unittest.TestCase):
         self.assertEqual(qc["common_strata"],1)
         shared=same_game_support(data)
         self.assertEqual(shared["both_extremes"],1)
+        pairs=matched_same_game_episodes(data)
+        self.assertEqual(len(pairs),1)
+        self.assertEqual(pairs[0][0]["cohort"],"top_quartile")
+        self.assertEqual(pairs[0][1]["cohort"],"bottom_quartile")
+        d=paired_contrast(pairs,"death10")
+        self.assertEqual(d["n"],1)
+        self.assertIsNone(d["ci_low"])
 
     def test_report_and_svg_use_only_same_season_qualifiers(self):
         with tempfile.TemporaryDirectory() as path:
@@ -102,6 +109,10 @@ class CohortTests(unittest.TestCase):
             self.assertEqual(summary["ranked_league_windows"],4)
             self.assertEqual(summary["ranked_trial_windows"],1)
             self.assertEqual(summary["same_match_extremes"],1)
+            self.assertEqual(summary["strictly_matched_pairs"],1)
+            self.assertTrue((data/"derived"/"competitive_matched_decisions.csv").exists())
+            self.assertIn("SAME real match",(
+                data/"reports"/"competitive_cohorts.md").read_text())
             report=(data/"reports"/"competitive_cohorts.md").read_text()
             self.assertIn("NOT a study",report)
             self.assertIn("SAME replay season",report)
