@@ -1,6 +1,6 @@
 # Snake26: Replay behavior by environment, then joined by student
 
-Generated UTC: 2026-11-02T07:13:05+00:00
+Generated UTC: 2026-11-02T07:47:16+00:00
 
 **Source:** full replay-derived behavior table, NOT catalog outcome proxies.
 Every student/match is grouped by explicit match kind. A SHA-identical

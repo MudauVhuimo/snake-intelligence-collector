@@ -1,6 +1,6 @@
 # Snake26: JOINED league + trials study
 
-Generated UTC: 2026-11-02T07:14:01+00:00
+Generated UTC: 2026-11-02T07:48:24+00:00
 
 **Latest official season:** 2026-11-02-045859-season. This report treats competitive league
 matches and controlled on-arrival trials as **two separate datasets**
@@ -128,6 +128,18 @@ matching on initial length, head proximity, and available neighboring
 cells. Later-turn comparisons exclude early deaths and are subject
 to survivorship selection, not a proof of causal protection.
 ![Matched death versus escape movements](charts/escape_case_control.svg)
+### Research-to-algorithm decision registry
+Our [falsifiable rulebook](algorithm_rulebook.md) tracks
+**8 proposed state-to-action hypotheses** with
+supporting studies, counterexamples and required validation.
+NO observational rule is automatically promoted into the new agent.
+### All competitors: strong, middle, and struggling league cohorts
+[Compare all three performance cohorts](competitive_cohorts.md)
+using official standings from the SAME replay season, with body-length
+and danger-state common-support checks. Palmer and the submitted
+snake are ordinary members of their cohorts, not a head-to-head.
+Same-season ranked league danger windows: **1,663**.
+![League and trial cohorts by danger response](charts/cohort_danger_outcomes.svg)
 ### Does the snake remain safe after its first escape?
 [Palmer's audited danger-response casebook](palmer_casebook.md) gives
 one earliest dangerous position per unique league replay and

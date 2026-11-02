@@ -18,6 +18,10 @@ Read this before interpreting the older single-environment reports.
   works without older official standings; **game-derived proxy** only.
 - [League/trial specialists across historical snapshots](seasonal_disagreement.md):
   matched division ranks, tracked across recorded seasons and bot hashes.
+- [Evidence-gated algorithm rulebook](algorithm_rulebook.md):
+  falsifiable state-to-action hypotheses for a NEW agent, not code fixes.
+- [All competitors: strong/middle/struggling cohorts](competitive_cohorts.md):
+  same-season rank-matched danger outcomes, separated league vs trials.
 - [Palmer league danger decision sequences](palmer_casebook.md):
   one deterministic audited real episode per unique league replay.
 - [Danger escapes: do they stay safe for 20–30 turns?](long_horizon_survival.md):

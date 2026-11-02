@@ -1,0 +1,99 @@
+# Snake26: Strong, middle, and struggling league competitors — comparison
+
+Generated UTC: 2026-11-02T07:48:22+00:00
+
+## Scientific question
+
+Across the competition, what danger-response patterns distinguish
+consistently strong versus weaker *official league* snakes in
+comparable situations? This is a population-level exploration,
+NOT a study of our submitted agent or a named rival. ALL student bots
+are eligible. Palmer is one top-division example, not the baseline.
+
+## Cohort design and selection caveats
+
+- Use official Division 1 standings from the **SAME replay season**
+  as each sampled student, never transplant today's rank into older
+  bot versions. Division 2 ranks are not mixed into Division 1.
+- Top cohort: official division rank in best 25%; bottom: worst 25%;
+  middle: remaining 50%. Only standings with at least 12 members qualify.
+- A frame is sampled every 25 turns only when a student is near
+  another live head (within 3 toroidal cells) OR has <=1 unoccupied
+  neighbor. Same raw replay payload counted once, not once per season.
+- Outcomes: real death event in the following 10 or 30 turns,
+  with incomplete followup CENSORED and respawn still a death.
+- We focus on actual league matches; controlled trials are shown
+  SEPARATELY, grouped by the student's same-season league standing.
+- Historical archived replays are deliberately sampled, not a random
+  draw from all official matches. Rankings include game results;
+  ranking groups are outcome-selected, not randomized policies.
+
+Baseline windows available across BOTH environments: **2,637**.
+Same-season Division 1 ranked league windows: **1,663**.
+Same-season Division 1 ranked trial windows: **167**.
+League windows without qualifying same-season rank: **533**.
+Trial windows without qualifying same-season rank: **274**.
+Duplicate rows excluded: **0**.
+
+## 1. Observed danger exposure and outcomes by performance cohort
+
+![Strong vs weak student danger windows](charts/cohort_danger_outcomes.svg)
+
+| Match mode | Division 1 cohort | Students | Unique replays | Danger windows | Nearby heads | Confinement | Death by +10 (events/windows) | Death by +30 (events/windows) | Gained exit by +3 (among +10 survivors) | First move straight | Moved toward a persistent apple |
+|---|---|---:|---:|---:|---|---|---|---|---|---|---|
+| league | top_quartile | 13 | 37 | 486 | 68.31% | 38.07% | 5/486 (1.03%) | 9/477 (1.89%) | 481 sampled, 38.25% | 486 moves, 54.12% | 460 moves, 56.96% |
+| league | middle_half | 29 | 42 | 807 | 63.32% | 41.02% | 22/807 (2.73%) | 43/795 (5.41%) | 785 sampled, 37.07% | 803 moves, 58.16% | 771 moves, 56.55% |
+| league | bottom_quartile | 20 | 32 | 370 | 64.59% | 39.73% | 14/370 (3.78%) | 22/368 (5.98%) | 356 sampled, 36.24% | 369 moves, 63.14% | 347 moves, 53.60% |
+| trial | top_quartile | 5 | 12 | 81 | 69.14% | 37.04% | 1/81 (1.23%) | 2/81 (2.47%) | 80 sampled, 32.50% | 81 moves, 65.43% | 75 moves, 65.33% |
+| trial | middle_half | 4 | 8 | 78 | 67.95% | 43.59% | 0/78 (0.00%) | 0/77 (0.00%) | 78 sampled, 34.62% | 78 moves, 65.38% | 71 moves, 50.70% |
+| trial | bottom_quartile | 1 | 1 | 8 | 75.00% | 25.00% | 0/8 (0.00%) | 0/8 (0.00%) | 8 sampled, 37.50% | 8 moves, 62.50% | 8 moves, 62.50% |
+
+First-move straight/turn is reconstructed from two consecutive REAL frames.
+Food progress means closing distance to the SAME apple still visible
+one frame later; this does not prove the snake targeted that apple.
+These rows DESCRIBE the encounters each cohort experienced; they do
+not establish that stronger snakes made different decisions inequivalent states. A difference may reflect opponents and selection.
+
+## 2. Restrict to comparable pre-decision danger situations
+
+Common-support strata require BOTH top and bottom students in the
+SAME environment, body length band, near-head yes/no, restricted
+neighbor count yes/no, and 500-turn phase. Each group must contain
+actual observations; we do not extrapolate outside overlap.
+
+- Common strata across both modes: **41**.
+- League replays with ranked student exposures: **45**.
+- Those containing BOTH extreme cohorts: **27**.
+- Distinct top/bottom students in overlapping games: **31**.
+
+| Mode | Cohort within overlap | Windows | Distinct replays | +10 death frequency | +3 exit gain frequency | First-move straight | Same-apple progress |
+|---|---|---:|---:|---|---|---|---|
+| league | top_quartile | 474 | 37 | 0.84% | 37.23% | 54.64% | 56.57% |
+| league | bottom_quartile | 364 | 32 | 3.57% | 35.90% | 63.64% | 53.37% |
+| trial | top_quartile | 52 | 12 | 0.00% | 30.77% | 69.23% | 56.25% |
+| trial | bottom_quartile | 8 | 1 | 0.00% | 37.50% | 62.50% | 62.50% |
+
+These are COMMON-STRATUM comparisons but they are NOT reweighted
+to identical distributions within the overlap. Even same-game cohorts
+may occupy different locations and face unequal threats. No p-value
+or effect-size certainty is claimed from individual windows.
+
+## 3. What would make a useful algorithm rule?
+
+Test the hypothesis that top league competitors select routes with
+better safe future mobility after controlling for starting length,
+head geometry and food opportunity. Our 0–4 free-neighbor count is
+an INSTANTANEOUS proxy, not a legal-move count or full route quality.
+We must next measure per-ACTION future reachable areas and opponent
+reach cones, then reproduce any predictive advantage on HELD-OUT
+entire matches and unseen bot versions.
+A cohort difference at this stage is evidence for a feature to
+test, NEVER evidence that copying a champion's move is optimal.
+
+## Auditable outputs
+
+- [Cohort sample sizes, outcomes, mobility](../derived/competitive_cohort_danger.csv).
+- [Underlying complete danger-window observations](../derived/long_horizon_danger_windows.csv).
+- [Research protocol and rule-promotion tests](../../docs/ALGORITHM_RESEARCH_PROTOCOL.md).
+
+**No existing submitted snake code was modified.**

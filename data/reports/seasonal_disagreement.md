@@ -1,6 +1,6 @@
 # Snake26: historical league versus trial specialization
 
-Generated UTC: 2026-11-02T07:14:00+00:00
+Generated UTC: 2026-11-02T07:48:23+00:00
 
 ## Design and guardrails
 
