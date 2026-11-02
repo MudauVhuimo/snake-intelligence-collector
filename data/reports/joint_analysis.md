@@ -1,6 +1,6 @@
 # Snake26: JOINED league + trials study
 
-Generated UTC: 2026-11-02T06:36:51+00:00
+Generated UTC: 2026-11-02T06:52:44+00:00
 
 **Latest official season:** 2026-11-02-045859-season. This report treats competitive league
 matches and controlled on-arrival trials as **two separate datasets**
@@ -120,6 +120,14 @@ opponent head, free adjacent cells, then death events in the NEXT
 ten turns. See [head-pressure and escape study](threat_windows.md)
 for length-stratified results, per-replay counts and uncertainty.
 ![10-turn death frequencies by head proximity](charts/head_pressure_vs_death.svg)
+### Matched death autopsies versus observed 10-turn escapes
+League death cases paired to real survivors: **63**.
+On-arrival trial death cases paired separately: **3**.
+[Explore actual first-turn escape movement](escape_autopsies.md),
+matching on initial length, head proximity, and available neighboring
+cells. Later-turn comparisons exclude early deaths and are subject
+to survivorship selection, not a proof of causal protection.
+![Matched death versus escape movements](charts/escape_case_control.svg)
 
 ## 6. Longitudinal disagreement: league specialists vs trial specialists
 
@@ -152,6 +160,8 @@ match-derived outcomes, never represented as official league rank.
   actual archived matches; does NOT imply missing official rank.
 - [Historical league–trial student rank gaps](../derived/seasonal_rank_gaps.csv) —
   comparable within-division student-season ranks; snapshots not independent.
+- [Matched death/survival replay observations](../derived/escape_matched_pairs.csv) —
+  baseline-matched cases and real early turn trajectories.
 - [Head-pressure and local-exit exposures](../derived/threat_window_student_seasons.csv) —
   sampled from actual replay frames, with next-10-turn outcomes.
 - [Replay-backed behavior, separated by mode](../derived/replay_behavior_by_mode.csv) —

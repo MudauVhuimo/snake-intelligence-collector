@@ -1,6 +1,6 @@
 # Snake26: Head pressure, escape options, and subsequent deaths
 
-Generated UTC: 2026-11-02T06:36:49+00:00
+Generated UTC: 2026-11-02T06:52:20+00:00
 
 ## Study design — actual replay frames, not a simulator
 
