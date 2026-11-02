@@ -20,6 +20,8 @@ Read this before interpreting the older single-environment reports.
   matched division ranks, tracked across recorded seasons and bot hashes.
 - [Evidence-gated algorithm rulebook](algorithm_rulebook.md):
   falsifiable state-to-action hypotheses for a NEW agent, not code fixes.
+- [Actual student decisions versus future route space](route_space.md):
+  frozen-body vs own-moving-tail route-proxy audit by performance cohort.
 - [All competitors: strong/middle/struggling cohorts](competitive_cohorts.md):
   same-season rank-matched danger outcomes, separated league vs trials.
 - [Palmer league danger decision sequences](palmer_casebook.md):

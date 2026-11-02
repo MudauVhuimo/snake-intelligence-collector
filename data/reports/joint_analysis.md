@@ -1,6 +1,6 @@
 # Snake26: JOINED league + trials study
 
-Generated UTC: 2026-11-02T07:53:50+00:00
+Generated UTC: 2026-11-02T08:22:22+00:00
 
 **Latest official season:** 2026-11-02-045859-season. This report treats competitive league
 matches and controlled on-arrival trials as **two separate datasets**
@@ -140,6 +140,14 @@ and danger-state common-support checks. Palmer and the submitted
 snake are ordinary members of their cohorts, not a head-to-head.
 Same-season ranked league danger windows: **1,663**.
 ![League and trial cohorts by danger response](charts/cohort_danger_outcomes.svg)
+### Which actual first moves preserve usable future space?
+The [route-space investigation](route_space.md) contrasts frozen
+flood-fill with an 8-step simulated moving-own-tail continuation for
+EACH alternative first move, then measures the actual chosen action.
+The model freezes opponents and assumes no growth; its routes are
+NOT engine-verified safe paths or counterfactual outcomes.
+Replay-sampled danger positions with route features: **2637**.
+![Recorded high-route-space first moves by cohort](charts/route_choice_cohorts.svg)
 ### Does the snake remain safe after its first escape?
 [Palmer's audited danger-response casebook](palmer_casebook.md) gives
 one earliest dangerous position per unique league replay and

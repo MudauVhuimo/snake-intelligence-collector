@@ -1,6 +1,6 @@
 # Snake26 — Evidence-gated algorithm rulebook
 
-Generated UTC: 2026-11-02T07:53:48+00:00
+Generated UTC: 2026-11-02T08:22:21+00:00
 
 **Purpose:** build a NEW snake from cross-competitor research, NOT
 fix the existing submission or clone a particular league leader.
@@ -15,7 +15,7 @@ Registered questions: **8**. Open: **3**. Observed association: **5**. Controlle
 |---|---|---|---|---|
 | SAFETY-01 | Avoid provably fatal next actions | both | Open question | Confirm official collision timing and run transition-validation on real multi-agent replay frames. |
 | DANGER-02 | Estimate head threat jointly with escape-space scarcity | league | Observed association | Compare threats by relative length, heading, body geometry and future opponent reach across whole-game holdouts. |
-| ROUTE-03 | Preserve future routes rather than maximize immediate free neighbors | league | Observed association | Measure dynamic reachable area, tail release, chokepoints and 10/30-turn outcomes by action in matched peer matches. |
+| ROUTE-03 | Preserve future routes rather than maximize immediate free neighbors | league | Observed association | Validate route-score prediction across later independent league seasons, include opponent-head reachable sets and growth-aware collision timing; run ablations of the new agent against a locked diverse peer panel. |
 | FOOD-04 | Target contest-adjusted safe food, not simply nearest apple | trial | Observed association | Run food appearance event study on actual league student-student contests, with action-level routes and apple-capture outcomes. |
 | RETENTION-05 | Optimize retained growth and competitive placement, not raw apple count | league | Observed association | Estimate food capture, death/reset hazard and final retained length conditional on body length, phase, opponents and available actions. |
 | CONTEST-06 | Use relative strength and opponent paths when contesting cells | league | Open question | Build head-to-head encounter cohorts from league matches with relative length, heading, predicted cell conflict and outcome. |
@@ -64,13 +64,13 @@ Registered questions: **8**. Open: **3**. Observed association: **5**. Controlle
 
 **Then, HYPOTHESIS only:** Prefer moves that maintain tail-aware future connectivity when the near-term cost is reasonable.
 
-**Known counterexample / limitation:** The selected league leader could lose an immediate free neighbor and survive; early exit gain is not universal or necessarily causal.
+**Known counterexample / limitation:** Moving-tail search showed only a small, uncertain held-out AUC gain over frozen flood-fill; top, middle and bottom snakes selected highest-score modeled moves at similar rates. High predicted reachable area is NOT a proven best first action.
 
-**Next needed measurement:** Measure dynamic reachable area, tail release, chokepoints and 10/30-turn outcomes by action in matched peer matches.
+**Next needed measurement:** Validate route-score prediction across later independent league seasons, include opponent-head reachable sets and growth-aware collision timing; run ablations of the new agent against a locked diverse peer panel.
 
 **Falsify if:** Dynamic connectivity fails to predict survival or gives poorer league results than a static or simpler heuristic.
 
-**Supporting reports:** [escape_autopsies](escape_autopsies.md), [long_horizon_survival](long_horizon_survival.md)
+**Supporting reports:** [escape_autopsies](escape_autopsies.md), [long_horizon_survival](long_horizon_survival.md), [route_space](route_space.md)
 
 ### FOOD-04 — Target contest-adjusted safe food, not simply nearest apple
 
