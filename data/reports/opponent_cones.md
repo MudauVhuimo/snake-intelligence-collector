@@ -87,7 +87,7 @@ are not present in next-frame surviving heads.
 
 | Length at danger position | Cohort | Observed first moves with shorter-only option | Chose it | Rate |
 |---|---|---:|---:|---:|
-| 5-24 | top_quartile | 0 | 0 | insufficient% |
+| 5-24 | top_quartile | 0 | 0 | insufficient |
 | 5-24 | middle_half | 4 | 2 | 50.0% |
 | 5-24 | bottom_quartile | 1 | 1 | 100.0% |
 | 25-49 | top_quartile | 2 | 2 | 100.0% |
