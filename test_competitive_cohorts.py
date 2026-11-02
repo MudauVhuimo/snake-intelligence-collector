@@ -31,6 +31,8 @@ def window(season=SEASON,student="student-01",mode="league",sha="r1",
     return dict(season=season,student=student,mode=mode,replay_sha=sha,
         replay=f"{season}/game-0001.rep.gz",turn=turn,
         length="30",length_band="25-49",nearest_head="2",
+        first_move_style="turn",first_move_axis="+x",
+        food_progress_same_apple1="1",
         free_exits="1" if confined else "3",outcome10=status,
         outcome20=status,outcome30=status,exit_gain3="1",apples10="1",
         apples30="2",head_distance_gain3="2")
