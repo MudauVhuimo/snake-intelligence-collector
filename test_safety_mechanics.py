@@ -53,6 +53,17 @@ class MechanicsAuditTests(unittest.TestCase):
         self.assertEqual(counts["ate_event_without_previous_food_cell"],0)
         self.assertEqual(counts["eating_length_delta_2"],1)
 
+    def test_actual_2026_self_and_body_death_labels(self):
+        old=[snake(1,"student",[(2,2),(2,3),(2,4)]),
+             snake(2,"peer",[(7,7),(7,8),(7,9)])]
+        new=[snake(1,"student",[],False),snake(2,"peer",[],False)]
+        events=[dict(kind="died",snake=1,cause=dict(kind="self_collision")),
+                dict(kind="died",snake=2,cause=dict(kind="collision"))]
+        counts=audit_replay(replay(old,new,events))
+        self.assertEqual(counts["recorded_deaths"],2)
+        self.assertEqual(counts["death_self_collision"],1)
+        self.assertEqual(counts["death_collision"],1)
+
     def test_dedup_export(self):
         a=snake(1,"student",[(34,1),(33,1),(32,1)])
         b=snake(1,"student",[(0,1),(34,1),(33,1)])
