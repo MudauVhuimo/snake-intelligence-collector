@@ -18,6 +18,10 @@ Read this before interpreting the older single-environment reports.
   works without older official standings; **game-derived proxy** only.
 - [League/trial specialists across historical snapshots](seasonal_disagreement.md):
   matched division ranks, tracked across recorded seasons and bot hashes.
+- [Actual 2026 safety mechanics](safety_mechanics.md): replay-based movement,
+  tail-vacating, head-on victim and growth audit; observational, not a legal-move oracle.
+- [Length/crowding/phase adaptation](adaptive_context.md): actual 10-turn deaths and
+  pre-death apple events by pre-action strata, league versus trials separated.
 - [Evidence-gated algorithm rulebook](algorithm_rulebook.md):
   falsifiable state-to-action hypotheses for a NEW agent, not code fixes.
 - [All competitors: opponent head-contest possibilities](opponent_cones.md):
