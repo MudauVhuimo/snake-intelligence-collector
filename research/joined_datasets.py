@@ -15,6 +15,7 @@ import argparse
 import csv
 import json
 import sqlite3
+import random
 
 from .league_core import spearman, current_season
 
@@ -160,17 +161,46 @@ def snapshot(db):
     return dict(latest=latest,rows=rows,league=league,trial=trial,
                 joined=joined,standings=standings)
 
+def paired_bootstrap_rho(values_x,values_y,draws=2000,seed=2026):
+    """Percentile interval resampling STUDENTS (the actual paired units).
+
+    This represents sampling variation within the current division only.
+    It does not correct opponent selection, repeated seasons or version drift.
+    """
+    n=len(values_x)
+    if n<8 or n!=len(values_y):
+        return None
+    rng=random.Random(seed)
+    vals=[]
+    for _ in range(draws):
+        indexes=[rng.randrange(n) for _ in range(n)]
+        rho=spearman([values_x[i] for i in indexes],
+                     [values_y[i] for i in indexes])
+        if rho is not None:
+            vals.append(rho)
+    if len(vals)<max(40,draws//2):
+        return None
+    vals.sort()
+    return dict(low=vals[int(.025*(len(vals)-1))],
+                high=vals[int(.975*(len(vals)-1))],
+                draws=len(vals))
+
 def correlations(joined,season,division=1,min_league=3):
     people=[r for r in joined if r["season"]==season
             and r["official_division"]==division
             and r["trial_complete"] and r["league_games"]>=min_league]
     results=[]
-    for league_field,trial_field,label in METRICS:
+    for index,(league_field,trial_field,label) in enumerate(METRICS):
         valid=[r for r in people if r["league_"+league_field] is not None
                and r["trial_"+trial_field] is not None]
-        value=spearman([r["league_"+league_field] for r in valid],
-                       [r["trial_"+trial_field] for r in valid])
-        results.append(dict(metric=label,n=len(valid),rho=value))
+        lx=[r["league_"+league_field] for r in valid]
+        tx=[r["trial_"+trial_field] for r in valid]
+        value=spearman(lx,tx)
+        interval=paired_bootstrap_rho(lx,tx,seed=2026+index) if value is not None else None
+        results.append(dict(metric=label,n=len(valid),rho=value,
+                            ci_low=interval["low"] if interval else None,
+                            ci_high=interval["high"] if interval else None,
+                            ci_draws=interval["draws"] if interval else 0))
     return people,results
 
 def audit(db,rows):
