@@ -77,6 +77,8 @@ class LongHorizonTests(unittest.TestCase):
         self.assertEqual((row["status10"],row["status20"],row["status30"]),
                          ("alive","alive","alive"))
         self.assertIn(30,row["measurements"])
+        self.assertEqual(row["first_action"]["movement"],"+x")
+        self.assertEqual(row["first_action"]["turn_type"],"straight")
         c=survival_counts([row],"league")
         self.assertEqual(c["known30"],1)
         self.assertEqual(c["alive30"],1)
@@ -110,6 +112,12 @@ class LongHorizonTests(unittest.TestCase):
             summary=build(base)
             self.assertEqual(summary["replays"],2)
             self.assertEqual(summary["palmer_games"],1)
+            self.assertEqual(summary["palmer_casebook"]["games"],1)
+            self.assertTrue((base/"reports"/"palmer_casebook.md").is_file())
+            with (base/"derived"/"palmer_league_casebook.csv").open(newline="") as f:
+                casebook=list(csv.DictReader(f))
+            self.assertEqual(casebook[0]["first_actual_move"],"+x")
+            self.assertEqual(casebook[0]["first_move_style"],"straight")
             self.assertGreater(summary["league"]["survived10"],0)
             for filename in ("danger_survival_30.svg","escape_recovery_late_death.svg"):
                 ElementTree.parse(base/"reports"/"charts"/filename)
