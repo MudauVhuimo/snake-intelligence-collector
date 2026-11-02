@@ -1,0 +1,52 @@
+name: One-time Snake26 catch-up collection
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/catchup_once.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: snake-intelligence-data
+  cancel-in-progress: false
+
+jobs:
+  catchup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run offline regression suite
+        run: python -m unittest discover -s . -p 'test*.py' -v
+      - name: Respectfully collect latest and historical league plus trial replays
+        run: python collector.py --max-replays 20 --lookback-seasons 12
+      - name: Rebuild reports for both environments and joined students
+        run: |
+          python trial_leaderboard.py
+          python -m research.league_comparison --data-dir data
+          python -m research.league_sweet_spot --data-dir data
+          python strategy_lab.py --stride 25
+          python -m research.dashboard --data-dir data --max-files 250
+          python -m research.food_races --data-dir data --max-files 250
+          python -m research.underdog_study --data-dir data --max-files 250
+          python -m research.path_geometry --data-dir data
+          python -m research.integrated_dashboard --data-dir data
+          cat data/derived/quality.json
+      - name: Persist catalog, full replays, and updated research outputs
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/
+          if ! git diff --cached --quiet; then
+            git commit -m 'data: catch up league and trial replay archive'
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          else
+            echo 'No changes needed'
+          fi
