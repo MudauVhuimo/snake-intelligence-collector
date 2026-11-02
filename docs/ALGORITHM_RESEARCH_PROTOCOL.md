@@ -1,6 +1,6 @@
 # Snake26 — Research program for designing a competitive decision algorithm
 
-**Research mission:** discover *generalizable state → action decision rules* that maximize performance in **real student-versus-student league play**. The goal is **not** to reproduce, reverse-engineer, or outperform any particular student's observed policy in a head-to-head case study. A single competitor's replay can be a counterexample or diagnostic, never a source of universally accepted rules.
+**Research mission:** discover *generalizable state → action decision rules* that maximize performance in **real student-versus-student league play**, using the **entire field of competitors**. Study consistently successful snakes (including Palmer, when his results support that label) as important positive examples, and weaker, inconsistent, trial-specialist, or failed snakes as negative and contrasting examples. Our already-submitted snake is **one ordinary competitor in the dataset**, not the starting baseline, subject of an improvement audit, or codebase to repair. The eventual deliverable is a **new algorithm built from scratch**, from validated principles rather than patches to our existing submission. No single competitor, however strong, provides universal rules by itself.
 
 **Research mode:** no competition agent implementation until hypotheses have passed the evidence gates below. Distinguish observations, plausible causal mechanisms, and tested rules.
 
@@ -30,7 +30,7 @@ For every decision, we aim to produce: **an observable feature definition, an es
 
 1. **League is the primary outcome target.** Use official league results and student-versus-student full replays to learn competitive behaviors. On-arrival trials are a *separate controlled test environment*, not the optimization target. Join the same student and season to study transfer only when both have actual data.
 2. **Keep match catalogs and replay evidence separate.** Catalogs support wins, final length, food and placement. Only frames and genuine events support observed movements, deaths, route choices, and exposure measures.
-3. **Do not study only winners.** Sample successes, failures, near misses, ordinary snakes and different opponent strategies. Match or stratify on body length, density, phase, relative heading, seed/map, player, and version where available.
+3. **Compare winners and non-winners, deliberately.** Sample successful leaders (including Palmer), other consistently strong snakes, middle performers, specialists, failures, and near misses. Our submitted snake has no special analytical status. Match or stratify on body length, density, phase, relative heading, seed/map, opponent mix, player, and code version where available; compare **similar decision situations**, not just final ranks.
 4. **Use the actual mechanics.** Verify the platform's collision order, walls/toroidal behavior, head-to-head outcomes, food growth and death resets against official rules and replay transitions *before* writing a safety invariant. Current frozen-body BFS and free-neighbor measures are descriptive approximations, not legal move engines.
 5. **No counterfactual claims from replays.** One observed action cannot reveal what would have happened under a different action because opponents and future board states react. A “survivor used X” statement does not prove “X prevents death.”
 6. **Measure exposure, not only deaths.** Compare risk per alive snake-turn, conditional on geometry and opponent proximity. Account for game-ending censoring, death followed by respawn, and the fact that multiple sampled turns from one game are correlated.
@@ -61,6 +61,19 @@ For every decision, we aim to produce: **an observable feature definition, an es
 | Fixed trial performance and competitive league placement show only partial agreement ([league vs trials](../data/reports/league_vs_trials.md)) | Optimize real competitive outcomes and test transfer | A universal “aggression/safety sweet spot” or a competitor-specific blueprint |
 
 These are **provisional findings, not algorithmic instructions**. Some are based on selected replays and may change as collection improves. Keep contradictory and negative evidence in the record.
+
+## Comparative strategy study: how strong and weak snakes differ
+
+The **unit of investigation is a decision situation**, not "our snake versus Palmer." Use all valid student league replays; retain trial results separately.
+
+- **Positive references:** Palmer and *multiple* consistently high-performing league competitors. Catalogue what they repeatedly do in comparable situations, including apparently surprising choices (e.g., temporarily fewer free neighboring cells when a future route remains safe). Also investigate their failures and exceptions.
+- **Contrasting references:** low-performing and average league snakes, as well as snakes that excel in trials but struggle in the league. Identify behaviors disproportionately associated with lost growth, collisions, poor exits, or lost food contests. Do not label actions "mistakes" until relevant alternatives are tested.
+- **Neutral inclusion:** our submitted bot is just another row in these cohorts. Do not organize reports as our bot's defects, fixes, or an improvement plan for its existing Java implementation.
+- **Within-situation comparison:** control for length, phase, local occupancy, moving-tail timing, opponent head reach, contested food, and available routes. Compare strong and weak choices *only where the decision states are meaningfully comparable*. Track the outcomes of actions and their continuations at 1, 3, 10, and 30 turns, and acknowledge censoring.
+- **Cross-competitor replication:** check whether an apparent expert behavior also appears among other successful bots, whether weaker bots ever use it successfully, and whether the same behavior fails in different contexts. Use season/version holdouts so we don't mistake one bot's quirks for a general principle.
+- **Counterfactual gate:** observed differences suggest features and candidate rules but do not prove a particular unchosen move would have worked. Promote a rule only after controlled policy ablations against diverse live opponents.
+
+Each comparison must end with an actionable **if-state/then-preferred-action hypothesis**, measurable applicability conditions, a documented counterexample, and the next test required for rule promotion. The final agent should be assembled *afresh* from validated rule components, not cloned from Palmer or adapted from the old submitted snake.
 
 ## Research work products, in priority order
 
@@ -95,4 +108,4 @@ The *existence* of these modules is a design hypothesis. Their definitions, cuto
 
 The companion [candidate-rule registry](../research/rule_candidates.json) is the machine-readable backlog. The scheduled dashboard renders [algorithm rulebook](../data/reports/algorithm_rulebook.md) from that registry. Each record identifies the question, status, evidence scope, proposed rule, falsification/validation work and its next measurable result. Update it whenever a study answers a question, contradicts a rule, or exposes a gap.
 
-Individual-player casebooks are **diagnostic appendices only**. They cannot replace population-level inference or advance the status of a rule. **The goal is to discover general principles—not reproduce any student's snake.**
+Individual-player casebooks, **especially those of successful snakes such as Palmer**, are valuable positive examples and hypothesis generators. They must be compared with other strong, average, and weak competitors; they cannot alone replace population-level inference or advance a rule's status. **The goal is a new, evidence-driven algorithm—not a Palmer clone and not a repair of our submitted snake.**
