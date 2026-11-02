@@ -44,6 +44,10 @@ jobs:
             data/reports/seasonal_disagreement.md
             data/reports/charts/historical_rank_alignment.svg
             data/reports/charts/league_trial_outliers.svg
+            data/reports/historical_peer_comparison.md
+            data/reports/charts/historical_peer_vs_trial.svg
+            data/derived/historical_peer_trial_correlations.csv
+            data/derived/historical_peer_trial_students.csv
             data/reports/README.md
             data/reports/joint_analysis.md
             data/reports/behavior_by_mode.md
