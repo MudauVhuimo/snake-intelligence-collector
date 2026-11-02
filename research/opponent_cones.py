@@ -56,6 +56,12 @@ def counts(rows):
     choices=[r for r in rows if r["chosen_cone"] is not None]
     candidates=[r for r in rows if r["candidate_count"]]
     known=[r for r in rows if r["death10"] in ("alive","dead")]
+    shorter_opportunities=[
+        r for r in choices
+        if r["threatened_count"]>r["nonweaker_threatened_count"]]
+    shorter_selected=[
+        r for r in shorter_opportunities
+        if r["chosen_cone"] and not r["chosen_nonweaker_cone"]]
     n= len(candidates)
     k= len(choices)
     return dict(
@@ -67,6 +73,13 @@ def counts(rows):
         chosen_cone=sum(r["chosen_cone"] is True for r in choices),
         chosen_nonweaker=sum(r["chosen_nonweaker_cone"] is True for r in choices),
         first_step_h2h=sum(r["first_step_death_cause"]=="head_to_head" for r in rows),
+        shorter_opportunity_choices=len(shorter_opportunities),
+        shorter_only_selected=len(shorter_selected),
+        pct_shorter_selected=percent(len(shorter_selected),len(shorter_opportunities)),
+        mean_observed_length=mean(r["length"] for r in choices) if choices else None,
+        mean_shorter_opportunity_length=(
+            mean(r["length"] for r in shorter_opportunities)
+            if shorter_opportunities else None),
         death10=sum(r["death10"]=="dead" for r in known),known10=len(known),
         pct_any=percent(sum(r["threatened_count"]>0 for r in candidates),n),
         pct_all=percent(sum(r["all_cone"] is True for r in candidates),n),
@@ -269,6 +282,49 @@ def build(data_dir):
                      f"({fmt(r['pct_nonweaker'],1)}%) | "
                      f"{r['death10']}/{r['known10']} |")
     lines+=["",
+        "### A critical sensitivity check: does a shorter-opponent opportunity exist?","",
+        "The unconditional rates above MIX states where a weaker opponent",
+        "can enter a candidate destination with states having NO such option.",
+        "Define a shorter-opponent opportunity as at least one modeled",
+        "candidate cell reached by a shorter opponent's cone, but by",
+        "NO equal-or-longer opponent cone. The resulting denominator is",
+        "observed first moves WITH an actual such opportunity.",
+        "",
+        "| Mode | Cohort | Mean body length (observed) | First moves with shorter-only opportunity | Chose shorter-only contest | Conditional % |",
+        "|---|---|---:|---:|---:|---:|"]
+    for r in groups:
+        lines.append(f"| {r['mode']} | {r['cohort']} | "
+                     f"{fmt(r['mean_observed_length'],1)} | "
+                     f"{r['shorter_opportunity_choices']} | "
+                     f"{r['shorter_only_selected']} | "
+                     f"{fmt(r['pct_shorter_selected'],1)}% |")
+    lines+=["",
+        "The top group may encounter MORE weaker opponents because its snakes",
+        "are already longer. Conditional rates can erase or reverse the",
+        "apparent top/middle/bottom trend. An observed shorter-only contest",
+        "is not necessarily deliberate aggression or an advantageous action.",
+        "Still excludes immediate deaths because their attempted destinations",
+        "are not present in next-frame surviving heads.",
+        "",
+        "### Further stratification by length in REAL league matches","",
+        "| Length at danger position | Cohort | Observed first moves with shorter-only option | Chose it | Rate |",
+        "|---|---|---:|---:|---:|"]
+    for length in LENGTH_BANDS:
+        for cohort in COHORTS[:3]:
+            part=[r for r in league if r["length_band"]==length]
+            observed=[r for r in part if r["cohort"]==cohort
+                      and r["chosen_cone"] is not None]
+            eligible=[r for r in observed if
+                      r["threatened_count"]>r["nonweaker_threatened_count"]]
+            chosen=sum(r["chosen_cone"] and not r["chosen_nonweaker_cone"]
+                       for r in eligible)
+            lines.append(f"| {length} | {cohort} | {len(eligible)} | "
+                         f"{chosen} | {fmt(percent(chosen,len(eligible)),1)}% |")
+    lines+=["",
+        "These strata are small and not exact-matched relative-length or",
+        "opponent-heading contexts; do NOT extrapolate a universal",
+        "size-based offensive rule.",
+        "",
         "SELECTION WARNING: observed first moves require a live head at t+1.",
         "Snakes killed on their first step have NO recorded destination;",
         "observed contested-move shares thus CANNOT estimate how dangerous",
