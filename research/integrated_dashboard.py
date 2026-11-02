@@ -20,6 +20,7 @@ from .escape_autopsies import build as autopsy_report
 from .long_horizon_survival import build as long_horizon_report
 from .competitive_cohorts import build as competitive_cohorts_report
 from .route_space import build as route_space_report
+from .opponent_cones import build as opponent_cone_report
 from .rulebook import build as render_rulebook
 from .seasonal_disagreement import build as seasonal_report
 from .historical_peer_comparison import build as historical_peer_report
@@ -115,6 +116,7 @@ def build(data_dir):
     long_horizon=long_horizon_report(data_dir)  # Censor-aware +10/+20/+30 followups.
     cohorts=competitive_cohorts_report(data_dir)  # Same-season Division 1 top/middle/bottom cohort study.
     routes=route_space_report(data_dir)  # Pre-action frozen-body vs moving-own-tail route prediction.
+    cones=opponent_cone_report(data_dir)  # One-step opponent head cones with actual event audits.
     candidate_rules=render_rulebook(data_dir)  # Evidence-gated hypotheses for a NEW agent.
     history=seasonal_report(data_dir)  # Longitudinal matched ranking differences, not independent trials.
     peer_history=historical_peer_report(data_dir)  # Older peer-game catalogs without official standings.
@@ -251,6 +253,14 @@ def build(data_dir):
         "NOT engine-verified safe paths or counterfactual outcomes.",
         f"Replay-sampled danger positions with route features: **{routes['modeled_windows']}**.",
         "![Recorded high-route-space first moves by cohort](charts/route_choice_cohorts.svg)",
+        "### Which first steps could become opponent head contests?",
+        "The [whole-field head-cone analysis](opponent_cones.md) models all",
+        "opponents' next-head REACHABLE cells from current geometry, compares",
+        "them with each alternative route and audits real next-frame",
+        "moves and head-to-head victim events. Separate league and trial",
+        "outcomes remain visible; these are NOT verified engine-legal moves.",
+        f"Actual league danger positions with cone features: **{cones['league_windows']}**.",
+        "![Observed head-contest choices by group](charts/opponent_contests.svg)",
         "### Does the snake remain safe after its first escape?",
         "[Palmer's audited danger-response casebook](palmer_casebook.md) gives",
         "one earliest dangerous position per unique league replay and",
@@ -336,6 +346,8 @@ def build(data_dir):
         "  matched division ranks, tracked across recorded seasons and bot hashes.",
         "- [Evidence-gated algorithm rulebook](algorithm_rulebook.md):",
         "  falsifiable state-to-action hypotheses for a NEW agent, not code fixes.",
+        "- [All competitors: opponent head-contest possibilities](opponent_cones.md):",
+        "  heading-based possible next-head cells, real event audits, danger prediction.",
         "- [Actual student decisions versus future route space](route_space.md):",
         "  frozen-body vs own-moving-tail route-proxy audit by performance cohort.",
         "- [All competitors: strong/middle/struggling cohorts](competitive_cohorts.md):",
@@ -370,7 +382,7 @@ def build(data_dir):
         "executables or source code are extracted. No Java snake changes yet.",""
     ]
     (output/"README.md").write_text("\n".join(home),encoding="utf-8")
-    return dict(season=latest,route_space_windows=routes["modeled_windows"],candidate_rules=candidate_rules["rules"],competitive_cohort_ranked_league_windows=cohorts["ranked_league_windows"],long_horizon_windows=long_horizon["league"]["baseline"]+long_horizon["trial"]["baseline"],matched_autopsies_league=autopsies["matched_league"],matched_autopsies_trial=autopsies["matched_trial"],head_pressure_windows=threat["windows"],peer_history_div1_snapshots=peer_history["div1_snapshots"],historical_div1_snapshots=history["division1_snapshots"],replay_paired=movement["paired_student_replays"],paired_division1=len(paired),
+    return dict(season=latest,opponent_cone_league_windows=cones["league_windows"],route_space_windows=routes["modeled_windows"],candidate_rules=candidate_rules["rules"],competitive_cohort_ranked_league_windows=cohorts["ranked_league_windows"],long_horizon_windows=long_horizon["league"]["baseline"]+long_horizon["trial"]["baseline"],matched_autopsies_league=autopsies["matched_league"],matched_autopsies_trial=autopsies["matched_trial"],head_pressure_windows=threat["windows"],peer_history_div1_snapshots=peer_history["div1_snapshots"],historical_div1_snapshots=history["division1_snapshots"],replay_paired=movement["paired_student_replays"],paired_division1=len(paired),
                 comparison={r["metric"]:r["rho"] for r in results},
                 reports=[str(dest),str(output/"README.md")])
 
