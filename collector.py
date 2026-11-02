@@ -445,6 +445,62 @@ def likely_replay_signatures(db: sqlite3.Connection) -> tuple[dict[tuple[str,str
     return signatures,downloaded
 
 
+def prioritize_paired_trials(candidates: list[tuple[str,str]],
+                             owners: dict[tuple[str,str],str],
+                             newly_observed_league: set[tuple[str,str]],
+                             archived_league: set[tuple[str,str]],
+                             archived_trial: set[tuple[str,str]]) -> list[tuple[str,str]]:
+    """Order trial candidates to grow actual SAME-STUDENT/SAME-SEASON comparisons.
+
+    New league opponents with no trial replay are highest priority; then
+    historically downloaded league opponents missing trial. Spread the budget
+    across distinct students first, while rotating the three trial suites.
+    This changes only ordering, not the respectful download budget or quotas.
+    """
+    by_category: dict[int,dict[tuple[str,str],list[tuple[str,str]]]] = {
+        k:{} for k in range(5)
+    }
+    for pair in candidates:
+        slug=owners.get(pair)
+        key=(pair[0],slug) if slug else None
+        if key in newly_observed_league and key not in archived_trial:
+            category=0
+        elif key in archived_league and key not in archived_trial:
+            category=1
+        elif key in newly_observed_league:
+            category=2
+        elif key in archived_league:
+            category=3
+        else:
+            category=4
+        owner=key if key else pair
+        by_category[category].setdefault(owner,[]).append(pair)
+    result=[]
+    for category in sorted(by_category):
+        owners_to_games=by_category[category]
+        owner_names=list(owners_to_games)
+        if not owner_names:
+            continue
+        def suite_index(pair):
+            name=pair[1]
+            if "/trial-912" in name:return 0
+            if "/trial-910" in name:return 1
+            if "/trial-911" in name:return 2
+            return 3
+        for index,name in enumerate(owner_names):
+            # Different students start with different suites, so a scarce
+            # download budget still observes all three benchmark setups.
+            owners_to_games[name].sort(
+                key=lambda pair:(suite_index(pair)-index%3)%3)
+        maximum=max(len(batch) for batch in owners_to_games.values())
+        for turn in range(maximum):
+            for name in owner_names:
+                games=owners_to_games[name]
+                if turn<len(games):
+                    result.append(games[turn])
+    return result
+
+
 def queued_matches(db: sqlite3.Connection, root: Path, known_seasons: list[str],
                    priority: set[str], limit: int) -> list[tuple[str, str]]:
     """Research sampler: 60% student league, 40% controlled trials when available.
@@ -565,6 +621,48 @@ def queued_matches(db: sqlite3.Connection, root: Path, known_seasons: list[str],
     # Explicit quotas for each environment, not an accidental side effect of
     # sorting trial suites before league games.
     for kind in ("league", "trial"):
+        if kind == "trial":
+            # The league choices are already fixed. Use their four student
+            # participants to select different, paired trial opponents.
+            selected_league_people=set()
+            for season_name,game in selected:
+                for (slug,) in db.execute(
+                    "SELECT team_slug FROM participants "
+                    "WHERE season_name=? AND replay_name=? "
+                    "AND team_slug NOT LIKE '~%'",
+                    (season_name,game)):
+                    selected_league_people.add((season_name,slug))
+            owners={}
+            for season_name,game,slug in db.execute(
+                "SELECT m.season_name,m.replay_name,p.team_slug "
+                "FROM matches m JOIN participants p "
+                "ON p.season_name=m.season_name AND p.replay_name=m.replay_name "
+                "WHERE m.kind='trial' AND p.team_slug NOT LIKE '~%'"):
+                pair=(season_name,game)
+                if pair in owners and owners[pair]!=slug:
+                    owners[pair]=None  # ambiguous trial; never infer owner
+                elif pair not in owners:
+                    owners[pair]=slug
+            archived_league_people={
+                (season_name,slug) for season_name,slug in db.execute(
+                "SELECT DISTINCT m.season_name,p.team_slug FROM matches m "
+                "JOIN participants p ON p.season_name=m.season_name "
+                "AND p.replay_name=m.replay_name "
+                "WHERE m.kind='league' AND m.replay_sha256 IS NOT NULL "
+                "AND p.team_slug NOT LIKE '~%'")}
+            archived_trial_people={
+                (season_name,slug) for season_name,slug in db.execute(
+                "SELECT DISTINCT m.season_name,p.team_slug FROM matches m "
+                "JOIN participants p ON p.season_name=m.season_name "
+                "AND p.replay_name=m.replay_name "
+                "WHERE m.kind='trial' AND m.replay_sha256 IS NOT NULL "
+                "AND p.team_slug NOT LIKE '~%'")}
+            pools["trial"][0]=prioritize_paired_trials(
+                pools["trial"][0],owners,selected_league_people,
+                archived_league_people,archived_trial_people)
+            historical["trial"]=prioritize_paired_trials(
+                historical["trial"],owners,selected_league_people,
+                archived_league_people,archived_trial_people)
         start = len(selected)
         hist_goal = start + history_goals[kind]
         goal = start + targets[kind]
