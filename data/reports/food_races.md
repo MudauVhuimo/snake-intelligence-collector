@@ -1,17 +1,17 @@
 # Snake26 Food Races: Observational Study
 
-Generated UTC: 2026-11-01T23:46:00+00:00
+Generated UTC: 2026-11-02T00:43:16+00:00
 
 ## Data validity FIRST
 
-- Replay files scanned: **150** of 150; unique content: **87**.
-- Exact duplicates skipped: **63**; unreadable replays: **0**.
-- First-visible apple episodes: **10400**.
-- Apples disappearing between adjacent states: **10316**.
-- Captures matched to next-head position AND explicit eat event: **10314**.
+- Replay files scanned: **160** of 160; unique content: **96**.
+- Exact duplicates skipped: **64**; unreadable replays: **0**.
+- First-visible apple episodes: **11490**.
+- Apples disappearing between adjacent states: **11397**.
+- Captures matched to next-head position AND explicit eat event: **11395**.
 - Unmatched disappearances: **2**.
 - Confirmation rate among disappeared apples: **100.0%**.
-- On-arrival matched apple events: **5195**; league matched events: **5119**.
+- On-arrival matched apple events: **5705**; league matched events: **5690**.
 
 > The measurement is conservative. A disappearing apple without BOTH
 > a matching eat event and next-frame head is not assigned a winner.
@@ -41,9 +41,9 @@ Unconsumed/censored opportunities are not included in the lifetime histogram.
 We call an apple initially contested when the student versus benchmark
 nearest-head distances differ by at most two cells, and at least one head
 is at toroidal Manhattan distance ten or less at first appearance.
-Observed matched contested captures: **289**.
-- Student captured: **162**.
-- Built-in benchmark captured: **127**.
+Observed matched contested captures: **317**.
+- Student captured: **175**.
+- Built-in benchmark captured: **142**.
 
 That is an operational distance-based definition, not proof of
 the actual safe paths, intentions or likelihood of winning.
@@ -52,8 +52,8 @@ the actual safe paths, intentions or likelihood of winning.
 
 | Mode | Matched apple captures | Student captures | Benchmark captures |
 |---|---:|---:|---:|
-| On-arrival | 5195 | 1810 | 3385 |
-| League | 5119 | 5119 | 0 |
+| On-arrival | 5705 | 1999 | 3706 |
+| League | 5690 | 5690 | 0 |
 
 ## Next research questions
 

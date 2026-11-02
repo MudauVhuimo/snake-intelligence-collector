@@ -1,35 +1,34 @@
 # Snake intelligence — collection status
 
-Generated (UTC): 2026-11-01T23:37:34+00:00
-Latest season: `2026-11-01-225859-season`
-Cataloged seasons: 47
-Cataloged matches: 20406
-Downloaded replays (all seasons): 150
+Generated (UTC): 2026-11-02T00:42:14+00:00
+Latest season: `2026-11-01-235859-season`
+Cataloged seasons: 55
+Cataloged matches: 24480
+Downloaded replays (all seasons): 160
 
 ## Most-observed snakes in downloaded current-season replays
 
 | Team | Matches | Wins | Avg final length | Observed moves | Deaths | Self-deaths | Food events |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| `~benchmark` | 10 | 0 | 11.5 | 19077 | 154 | 25 | 323 |
-| `~survivor` | 7 | 0 | 31.4 | 13887 | 18 | 4 | 150 |
-| `419926-mphile-nchabeleng` | 6 | 4 | 140.8 | 11988 | 1 | 0 | 192 |
-| `413538-lelethuthando-nikelo` | 5 | 3 | 165.0 | 9983 | 2 | 2 | 202 |
-| `388060-tshepang-tshabalala` | 4 | 1 | 78.8 | 7978 | 3 | 1 | 100 |
-| `424820-elisha-mundalamo` | 4 | 0 | 108.8 | 7984 | 2 | 1 | 122 |
-| `~gauntlet_1` | 4 | 0 | 10.0 | 7858 | 23 | 2 | 111 |
-| `388828-ngcebo-methula` | 3 | 3 | 110.0 | 5991 | 1 | 0 | 92 |
-| `421349-phathutshedzo-mudzanani` | 3 | 3 | 213.3 | 5991 | 1 | 1 | 131 |
-| `421462-alexander-palmer` | 3 | 2 | 95.0 | 5991 | 1 | 0 | 86 |
-| `409997-utayan-naidoo` | 3 | 1 | 96.7 | 5962 | 6 | 2 | 99 |
-| `~hungry` | 3 | 0 | 26.7 | 5877 | 20 | 7 | 112 |
-| `~hunter` | 3 | 0 | 8.3 | 5749 | 42 | 13 | 98 |
-| `~wander` | 3 | 0 | 5.0 | 5867 | 23 | 3 | 5 |
-| `423239-zeeshaan-bham` | 2 | 1 | 97.5 | 3974 | 4 | 1 | 69 |
-| `408070-collen-mthombeni` | 2 | 0 | 20.0 | 3980 | 3 | 0 | 68 |
-| `410193-vhugala-makhwathane` | 2 | 0 | 65.0 | 3986 | 2 | 0 | 56 |
-| `422777-thandile-mamiana` | 2 | 0 | 35.0 | 2000 | 1 | 0 | 23 |
-| `423135-mpho-muremi` | 2 | 0 | 95.0 | 3992 | 1 | 1 | 46 |
-| `428954-njabulo-ndlozi` | 2 | 0 | 47.5 | 3986 | 2 | 0 | 54 |
+| `421462-alexander-palmer` | 6 | 5 | 160.8 | 11982 | 2 | 2 | 255 |
+| `~benchmark` | 3 | 0 | 15.0 | 5785 | 36 | 6 | 104 |
+| `403754-vhuimo-mudau` | 2 | 0 | 30.0 | 3986 | 2 | 1 | 50 |
+| `~survivor` | 2 | 0 | 12.5 | 3923 | 13 | 3 | 43 |
+| `421538-tshifhiwa-bvumbi` | 1 | 1 | 230.0 | 1999 | 0 | 0 | 45 |
+| `426895-mpho-ramasakona` | 1 | 1 | 150.0 | 1987 | 2 | 1 | 23 |
+| `388828-ngcebo-methula` | 1 | 0 | 170.0 | 1999 | 0 | 0 | 33 |
+| `402334-angile-saho` | 1 | 0 | 25.0 | 1987 | 2 | 2 | 29 |
+| `404721-khensani-maluleke` | 1 | 0 | 160.0 | 1993 | 1 | 1 | 29 |
+| `409997-utayan-naidoo` | 1 | 0 | 15.0 | 1987 | 2 | 0 | 25 |
+| `413538-lelethuthando-nikelo` | 1 | 0 | 105.0 | 1999 | 0 | 0 | 20 |
+| `419342-ayeshan-puckree` | 1 | 0 | 55.0 | 1987 | 2 | 1 | 26 |
+| `419926-mphile-nchabeleng` | 1 | 0 | 40.0 | 1987 | 2 | 0 | 31 |
+| `420236-nathan-gebremichael` | 1 | 0 | 15.0 | 1999 | 0 | 0 | 27 |
+| `422777-thandile-mamiana` | 1 | 0 | 20.0 | 1987 | 2 | 2 | 26 |
+| `~gauntlet_1` | 1 | 0 | 15.0 | 1981 | 3 | 0 | 27 |
+| `~hungry` | 1 | 0 | 5.0 | 1923 | 13 | 2 | 34 |
+| `~hunter` | 1 | 0 | 20.0 | 1963 | 6 | 4 | 33 |
+| `~wander` | 1 | 0 | 5.0 | 1987 | 2 | 0 | 0 |
 
 Counts reflect downloaded replays only, not the whole league. Actions are inferred from adjacent alive frames, excluding discontinuities.
 No strategy or win-rate advantage is assumed from these descriptive numbers.

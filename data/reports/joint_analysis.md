@@ -1,8 +1,8 @@
 # Snake26: JOINED league + trials study
 
-Generated UTC: 2026-11-01T23:46:10+00:00
+Generated UTC: 2026-11-02T00:43:29+00:00
 
-**Latest official season:** 2026-11-01-225859-season. This report treats competitive league
+**Latest official season:** 2026-11-01-235859-season. This report treats competitive league
 matches and controlled on-arrival trials as **two separate datasets**
 and joins them at the **same season + same student**. The published
 end-of-season code SHA, when known, is attached for auditing, but is
@@ -14,11 +14,11 @@ end-of-season code SHA, when known, is attached for auditing, but is
 
 | Separate data source | Cataloged matches | Full replays | Unique replay hashes |
 |---|---:|---:|---:|
-| League | 2,093 | 95 | 45 |
-| Trial | 17,958 | 55 | 42 |
+| League | 2,579 | 101 | 50 |
+| Trial | 21,462 | 59 | 46 |
 
-**Historical student-season rows:** league 1,548,
-trials 5,986, union 6,005.
+**Historical student-season rows:** league 1,923,
+trials 7,154, union 7,173.
 **Current season paired students (at least 2 student-opponent league games
 plus all 3 trials): 146**.
 **Division 1 study sample (at least 3 league games + all trials): 32**.
@@ -37,10 +37,10 @@ Investigate any nonzero cases before interpreting reset behavior.
 
 | Paired measurement | Division 1 students | Spearman rho |
 |---|---:|---:|
-| Apples per game | 32 | 0.491 |
-| Final body length | 32 | 0.475 |
-| Kills per game | 32 | 0.438 |
-| Retained growth / expected no-reset growth | 32 | 0.499 |
+| Apples per game | 32 | 0.505 |
+| Final body length | 32 | 0.440 |
+| Kills per game | 32 | 0.436 |
+| Retained growth / expected no-reset growth | 32 | 0.387 |
 
 Correlations are calculated only among students from **the same division
 and season**, to avoid comparing ranks of different divisions. These are
@@ -66,42 +66,42 @@ match opponents, seats and seeds vary by schedule.
 
 | Rank | Student | League games | League wins % | League apples | League retained | League kills | Trial apples | Trial retained | Trial kills | Replay coverage L/T |
 |---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 1 | 421462-alexander-palmer | 3 | 66.7 | 28.7 | 0.70 | 0.67 | 48.0 | 0.79 | 15.33 | 3/0 |
-| 2 | 428786-marvellous-sambo | 5 | 60.0 | 32.0 | 0.74 | 1.00 | 34.7 | 0.70 | 16.00 | 1/0 |
-| 3 | 388828-ngcebo-methula | 6 | 66.7 | 32.7 | 0.47 | 0.83 | 40.0 | 1.00 | 14.67 | 3/0 |
-| 4 | 403339-david-ndambo | 5 | 80.0 | 30.2 | 0.84 | 1.40 | 41.3 | 1.00 | 12.67 | 1/0 |
-| 5 | 427039-sameeha-miabala | 4 | 50.0 | 25.8 | 1.00 | 0.75 | 38.7 | 1.00 | 14.33 | 1/0 |
-| 6 | 413538-lelethuthando-nikelo | 5 | 20.0 | 33.6 | 0.64 | 1.80 | 43.3 | 1.00 | 22.33 | 2/3 |
-| 7 | 421349-phathutshedzo-mudzanani | 4 | 25.0 | 29.8 | 0.56 | 0.50 | 43.7 | 0.95 | 10.33 | 0/3 |
-| 8 | 427064-khodani-netili | 5 | 40.0 | 31.4 | 0.40 | 1.80 | 42.0 | 1.00 | 11.33 | 1/0 |
-| 9 | 419926-mphile-nchabeleng | 6 | 33.3 | 29.3 | 0.61 | 0.67 | 35.0 | 1.00 | 14.00 | 3/3 |
-| 10 | 424820-elisha-mundalamo | 5 | 20.0 | 31.4 | 0.78 | 1.20 | 40.3 | 0.95 | 13.33 | 4/0 |
-| 11 | 428954-njabulo-ndlozi | 4 | 25.0 | 30.2 | 0.25 | 0.50 | 37.3 | 0.75 | 17.00 | 2/0 |
-| 12 | 426895-mpho-ramasakona | 5 | 20.0 | 26.2 | 0.27 | 0.60 | 40.7 | 0.54 | 15.67 | 1/0 |
-| 13 | 406000-mulimisi-rammela | 5 | 40.0 | 23.0 | 0.82 | 1.00 | 25.0 | 1.00 | 12.00 | 0/0 |
-| 14 | 423258-muhammed-dar | 5 | 40.0 | 32.0 | 0.47 | 0.80 | 44.0 | 0.74 | 13.00 | 1/0 |
-| 15 | 388060-tshepang-tshabalala | 5 | 20.0 | 25.4 | 0.65 | 0.80 | 44.7 | 1.00 | 15.00 | 4/0 |
-| 16 | 389160-lwandle-ramanugu | 6 | 33.3 | 25.7 | 0.45 | 1.17 | 38.0 | 0.54 | 17.33 | 1/0 |
-| 17 | 423436-ntobeko-zondi | 6 | 33.3 | 27.2 | 0.57 | 0.33 | 33.3 | 1.00 | 12.00 | 1/0 |
-| 18 | 423135-mpho-muremi | 5 | 0.0 | 21.4 | 0.91 | 0.80 | 26.0 | 1.00 | 21.33 | 2/0 |
-| 19 | 408070-collen-mthombeni | 6 | 16.7 | 30.3 | 0.24 | 0.33 | 42.3 | 0.50 | 4.67 | 2/0 |
-| 20 | 426650-babongile-mafantiri | 5 | 40.0 | 26.6 | 0.16 | 0.40 | 32.7 | 1.00 | 20.33 | 0/0 |
-| 21 | 402334-angile-saho | 6 | 16.7 | 30.8 | 0.52 | 1.17 | 52.7 | 0.78 | 19.33 | 1/0 |
-| 22 | 404721-khensani-maluleke | 4 | 0.0 | 34.2 | 0.31 | 0.00 | 45.0 | 0.43 | 13.00 | 1/0 |
-| 23 | 419342-ayeshan-puckree | 5 | 20.0 | 27.4 | 0.43 | 0.60 | 32.0 | 1.00 | 12.33 | 0/0 |
-| 24 | 422777-thandile-mamiana | 6 | 0.0 | 18.5 | 0.70 | 0.50 | 35.0 | 0.81 | 8.33 | 2/0 |
-| 25 | 427417-phophi-shavhani | 5 | 20.0 | 27.8 | 0.41 | 1.00 | 44.0 | 0.40 | 10.00 | 1/0 |
-| 26 | 409997-utayan-naidoo | 6 | 16.7 | 28.7 | 0.21 | 0.17 | 48.7 | 0.77 | 10.67 | 2/1 |
-| 27 | 410193-vhugala-makhwathane | 6 | 0.0 | 24.5 | 0.66 | 0.17 | 27.0 | 1.00 | 8.67 | 2/0 |
-| 28 | 424907-sibongakonke-ntsele | 5 | 20.0 | 22.8 | 0.50 | 0.40 | 36.7 | 0.62 | 8.00 | 1/0 |
-| 29 | 408008-bradley-buys | 5 | 0.0 | 25.8 | 0.30 | 0.40 | 42.0 | 0.76 | 16.67 | 1/0 |
-| 30 | 428798-oratile-molefe | 6 | 0.0 | 26.2 | 0.30 | 0.33 | 31.3 | 0.54 | 8.33 | 1/0 |
-| 31 | 428464-madalitso-mnqanqeni | 5 | 0.0 | 28.2 | 0.11 | 0.20 | 41.7 | 0.50 | 9.33 | 1/0 |
-| 32 | 423239-zeeshaan-bham | 5 | 20.0 | 34.4 | 0.34 | 0.40 | 41.0 | 1.00 | 13.33 | 2/0 |
+| 1 | 421462-alexander-palmer | 6 | 66.7 | 36.8 | 0.77 | 0.67 | 48.0 | 0.79 | 15.33 | 4/2 |
+| 2 | 403339-david-ndambo | 5 | 60.0 | 31.6 | 0.30 | 0.80 | 41.3 | 1.00 | 12.67 | 0/0 |
+| 3 | 427064-khodani-netili | 4 | 50.0 | 27.5 | 0.89 | 1.25 | 42.0 | 1.00 | 11.33 | 0/0 |
+| 4 | 426895-mpho-ramasakona | 4 | 50.0 | 28.8 | 0.76 | 1.50 | 40.7 | 0.54 | 15.67 | 1/0 |
+| 5 | 423436-ntobeko-zondi | 4 | 50.0 | 26.5 | 0.78 | 1.50 | 33.3 | 1.00 | 12.00 | 0/0 |
+| 6 | 388828-ngcebo-methula | 4 | 25.0 | 27.2 | 0.82 | 0.50 | 40.0 | 1.00 | 14.67 | 1/0 |
+| 7 | 424820-elisha-mundalamo | 5 | 40.0 | 29.2 | 0.71 | 1.20 | 40.3 | 0.95 | 13.33 | 0/0 |
+| 8 | 428786-marvellous-sambo | 5 | 40.0 | 31.2 | 0.17 | 0.00 | 34.7 | 0.70 | 16.00 | 0/0 |
+| 9 | 388060-tshepang-tshabalala | 4 | 50.0 | 29.8 | 0.81 | 0.75 | 44.7 | 1.00 | 15.00 | 0/0 |
+| 10 | 427039-sameeha-miabala | 5 | 60.0 | 31.4 | 0.70 | 0.40 | 38.7 | 1.00 | 14.33 | 0/0 |
+| 11 | 413538-lelethuthando-nikelo | 4 | 25.0 | 29.5 | 0.65 | 1.00 | 43.3 | 1.00 | 22.33 | 1/0 |
+| 12 | 429782-maseeha-seedat | 5 | 40.0 | 26.6 | 0.58 | 0.80 | 38.3 | 0.50 | 15.33 | 0/0 |
+| 13 | 428954-njabulo-ndlozi | 4 | 25.0 | 33.5 | 0.49 | 1.50 | 37.3 | 0.75 | 17.00 | 0/0 |
+| 14 | 421349-phathutshedzo-mudzanani | 6 | 33.3 | 30.5 | 0.66 | 0.50 | 43.7 | 0.95 | 10.33 | 0/0 |
+| 15 | 406000-mulimisi-rammela | 4 | 0.0 | 20.5 | 1.00 | 0.00 | 25.0 | 1.00 | 12.00 | 0/0 |
+| 16 | 403501-mashau-mudzanani | 4 | 25.0 | 37.0 | 0.30 | 0.25 | 41.3 | 0.75 | 8.33 | 0/0 |
+| 17 | 402334-angile-saho | 5 | 20.0 | 30.6 | 0.50 | 1.40 | 52.7 | 0.78 | 19.33 | 1/0 |
+| 18 | 404721-khensani-maluleke | 6 | 0.0 | 31.0 | 0.49 | 0.50 | 45.0 | 0.43 | 13.00 | 1/0 |
+| 19 | 419926-mphile-nchabeleng | 5 | 20.0 | 29.0 | 0.49 | 1.40 | 35.0 | 1.00 | 14.00 | 1/0 |
+| 20 | 419636-jason-chen | 5 | 0.0 | 28.6 | 0.48 | 0.20 | 42.7 | 1.00 | 6.67 | 0/0 |
+| 21 | 422777-thandile-mamiana | 5 | 0.0 | 18.2 | 0.31 | 1.00 | 35.0 | 0.81 | 8.33 | 1/0 |
+| 22 | 426650-babongile-mafantiri | 5 | 20.0 | 29.4 | 0.45 | 0.40 | 32.7 | 1.00 | 20.33 | 0/0 |
+| 23 | 420236-nathan-gebremichael | 4 | 25.0 | 22.8 | 0.73 | 1.25 | 38.7 | 1.00 | 14.00 | 1/0 |
+| 24 | 408501-asher-urison | 5 | 0.0 | 26.6 | 0.45 | 0.00 | 38.3 | 0.70 | 8.00 | 0/0 |
+| 25 | 419342-ayeshan-puckree | 6 | 16.7 | 28.2 | 0.50 | 0.33 | 32.0 | 1.00 | 12.33 | 1/0 |
+| 26 | 423258-muhammed-dar | 3 | 33.3 | 31.0 | 0.64 | 1.00 | 44.0 | 0.74 | 13.00 | 0/0 |
+| 27 | 389160-lwandle-ramanugu | 5 | 20.0 | 28.2 | 0.48 | 0.80 | 38.0 | 0.54 | 17.33 | 0/0 |
+| 28 | 403754-vhuimo-mudau | 5 | 20.0 | 27.4 | 0.32 | 0.20 | 35.3 | 1.00 | 11.00 | 2/0 |
+| 29 | 409997-utayan-naidoo | 5 | 0.0 | 32.0 | 0.11 | 0.00 | 48.7 | 0.77 | 10.67 | 1/0 |
+| 30 | 408070-collen-mthombeni | 4 | 0.0 | 29.0 | 0.27 | 0.00 | 42.3 | 0.50 | 4.67 | 0/0 |
+| 31 | 423135-mpho-muremi | 4 | 0.0 | 22.5 | 0.37 | 0.50 | 26.0 | 1.00 | 21.33 | 0/0 |
+| 32 | 427417-phophi-shavhani | 3 | 0.0 | 25.7 | 0.19 | 0.33 | 44.0 | 0.40 | 10.00 | 0/0 |
 
 ## 5. The same students: *actual replay-derived* behavior
 
-Current-season students with BOTH league and trial full replay behavior: **3**.
+Current-season students with BOTH league and trial full replay behavior: **1**.
 Catalog counts cannot fill in missing replay decisions; only identical,
 verifiable frame-derived definitions can be compared across modes.
 [See the mode-separated behavioral report](behavior_by_mode.md) for

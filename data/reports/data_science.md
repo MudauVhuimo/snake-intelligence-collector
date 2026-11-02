@@ -1,14 +1,14 @@
 # Snake26 — Data Science Dashboard: Phase I
 
-Generated UTC: 2026-11-01T23:45:46+00:00
+Generated UTC: 2026-11-02T00:42:56+00:00
 
 ## Data coverage and quality
 
-- Cataloged seasons: **47**; match records: **20,406**.
-- Replay records marked downloaded in SQLite: **150**.
-- Files on disk: **150**; sampled: **150**.
-- Unique replay payloads (SHA-256): **87**; duplicate payloads skipped: **63**; unreadable: **0**.
-- Latest season: **2026-11-01-225859-season**; published gauntlet_1 trial results: **146**.
+- Cataloged seasons: **55**; match records: **24,480**.
+- Replay records marked downloaded in SQLite: **160**.
+- Files on disk: **160**; sampled: **160**.
+- Unique replay payloads (SHA-256): **96**; duplicate payloads skipped: **64**; unreadable: **0**.
+- Latest season: **2026-11-01-235859-season**; published gauntlet_1 trial results: **146**.
 
 > Thousands of catalog records are not thousands of independent replay observations.
 > Adjacent turns are correlated. Same bot, version, opponent setup or seed can recur.
@@ -33,7 +33,7 @@ Below-reference points may reflect growth lost to deaths, but only full replay e
 
 ![Growth across game turns](charts/gauntlet_growth.svg)
 
-Current-season gauntlet_1 trial replays with trajectories: **4**.
+Current-season gauntlet_1 trial replays with trajectories: **1**.
 Actual recorded body lengths, sampled every 100 turns; missing curves are not interpolated.
 
 ## 4. Deaths by recorded cause (all match modes pooled)
@@ -48,11 +48,11 @@ Raw counts mix opponent groups and survival exposure; they are not comparable ri
 
 | Length range | Student alive turns | Student deaths | Deaths / 1,000 alive turns | Benchmark alive turns | Benchmark deaths |
 |---|---:|---:|---:|---:|---:|
-| 5-24 | 85,812 | 29 | 0.338 | 165,206 | 733 |
-| 25-49 | 89,156 | 39 | 0.437 | 55,814 | 241 |
-| 50-99 | 139,573 | 77 | 0.552 | 24,119 | 74 |
-| 100-149 | 84,246 | 43 | 0.510 | 1,343 | 4 |
-| 150+ | 42,152 | 15 | 0.356 | 0 | 0 |
+| 5-24 | 95,799 | 33 | 0.344 | 181,440 | 782 |
+| 25-49 | 97,511 | 44 | 0.451 | 61,347 | 268 |
+| 50-99 | 153,385 | 83 | 0.541 | 25,882 | 82 |
+| 100-149 | 94,013 | 48 | 0.511 | 1,343 | 4 |
+| 150+ | 48,121 | 17 | 0.353 | 0 | 0 |
 
 Exposure: one alive snake at the start of an observed turn. A death is attributed
 to its previous alive state, not the dead/respawned frame's length. A zero-exposure
@@ -65,13 +65,13 @@ These pooled figures DO NOT establish differences between the two game environme
 
 | Length | League alive turns | League deaths | League rate / 1000 | Trial alive turns | Trial deaths | Trial rate / 1000 |
 |---|---:|---:|---:|---:|---:|---:|
-| 5-24 | 78,372 | 29 | 0.370 | 7,440 | 0 | 0.000 |
-| 25-49 | 79,633 | 38 | 0.477 | 9,523 | 1 | 0.105 |
-| 50-99 | 121,854 | 75 | 0.615 | 17,719 | 2 | 0.113 |
-| 100-149 | 64,184 | 43 | 0.670 | 20,062 | 0 | 0.000 |
-| 150+ | 12,946 | 8 | 0.618 | 29,206 | 7 | 0.240 |
+| 5-24 | 87,573 | 33 | 0.377 | 8,226 | 0 | 0.000 |
+| 25-49 | 87,040 | 43 | 0.494 | 10,471 | 1 | 0.096 |
+| 50-99 | 134,022 | 81 | 0.604 | 19,363 | 2 | 0.103 |
+| 100-149 | 72,500 | 48 | 0.662 | 21,513 | 0 | 0.000 |
+| 150+ | 15,749 | 9 | 0.571 | 32,372 | 8 | 0.247 |
 
-Unique full replay payloads sampled: league 45, trials 42.
+Unique full replay payloads sampled: league 50, trials 46.
 A missing bar denotes NO exposure, not zero risk. Different opponents,
 seeds and bot versions make these observational, non-causal comparisons.
 
