@@ -1,0 +1,45 @@
+name: Publish refreshed joined research once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish_research_once.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: snake-intelligence-data
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Regression tests
+        run: python -m unittest discover -s . -p 'test*.py' -v
+      - name: Refresh every canonical source-separated research report
+        run: |
+          python -m research.dashboard --data-dir data --max-files 250
+          python -m research.integrated_dashboard --data-dir data
+          sed -n '1,80p' data/reports/historical_peer_comparison.md
+          sed -n '1,80p' data/reports/seasonal_disagreement.md
+          cat data/derived/quality.json
+      - name: Commit reviewed analysis only, never raw replay or database changes
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/reports/ data/derived/
+          if ! git diff --cached --quiet; then
+            git commit -m 'data: publish historical league/trial studies and paired uncertainty'
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          else
+            echo 'Reports already current'
+          fi
