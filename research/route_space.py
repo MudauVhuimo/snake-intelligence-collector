@@ -67,6 +67,8 @@ def one_window(replay,frames,window,cohort,quality):
     if scene is None:
         quality["invalid_scene"]+=1
         return None
+    if len(set(scene.own))!=len(scene.own):
+        quality["repeated_tail_accepted"]+=1
     alternatives=scene_metrics(scene)
     following=frames.get(t+1)
     after=get_next_head(following,sid)
@@ -331,7 +333,9 @@ def build(data_dir,max_files=250):
         "1. **Frozen-body flood fill:** after each candidate first step,",
         "   count connected currently-unoccupied cells (all bodies frozen).",
         "2. **Tail-aware 8-step beam:** shift the OWN body one cell after",
-        "   every projected step, allowing tail cells to vacate. Keep at most",
+        "   every projected step, allowing tail cells to vacate (including",
+        "   legitimate repeated terminal coordinates during prior growth).",
+        "   Keep at most"
         "   64 distinct body states per depth with at most two states per head.",
         "   Count distinct projected head positions reached over eight steps.",
         "   Deterministic beam pruning means the count is approximate.",
@@ -346,7 +350,8 @@ def build(data_dir,max_files=250):
         "Real death outcomes (next 10 turns) remain separate recorded labels.",
         "",
         "## Coverage and validation of ordinary body shifts","",
-        f"Unique replay payloads: **{qc['unique_replays']}**",
+        f"Source danger-window observations: **{qc['source_danger_windows']:,}**.",
+        f"Unique replay payloads WITH danger observations: **{qc['unique_replays']}**",
         f"(league {qc['league_unique_replays']}, trials {qc['trial_unique_replays']}).",
         f"Audited dangerous windows: **{qc['modeled_rows']:,}**",
         f"(league {qc['league_windows']}, trial {qc['trial_windows']}).",
@@ -357,6 +362,13 @@ def build(data_dir,max_files=250):
         f"**{qc['observed_next_head_missing']}**.",
         f"Observed valid heads outside the simplified model: "
         f"**{qc['observed_outside_projection']}** (NOT silently made legal).",
+        f"Recognized duplicated terminal tail cells during growth: "
+        f"**{qc['repeated_tail_accepted']}**.",
+        f"Invalid scene/body shape: **{qc['invalid_scene']}**.",
+        f"Missing frame/student: **{qc['missing_frame']+qc['missing_student']}**.",
+        f"Invalid source windows: **{qc['invalid_window']}**.",
+        f"SHA mismatch / unreadable replay: **{qc['sha_mismatch']+qc['invalid_replays']}**.",
+        "Any skipped rows remain excluded rather than silently designated safe.",
         f"Plain no-food-growth actual body transitions consistent with shift: "
         f"**{qc['plain_shift_valid']}/{qc['plain_shift_checked']}**.",
         f"Modeled windows with no next candidates: **{qc['league_no_candidate']+qc['trial_no_candidate']}**.",
