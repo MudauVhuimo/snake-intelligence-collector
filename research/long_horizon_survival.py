@@ -211,6 +211,7 @@ def palmer_casebook(rows,data_dir):
         "These are descriptive case studies, not a learned or proven policy.",
         "No competition snake code has been altered.",""]
     path=data_dir/"reports"/"palmer_casebook.md"
+    path.parent.mkdir(parents=True,exist_ok=True)
     path.write_text("\n".join(report),encoding="utf-8")
     return dict(games=len(out),matched_peer_games=sum(bool(x["matched_peer"]) for x in out),
                 report=str(path))
