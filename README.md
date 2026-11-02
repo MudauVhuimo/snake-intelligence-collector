@@ -8,14 +8,17 @@ This private repository collects publicly accessible Wits Snake26 match catalogs
 
 1. **[Research dashboard and report index](data/reports/README.md)** — the entry point for all studies
 2. **[Canonical joint league–trial report](data/reports/joint_analysis.md)** — same student, same season, cross-environment correlations
-3. **[Full replay behavior separated by environment](data/reports/behavior_by_mode.md)** — real observed decisions, not inferred from match scores
+3. **[Competition-wide decisions: strong/middle/struggling snakes](data/reports/competitive_cohorts.md)** — same-season league rank, actual recorded choices, matched same-game comparisons
+   - **[Future route-space investigation](data/reports/route_space.md)** — frozen flood-fill versus moving own-tail prediction, with replay-holdout ROC AUC and cluster-bootstrap uncertainty
+   - **[Evidence-gated algorithm rulebook](data/reports/algorithm_rulebook.md)** — state-to-action hypotheses, counterexamples, tests for a completely NEW agent
+4. **[Full replay behavior separated by environment](data/reports/behavior_by_mode.md)** — real observed decisions, not inferred from match scores
    - **[Opponent head pressure and escape-space study](data/reports/threat_windows.md)**
    - **[Matched death autopsies versus observed escapes](data/reports/escape_autopsies.md)** — same-mode, same-starting-risk comparisons across real league and trial replays
    - **[30-turn danger survival](data/reports/long_horizon_survival.md)** — after the first successful escape, does the snake remain alive?
-   - **[Palmer's actual league danger decisions](data/reports/palmer_casebook.md)** — first real movement and follow-up geometry from each archived game — future 10-turn death outcomes from actual league/trial replay frames
-4. **[Historical peer-game versus trial study](data/reports/historical_peer_comparison.md)** — actual archived student league placements where official old standings are missing
-5. **[Historical league/trial specialists](data/reports/seasonal_disagreement.md)** — comparable division rank gaps with explicit snapshot/version caveats
-6. **[Joined data exports](data/derived/joined_team_seasons.csv)** and **[quality audit](data/derived/quality.json)** — reproducible inputs and coverage
+   - **[Palmer's actual league danger decisions](data/reports/palmer_casebook.md)** — one strong competitor's real movement casebook, supporting (not replacing) population-wide comparisons
+5. **[Historical peer-game versus trial study](data/reports/historical_peer_comparison.md)** — actual archived student league placements where official old standings are missing
+6. **[Historical league/trial specialists](data/reports/seasonal_disagreement.md)** — comparable division rank gaps with explicit snapshot/version caveats
+7. **[Joined data exports](data/derived/joined_team_seasons.csv)** and **[quality audit](data/derived/quality.json)** — reproducible inputs and coverage
 
 The old [strategy laboratory](data/reports/strategy_lab.md) is a **legacy pooled diagnostic**, not evidence about league strategy. On-arrival food-race/underdog studies remain useful supporting studies but **do not substitute for student-versus-student replay observations**.
 
