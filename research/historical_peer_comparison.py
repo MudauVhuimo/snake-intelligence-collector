@@ -20,6 +20,8 @@ from .league_comparison import chart
 
 def analyze(db,minimum_students=10,minimum_games=3):
     snap=snapshot(db)
+    versions={(r["season"],r["team"]):r["version_sha256"]
+              for r in snap["joined"]}
     student_counts=defaultdict(set)
     matches=defaultdict(list)
     rows=db.execute(
@@ -63,9 +65,7 @@ def analyze(db,minimum_students=10,minimum_games=3):
                                 if any(x["length"] is not None for x in eligible) else None,
             trial_mean_length=trials["mean_final_length"],
             official_rank=snap["standings"].get((season,team),{}).get("rank"),
-            snapshot_sha=snap["joined"][0].get("version_sha256") if False else
-               next((r["version_sha256"] for r in snap["joined"] if
-                     r["season"]==season and r["team"]==team),None)))
+            snapshot_sha=versions.get((season,team))))
     time_series=[]
     student_rows=[]
     for (season,division),people in sorted(grouped.items()):
