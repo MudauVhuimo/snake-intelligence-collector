@@ -7,7 +7,7 @@ import tempfile
 import unittest
 
 from collector import connect,ingest_latest_season,ingest_games
-from research.joined_datasets import snapshot,correlations,retained
+from research.joined_datasets import snapshot,correlations,retained,paired_bootstrap_rho
 from research.integrated_dashboard import build
 
 SEASON="2026-11-02-010000-season"
@@ -91,6 +91,16 @@ class JoinedResearchTests(unittest.TestCase):
         self.assertEqual(len(paired),4)
         self.assertEqual(len(metrics),4)
         self.assertTrue(all(m["rho"] is not None for m in metrics))
+
+    def test_paired_student_bootstrap_uses_student_units_and_is_repeatable(self):
+        x=list(range(12))
+        y=list(range(12))
+        a=paired_bootstrap_rho(x,y,draws=200,seed=19)
+        b=paired_bootstrap_rho(x,y,draws=200,seed=19)
+        self.assertEqual(a,b)
+        self.assertEqual(a["low"],1)
+        self.assertEqual(a["high"],1)
+        self.assertIsNone(paired_bootstrap_rho([1,2,3],[3,2,1]))
 
     def test_final_length_ratio_is_not_death_count(self):
         self.assertEqual(retained(55,10),1)
