@@ -17,6 +17,7 @@ from collections import Counter,defaultdict
 from datetime import datetime,timezone
 from pathlib import Path
 from statistics import mean
+import random
 
 from .league_comparison import chart
 
@@ -180,6 +181,102 @@ def same_game_support(rows):
                 matched_students=len({r["student"] for g in games
                     for cohort in ("top_quartile","bottom_quartile") for r in g[cohort]}))
 
+def matched_same_game_episodes(rows):
+    """Greedy 1:1 unique pairs in SAME league game and SAME baseline stratum.
+
+    Match pre-outcome length band, nearest head <=3, free exits <=1, phase.
+    Prefer closest EXACT starting length, head distance, free exits and turn.
+    This is observational matching, not randomization or causal inference.
+    """
+    indexed=defaultdict(lambda:defaultdict(list))
+    for row in rows:
+        if row["mode"]!="league" or row["cohort"] not in ("top_quartile","bottom_quartile"):
+            continue
+        key=(row["replay_sha"],matching_stratum(row))
+        indexed[key][row["cohort"]].append(row)
+    matched=[]
+    for key,groups in sorted(indexed.items(),key=lambda kv:str(kv[0])):
+        tops=sorted(groups.get("top_quartile",[]),key=lambda r:(
+            r["turn"],r["student"]))
+        bottoms=list(groups.get("bottom_quartile",[]))
+        for top in tops:
+            if not bottoms:
+                break
+            best=min(range(len(bottoms)),key=lambda i:(
+                abs(bottoms[i]["length"]-top["length"]),
+                abs(bottoms[i]["nearest_head"]-top["nearest_head"]),
+                abs(bottoms[i]["free_exits"]-top["free_exits"]),
+                abs(bottoms[i]["turn"]-top["turn"]),
+                bottoms[i]["student"]))
+            bottom=bottoms.pop(best)
+            matched.append((top,bottom))
+    return matched
+
+def pair_value(row,metric):
+    if metric=="death10":
+        if row["status10"]=="censored":return None
+        return int(row["status10"]=="dead")
+    if metric=="turn":
+        return (int(row["first_move"]!="straight")
+                if row["first_move"] in ("straight","turn","reverse") else None)
+    if metric=="apple_progress":
+        return (int(row["food_progress1"]>0)
+                if row["food_progress1"] is not None else None)
+    if metric=="exit_gain":
+        if row["status10"]!="alive" or row["exit_gain3"] is None:return None
+        return int(row["exit_gain3"]>0)
+    raise ValueError("Unknown measured feature")
+
+def paired_contrast(pairs,metric,draws=1000,seed=2026):
+    """Bottom minus top, event-level; confidence by entire REPLAY cluster.
+
+    Resampling replay clusters handles correlated episodes within game.
+    Historical repeated opponents/bot versions can still create dependence.
+    """
+    observations=[(a["replay_sha"],pair_value(a,metric),pair_value(b,metric))
+                  for a,b in pairs]
+    observed=[(sha,100*(v-u)) for sha,u,v in observations
+              if u is not None and v is not None]
+    result=dict(n=len(observed),
+                replay_clusters=len({sha for sha,_ in observed}),
+                bottom_minus_top_pp=(mean(diff for _,diff in observed)
+                                     if observed else None),
+                ci_low=None,ci_high=None)
+    grouped=defaultdict(list)
+    for sha,value in observed:grouped[sha].append(value)
+    games=sorted(grouped)
+    if len(games)<8:return result
+    rng=random.Random(seed)
+    bs=[]
+    for _ in range(draws):
+        diff=[]
+        for sha in rng.choices(games,k=len(games)):
+            diff.extend(grouped[sha])
+        if diff:bs.append(mean(diff))
+    bs.sort()
+    if bs:
+        result["ci_low"]=bs[int(.025*(len(bs)-1))]
+        result["ci_high"]=bs[int(.975*(len(bs)-1))]
+    return result
+
+def write_matched_csv(path,pairs):
+    rows=[]
+    for top,bottom in pairs:
+        row=dict(season=top["season"],replay_sha=top["replay_sha"],
+                 top_student=top["student"],bottom_student=bottom["student"],
+                 top_turn=top["turn"],bottom_turn=bottom["turn"],
+                 top_length=top["length"],bottom_length=bottom["length"],
+                 top_head_dist=top["nearest_head"],bottom_head_dist=bottom["nearest_head"],
+                 top_free_exits=top["free_exits"],bottom_free_exits=bottom["free_exits"],
+                 top_first_move=top["first_move"],bottom_first_move=bottom["first_move"],
+                 top_apple_progress1=top["food_progress1"],
+                 bottom_apple_progress1=bottom["food_progress1"],
+                 top_exit_gain3=top["exit_gain3"],bottom_exit_gain3=bottom["exit_gain3"],
+                 top_outcome10=top["status10"],bottom_outcome10=bottom["status10"])
+        rows.append(row)
+    write_csv(path,rows)
+    return rows
+
 def fmt(v):
     return "insufficient" if v is None else f"{v:.2f}%"
 
@@ -232,6 +329,11 @@ def build(data_dir):
     supported,matching=common_support(observations)
     within=grouped_rates(supported)
     shared=same_game_support(observations)
+    same_match_pairs=matched_same_game_episodes(observations)
+    pair_stats={k:paired_contrast(same_match_pairs,k) for k in
+                ("death10","turn","apple_progress","exit_gain")}
+    write_matched_csv(data_dir/"derived"/"competitive_matched_decisions.csv",
+                      same_match_pairs)
     chart_path=data_dir/"reports"/"charts"/"cohort_danger_outcomes.svg"
     plot(chart_path,groups)
     by_group=[]
@@ -311,12 +413,46 @@ def build(data_dir):
                          f"{fmt(v['death10_pct'])} | {fmt(v['gain3_pct'])} | "
                          f"{fmt(v['straight_pct'])} | {fmt(v['toward_apple_pct'])} |")
     lines += ["",
-        "These are COMMON-STRATUM comparisons but they are NOT reweighted",
+        "## 3. Strong versus struggling snakes in the SAME real match","",
+        "Each pair uses one top-quartile and one bottom-quartile student",
+        "from the SAME actual replay, SAME body-length band, near-head",
+        "condition, confined/unconfined condition, and 500-turn game phase.",
+        "Pairing uses only BASELINE variables, and no observed window is reused.",
+        "This is a harder comparison than grouping results across unrelated",
+        "games, but pairs may still differ in exact body location, apples,",
+        "opponent responses and how much time passes between snapshots.","",
+        f"Matched dangerous-position pairs: **{len(same_match_pairs)}**.",
+        f"Distinct league replays with strict matched pairs: "
+        f"**{len({a['replay_sha'] for a,b in same_match_pairs})}**.",
+        "",
+        "| Measured outcome (bottom minus top) | Both decisions observable | Replay clusters | Difference (percentage points) | Replay-resampled 95% interval |",
+        "|---|---:|---:|---:|---|"]
+    for metric,label in (
+        ("death10","Died in next 10 turns"),
+        ("turn","First step was a turn/reversal rather than straight"),
+        ("apple_progress","Moved toward same still-visible apple"),
+        ("exit_gain","Gained 1+ neighboring cell by turn 3, among +10 survivors")
+    ):
+        r=pair_stats[metric]
+        ci=(f"[{r['ci_low']:+.2f}, {r['ci_high']:+.2f}]"
+            if r["ci_low"] is not None else "insufficient distinct games")
+        d=f"{r['bottom_minus_top_pp']:+.2f}" if r["bottom_minus_top_pp"] is not None else "n/a"
+        lines.append(f"| {label} | {r['n']} | {r['replay_clusters']} | {d} | {ci} |")
+    lines += ["",
+        "Positive values mean the bottom cohort exhibited the behavior or",
+        "death more frequently; negative values mean the top did.",
+        "Match-level bootstrap uncertainty addresses repeated episodes in",
+        "one replay, NOT repeated student versions across snapshots.",
+        "Even equal baseline categories are NOT identical legal choices;",
+        "none of these contrasts alone tells us which action caused survival.",
+        "[Auditable non-reused matched pairs](../derived/competitive_matched_decisions.csv).",
+        "",
+        "These are COMMON-STRATUM comparisons but they are NOT reweighted,
         "to identical distributions within the overlap. Even same-game cohorts",
         "may occupy different locations and face unequal threats. No p-value",
         "or effect-size certainty is claimed from individual windows.",
         "",
-        "## 3. What would make a useful algorithm rule?","",
+        "## 4. What would make a useful algorithm rule?","",
         "Test the hypothesis that top league competitors select routes with",
         "better safe future mobility after controlling for starting length,",
         "head geometry and food opportunity. Our 0–4 free-neighbor count is",
@@ -339,6 +475,8 @@ def build(data_dir):
                 ranked_trial_windows=qc["trial_ranked_windows"],
                 common_strata=matching["common_strata"],
                 same_match_extremes=shared["both_extremes"],
+                strictly_matched_pairs=len(same_match_pairs),
+                pair_statistics=pair_stats,
                 cohorts=by_group,report=str(dst))
 
 def main():
