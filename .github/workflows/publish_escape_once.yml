@@ -1,0 +1,43 @@
+name: Publish verified escape autopsy research once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish_escape_once.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: snake-intelligence-data
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - name: Checkout existing public Snake26 replay archive
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run every offline regression test
+        run: python -m unittest discover -s . -p 'test*.py' -v
+      - name: Rebuild joined league/trial plus death escape research
+        run: |
+          python -m research.integrated_dashboard --data-dir data
+          sed -n '1,110p' data/reports/escape_autopsies.md
+      - name: Publish reviewed derived research only
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/reports/ data/derived/
+          if git diff --cached --quiet; then
+            echo 'All research outputs already current'
+            exit 0
+          fi
+          git commit -m 'data: publish replay-matched death and escape case-control studies'
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
