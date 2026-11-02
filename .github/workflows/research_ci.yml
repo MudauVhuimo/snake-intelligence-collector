@@ -38,6 +38,7 @@ jobs:
           sed -n '1,115p' data/reports/threat_windows.md
           sed -n '1,120p' data/reports/escape_autopsies.md
           sed -n '1,155p' data/reports/long_horizon_survival.md
+          sed -n '1,80p' data/reports/palmer_casebook.md
       - name: Save validated report and charts (never commits data)
         uses: actions/upload-artifact@v4
         with:
@@ -59,6 +60,8 @@ jobs:
             data/reports/threat_windows.md
             data/reports/escape_autopsies.md
             data/reports/long_horizon_survival.md
+            data/reports/palmer_casebook.md
+            data/derived/palmer_league_casebook.csv
             data/reports/charts/danger_survival_30.svg
             data/reports/charts/escape_recovery_late_death.svg
             data/derived/long_horizon_danger_windows.csv
