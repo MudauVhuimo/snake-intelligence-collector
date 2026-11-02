@@ -130,6 +130,32 @@ def check_opponent_next_heads(cones,following,excluded_ids):
                 counters["known_heading_disagreement"]+=1
     return counters
 
+def head_to_head_lengths(before,death_event):
+    """Lengths at LAST observed frame for a recorded head_to_head death.
+
+    This is a victim EVENT, not unique collision or an inferred attacker move.
+    'by' may be missing/unknown; do not fabricate which player won.
+    """
+    cause=death_event.get("cause") or {}
+    if death_event.get("kind")!="died" or cause.get("kind")!="head_to_head":
+        return None
+    sid=death_event.get("snake")
+    by=cause.get("by")
+    if before is None:
+        return dict(relation="missing_prior_frame",victim_length=None,
+                    peer_length=None)
+    living={}
+    for s in before.get("snakes",()):
+        if s.get("alive") and s.get("body") and s.get("id") is not None:
+            living[s["id"]]=len(s["body"])
+    if sid not in living or by not in living:
+        return dict(relation="missing_participant",victim_length=living.get(sid),
+                    peer_length=living.get(by))
+    a,b=living[sid],living[by]
+    relation="victim_shorter" if a<b else "victim_longer" if a>b else "equal"
+    return dict(relation=relation,victim_length=a,peer_length=b)
+
+
 def audit_next_head_death(following,focal_id):
     """Observed next-frame death event cause. A cause is not a predicted move."""
     if following is None:return "censored"
