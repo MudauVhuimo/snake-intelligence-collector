@@ -52,6 +52,9 @@ def percent(n,d):
 def fmt(x,digits=3):
     return "insufficient" if x is None else f"{x:.{digits}f}"
 
+def fmt_pct(x,digits=1):
+    return "insufficient" if x is None else f"{x:.{digits}f}%"
+
 def counts(rows):
     choices=[r for r in rows if r["chosen_cone"] is not None]
     candidates=[r for r in rows if r["candidate_count"]]
@@ -273,13 +276,13 @@ def build(data_dir):
         lines.append(f"| {r['mode']} | {r['cohort']} | {r['students']} | "
                      f"{r['games']} | {r['windows']} | "
                      f"{r['any_cone']}/{r['candidate_frames']} "
-                     f"({fmt(r['pct_any'],1)}%) | "
+                     f"({fmt_pct(r['pct_any'])}) | "
                      f"{r['all_cone']}/{r['candidate_frames']} "
-                     f"({fmt(r['pct_all'],1)}%) | {r['observed_moves']} | "
+                     f"({fmt_pct(r['pct_all'])}) | {r['observed_moves']} | "
                      f"{r['chosen_cone']}/{r['observed_moves']} "
-                     f"({fmt(r['pct_chosen'],1)}%) | "
+                     f"({fmt_pct(r['pct_chosen'])}) | "
                      f"{r['chosen_nonweaker']}/{r['observed_moves']} "
-                     f"({fmt(r['pct_nonweaker'],1)}%) | "
+                     f"({fmt_pct(r['pct_nonweaker'])}) | "
                      f"{r['death10']}/{r['known10']} |")
     lines+=["",
         "### A critical sensitivity check: does a shorter-opponent opportunity exist?","",
@@ -297,7 +300,7 @@ def build(data_dir):
                      f"{fmt(r['mean_observed_length'],1)} | "
                      f"{r['shorter_opportunity_choices']} | "
                      f"{r['shorter_only_selected']} | "
-                     f"{fmt(r['pct_shorter_selected'],1)}% |")
+                     f"{fmt_pct(r['pct_shorter_selected'])} |")
     lines+=["",
         "The top group may encounter MORE weaker opponents because its snakes",
         "are already longer. Conditional rates can erase or reverse the",
@@ -319,7 +322,7 @@ def build(data_dir):
             chosen=sum(r["chosen_cone"] and not r["chosen_nonweaker_cone"]
                        for r in eligible)
             lines.append(f"| {length} | {cohort} | {len(eligible)} | "
-                         f"{chosen} | {fmt(percent(chosen,len(eligible)),1)}% |")
+                         f"{chosen} | {fmt_pct(percent(chosen,len(eligible)))} |")
     lines+=["",
         "These strata are small and not exact-matched relative-length or",
         "opponent-heading contexts; do NOT extrapolate a universal",
