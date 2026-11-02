@@ -67,6 +67,7 @@ jobs:
             data/reports/algorithm_rulebook.md
             data/reports/charts/cohort_danger_outcomes.svg
             data/derived/competitive_cohort_danger.csv
+            data/derived/competitive_matched_decisions.csv
             data/derived/palmer_league_casebook.csv
             data/reports/charts/danger_survival_30.svg
             data/reports/charts/escape_recovery_late_death.svg
