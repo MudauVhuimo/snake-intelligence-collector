@@ -93,6 +93,13 @@ def classify(rows,ranked):
         if r.get("exit_gain3") not in (None,""):
             try:gain=int(r["exit_gain3"])
             except ValueError:qc["bad_3_turn_delta"]+=1
+        first_move=r.get("first_move_style")
+        if first_move not in ("straight","turn","reverse","unknown_heading"):
+            first_move=None
+        food_progress=None
+        if r.get("food_progress_same_apple1") not in (None,""):
+            try:food_progress=int(r["food_progress_same_apple1"])
+            except (ValueError,TypeError):qc["bad_food_progress"]+=1
         result.append(dict(
             season=r["season"],replay_sha=r["replay_sha"],
             student=r["student"],mode=mode,cohort=meta["cohort"],
@@ -101,6 +108,7 @@ def classify(rows,ranked):
             length_band=r["length_band"],nearest_head=nearest,
             free_exits=exits,head_close=nearest<=3,
             confined=exits<=1,exit_gain3=gain,
+            first_move=first_move,food_progress1=food_progress,
             status10=r["outcome10"],status30=r["outcome30"]))
         qc[mode+"_ranked_windows"]+=1
     return result,qc
@@ -111,6 +119,8 @@ def rates(rows):
     known30=[r for r in rows if r["status30"]!="censored"]
     valid_gain=[r for r in rows if r["exit_gain3"] is not None
                 and r["status10"]=="alive"]
+    observed_moves=[r for r in rows if r["first_move"] in ("straight","turn","reverse")]
+    food_moves=[r for r in rows if r["food_progress1"] is not None]
     d10=sum(r["status10"]=="dead" for r in known10)
     d30=sum(r["status30"]=="dead" for r in known30)
     return dict(n=len(rows),n10=len(known10),deaths10=d10,
@@ -122,6 +132,12 @@ def rates(rows):
                 gain3_pct=100*sum(r["exit_gain3"]>0 for r in valid_gain)/len(valid_gain)
                 if valid_gain else None,
                 n_gain3=len(valid_gain),
+                first_move_n=len(observed_moves),
+                straight_pct=100*sum(r["first_move"]=="straight" for r in observed_moves)/
+                len(observed_moves) if observed_moves else None,
+                food_move_n=len(food_moves),
+                toward_apple_pct=100*sum(r["food_progress1"]>0 for r in food_moves)/
+                len(food_moves) if food_moves else None,
                 replays=len({r["replay_sha"] for r in rows}),
                 students=len({r["student"] for r in rows}),
                 seasons=len({r["season"] for r in rows}))
@@ -258,18 +274,23 @@ def build(data_dir):
         "",
         "## 1. Observed danger exposure and outcomes by performance cohort","",
         "![Strong vs weak student danger windows](charts/cohort_danger_outcomes.svg)","",
-        "| Match mode | Division 1 cohort | Students | Unique replays | Danger windows | Nearby heads | Confinement | Death by +10 (events/windows) | Death by +30 (events/windows) | Gained exit by +3 (among +10 survivors) |",
-        "|---|---|---:|---:|---:|---|---|---|---|---|"]
+        "| Match mode | Division 1 cohort | Students | Unique replays | Danger windows | Nearby heads | Confinement | Death by +10 (events/windows) | Death by +30 (events/windows) | Gained exit by +3 (among +10 survivors) | First move straight | Moved toward a persistent apple |",
+        "|---|---|---:|---:|---:|---|---|---|---|---|---|---|"]
     for x in by_group:
         lines.append(f"| {x['mode']} | {x['cohort']} | {x['students']} | "
                      f"{x['replays']} | {x['n']} | {fmt(x['close_pct'])} | "
                      f"{fmt(x['confined_pct'])} | {x['deaths10']}/{x['n10']} "
                      f"({fmt(x['death10_pct'])}) | {x['deaths30']}/{x['n30']} "
                      f"({fmt(x['death30_pct'])}) | {x['n_gain3']} sampled, "
-                     f"{fmt(x['gain3_pct'])} |")
+                     f"{fmt(x['gain3_pct'])} | {x['first_move_n']} moves, "
+                     f"{fmt(x['straight_pct'])} | {x['food_move_n']} moves, "
+                     f"{fmt(x['toward_apple_pct'])} |")
     lines+=["",
+        "First-move straight/turn is reconstructed from two consecutive REAL frames.",
+        "Food progress means closing distance to the SAME apple still visible",
+        "one frame later; this does not prove the snake targeted that apple.",
         "These rows DESCRIBE the encounters each cohort experienced; they do",
-        "not establish that stronger snakes made different decisions in",
+        "not establish that stronger snakes made different decisions in"
         "equivalent states. A difference may reflect opponents and selection.","",
         "## 2. Restrict to comparable pre-decision danger situations","",
         "Common-support strata require BOTH top and bottom students in the",
@@ -281,13 +302,14 @@ def build(data_dir):
         f"- Those containing BOTH extreme cohorts: **{shared['both_extremes']}**.",
         f"- Distinct top/bottom students in overlapping games: **{shared['matched_students']}**.",
         "",
-        "| Mode | Cohort within overlap | Windows | Distinct replays | +10 death frequency | +3 exit gain frequency |",
-        "|---|---|---:|---:|---|---|"]
+        "| Mode | Cohort within overlap | Windows | Distinct replays | +10 death frequency | +3 exit gain frequency | First-move straight | Same-apple progress |",
+        "|---|---|---:|---:|---|---|---|---|"]
     for mode in ("league","trial"):
         for cohort in ("top_quartile","bottom_quartile"):
             v=within[mode,cohort]
             lines.append(f"| {mode} | {cohort} | {v['n']} | {v['replays']} | "
-                         f"{fmt(v['death10_pct'])} | {fmt(v['gain3_pct'])} |")
+                         f"{fmt(v['death10_pct'])} | {fmt(v['gain3_pct'])} | "
+                         f"{fmt(v['straight_pct'])} | {fmt(v['toward_apple_pct'])} |")
     lines += ["",
         "These are COMMON-STRATUM comparisons but they are NOT reweighted",
         "to identical distributions within the overlap. Even same-game cohorts",
