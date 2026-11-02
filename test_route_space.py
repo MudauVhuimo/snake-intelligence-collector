@@ -80,6 +80,21 @@ class RouteTests(unittest.TestCase):
         food_scene=Scene(7,7,body,frozenset(area),frozenset({(2,1)}))
         self.assertNotIn((2,1),[x["next_head"] for x in scene_metrics(food_scene)])
 
+    def test_legitimate_repeated_tail_coordinates_are_not_dropped(self):
+        g=game()
+        original=g["frames"][0]["snakes"][0]["body"]
+        # During +5 food growth, tail stays in place across several frames.
+        original.append(dict(original[-1]))
+        original.append(dict(original[-1]))
+        scene=scene_from_frame(g,g["frames"][0],0)
+        self.assertIsNotNone(scene)
+        self.assertEqual(len(scene.own),6)
+        # The repeated tail is still blocked after a single pop.
+        self.assertIsNone(step_body(scene.own,scene.own[-1],scene.others))
+        # Duplicating an internal body point is NOT a normal growth suffix.
+        original.insert(1,dict(original[1]))
+        self.assertIsNone(scene_from_frame(g,g["frames"][0],0))
+
     def test_midrank_on_tied_options_and_missing_actual_head(self):
         paths=[dict(next_head=(0,0),frozen=5,tail=10),
                dict(next_head=(1,0),frozen=5,tail=6),
