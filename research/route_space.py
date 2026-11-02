@@ -490,7 +490,7 @@ def build(data_dir,max_files=250):
         "Small snakes and long snakes can differ; individual bins have few",
         "death events, so these figures are NOT verified optimal thresholds.",
         "",
-        "Univariate AUC is NOT a calibrated hazard model. Match/body length,
+        "Univariate AUC is NOT a calibrated hazard model. Match/body length",
         "food density, opponent strength and available routes affect every",
         "candidate feature. A test with no deaths cannot produce an AUC.",
         "",
