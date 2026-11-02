@@ -447,7 +447,7 @@ def build(data_dir):
         "none of these contrasts alone tells us which action caused survival.",
         "[Auditable non-reused matched pairs](../derived/competitive_matched_decisions.csv).",
         "",
-        "These are COMMON-STRATUM comparisons but they are NOT reweighted,
+        "These are COMMON-STRATUM comparisons but they are NOT reweighted",
         "to identical distributions within the overlap. Even same-game cohorts",
         "may occupy different locations and face unequal threats. No p-value",
         "or effect-size certainty is claimed from individual windows.",
