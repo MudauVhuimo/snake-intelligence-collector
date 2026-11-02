@@ -805,9 +805,36 @@ def collect(client: Client, db: sqlite3.Connection, root: Path, max_replays: int
         sampling_lines.append(
             f"| {season_name} | {replay_name} | {kind} | "
             f"{division if division is not None else '—'} | {humans} |")
+    planned_people={"league":set(),"trial":set()}
+    for season_name,replay_name in chosen:
+        kind=db.execute(
+            "SELECT kind FROM matches WHERE season_name=? AND replay_name=?",
+            (season_name,replay_name)).fetchone()[0]
+        kind="trial" if kind=="trial" else "league"
+        for (student,) in db.execute(
+            "SELECT team_slug FROM participants WHERE season_name=? "
+            "AND replay_name=? AND team_slug NOT LIKE '~%'",
+            (season_name,replay_name)):
+            planned_people[kind].add((season_name,student))
+    archived_people={}
+    for kind in ("league","trial"):
+        archived_people[kind]={
+            (season,student) for season,student in db.execute(
+            "SELECT DISTINCT m.season_name,p.team_slug FROM matches m "
+            "JOIN participants p ON p.season_name=m.season_name "
+            "AND p.replay_name=m.replay_name "
+            "WHERE m.kind=? AND m.replay_sha256 IS NOT NULL "
+            "AND p.team_slug NOT LIKE '~%'",(kind,))}
+    potential_new_pairs=(
+        (planned_people["league"] & (planned_people["trial"]|archived_people["trial"])) |
+        (planned_people["trial"] & archived_people["league"])
+    )
     sampling_lines.extend([
         "", f"Selected league-like games: **{league_count}**.",
         f"Selected on-arrival trials: **{trial_count}**.",
+        f"Student-season pairs potentially covered by this selection: **{len(potential_new_pairs)}**.",
+        f"Pairs in current season: **{sum(s==current for s,_ in potential_new_pairs)}**.",
+        "These are planned pairs, NOT evidence both raw replays downloaded successfully.",
         "", "Catalog metadata does not reveal private bot strategy; both game",
         "environments need actual replay analysis, with duplicates removed.",""
     ])
