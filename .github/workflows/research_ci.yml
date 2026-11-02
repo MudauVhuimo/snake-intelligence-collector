@@ -41,6 +41,7 @@ jobs:
           sed -n '1,80p' data/reports/palmer_casebook.md
           sed -n '1,110p' data/reports/competitive_cohorts.md
           sed -n '1,160p' data/reports/route_space.md
+          sed -n '1,170p' data/reports/opponent_cones.md
           sed -n '1,135p' data/reports/algorithm_rulebook.md
       - name: Save validated report and charts (never commits data)
         uses: actions/upload-artifact@v4
@@ -66,6 +67,11 @@ jobs:
             data/reports/palmer_casebook.md
             data/reports/competitive_cohorts.md
             data/reports/route_space.md
+            data/reports/opponent_cones.md
+            data/reports/charts/opponent_contests.svg
+            data/derived/opponent_cone_cohorts.csv
+            data/derived/opponent_cone_paired_students.csv
+            data/derived/route_cone_quality.json
             data/reports/charts/route_choice_cohorts.svg
             data/derived/route_choice_windows.csv
             data/derived/route_choice_cohorts.csv
