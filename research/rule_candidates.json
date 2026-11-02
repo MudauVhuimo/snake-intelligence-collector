@@ -47,10 +47,11 @@
       "then_hypothesis": "Prefer moves that maintain tail-aware future connectivity when the near-term cost is reasonable.",
       "evidence": [
         "data/reports/escape_autopsies.md",
-        "data/reports/long_horizon_survival.md"
+        "data/reports/long_horizon_survival.md",
+        "data/reports/route_space.md"
       ],
-      "counterexample": "The selected league leader could lose an immediate free neighbor and survive; early exit gain is not universal or necessarily causal.",
-      "next_experiment": "Measure dynamic reachable area, tail release, chokepoints and 10/30-turn outcomes by action in matched peer matches.",
+      "counterexample": "Moving-tail search showed only a small, uncertain held-out AUC gain over frozen flood-fill; top, middle and bottom snakes selected highest-score modeled moves at similar rates. High predicted reachable area is NOT a proven best first action.",
+      "next_experiment": "Validate route-score prediction across later independent league seasons, include opponent-head reachable sets and growth-aware collision timing; run ablations of the new agent against a locked diverse peer panel.",
       "falsification": "Dynamic connectivity fails to predict survival or gives poorer league results than a static or simpler heuristic."
     },
     {
