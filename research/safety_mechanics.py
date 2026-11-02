@@ -15,9 +15,6 @@ from pathlib import Path
 
 from .threat_windows_core import board_shape, coord, heads, distance
 
-CAUSES = ("self", "body", "head_to_head", "obstacle", "forfeit", "other")
-
-
 def _snake_info(frame):
     result = {}
     for snake in frame.get("snakes", ()):
@@ -145,8 +142,8 @@ def build(data_dir,max_files=250):
         ("recorded_eating_survivors","Survivors with recorded eat event"),
         ("ate_event_without_previous_food_cell","Eat without previous-frame apple"),
         ("recorded_deaths","Explicit recorded death events"),
-        ("death_self","Self death events"),
-        ("death_body","Body death events"),
+        ("death_self_collision","Self-collision victim events"),
+        ("death_collision","Body/obstacle collision victim events"),
         ("death_head_to_head","Head-to-head victim events"),
         ("head_on_victim_shorter","Head-on victim shorter than attributed rival"),
         ("head_on_victim_equal","Head-on victim equal to attributed rival"),
