@@ -35,7 +35,6 @@ jobs:
           cat data/derived/quality.json
           sed -n '1,75p' data/reports/historical_peer_comparison.md
           sed -n '1,58p' data/reports/seasonal_disagreement.md
-          python -m research.threat_windows --data-dir data --max-files 250
           sed -n '1,115p' data/reports/threat_windows.md
       - name: Save validated report and charts (never commits data)
         uses: actions/upload-artifact@v4
