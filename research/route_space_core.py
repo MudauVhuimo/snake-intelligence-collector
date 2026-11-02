@@ -43,7 +43,18 @@ def scene_from_frame(replay,frame,sid):
     if len(own)!=1:
         return None
     body=tuple(coord(p) for p in own[0]["body"])
-    if len(body)<2 or any(x is None for x in body) or len(set(body))!=len(body):
+    if len(body)<2 or any(x is None for x in body):
+        return None
+    # Food may make a snake grow over several turns with a stationary tail:
+    # the observed body can legitimately end in MULTIPLE copies of tail.
+    # Preserve these positions; the no-further-growth projection pops one
+    # tail element per step, so a duplicated tail does not vacate early.
+    last=body[-1]
+    k=len(body)-1
+    while k>0 and body[k-1]==last:
+        k-=1
+    prefix=body[:k]
+    if len(set(prefix))!=len(prefix) or last in prefix:
         return None
     occupied=set()
     for s in frame.get("snakes",()):
