@@ -40,6 +40,7 @@ jobs:
           sed -n '1,155p' data/reports/long_horizon_survival.md
           sed -n '1,80p' data/reports/palmer_casebook.md
           sed -n '1,110p' data/reports/competitive_cohorts.md
+          sed -n '1,135p' data/reports/algorithm_rulebook.md
       - name: Save validated report and charts (never commits data)
         uses: actions/upload-artifact@v4
         with:
@@ -63,6 +64,7 @@ jobs:
             data/reports/long_horizon_survival.md
             data/reports/palmer_casebook.md
             data/reports/competitive_cohorts.md
+            data/reports/algorithm_rulebook.md
             data/reports/charts/cohort_danger_outcomes.svg
             data/derived/competitive_cohort_danger.csv
             data/derived/palmer_league_casebook.csv
