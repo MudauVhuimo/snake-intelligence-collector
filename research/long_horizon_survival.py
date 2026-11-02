@@ -134,6 +134,87 @@ def palmer_comparison(rows):
                              observed3=len(observed))
     return results,len(shas)
 
+def palmer_casebook(rows,data_dir):
+    """One deterministically selected real danger episode per unique Palmer game.
+
+    We select the EARLIEST sampled dangerous position, without selecting for
+    future outcome. A peer comparator is shown only when starting length band,
+    head-pressure category and constrained/unconstrained exits match within
+    the SAME game. Those categories do not perfectly equalize geometry.
+    """
+    candidate={}
+    for r in rows:
+        if r["mode"]=="league" and r["student"]==PALMER:
+            existing=candidate.get(r["sha"])
+            if existing is None or r["turn"]<existing["turn"]:
+                candidate[r["sha"]]=r
+    out=[]
+    for sha,p in sorted(candidate.items(),key=lambda item:
+                        (item[1]["season"],item[1]["replay"]),reverse=True):
+        peers=[r for r in rows if r["mode"]=="league" and r["sha"]==sha
+               and r["student"]!=PALMER and r["length_bin"]==p["length_bin"]
+               and r["head_pressure"]==p["head_pressure"]
+               and r["confined"]==p["confined"]]
+        peers.sort(key=lambda r:(abs(r["turn"]-p["turn"]),
+                   abs(r["length"]-p["length"]),r["student"]))
+        peer=peers[0] if peers else None
+        act=p.get("first_action") or {}
+        record=dict(
+            season=p["season"],replay=p["replay"],sha=sha,
+            danger_turn=p["turn"],body_length=p["length"],
+            initial_head_distance=p["nearest_head"],initial_free_exits=p["free_exits"],
+            first_actual_move=act.get("movement"),first_move_style=act.get("turn_type"),
+            outcome10=p["status10"],outcome20=p["status20"],outcome30=p["status30"],
+            matched_peer=peer["student"] if peer else None,
+            peer_danger_turn=peer["turn"] if peer else None,
+            peer_outcome30=peer["status30"] if peer else None)
+        for t in (1,3,10,20,30):
+            m=p["measurements"].get(t) or {}
+            record[f"free_exits_{t}"]=m.get("free_exits")
+            record[f"opponent_distance_{t}"]=m.get("nearest_head")
+            record[f"apples_{t}"]=m.get("apples")
+        out.append(record)
+    write_csv(data_dir/"derived"/"palmer_league_casebook.csv",out)
+    report=[
+        "# Palmer's real league danger decisions — replay casebook","",
+        "One selected example from EACH unique archived league game containing",
+        "a sampled dangerous Palmer position. For reproducibility, selection",
+        "uses the **earliest dangerous snapshot** in that game, NOT a winning",
+        "or particularly impressive escape. No hypothetical moves are drawn.",
+        "A danger snapshot means head distance <=3 cells or <=1 free neighbor.",
+        "All observed x/y motions are on the real toroidal board. The first",
+        "move style reports straight/turn/reverse relative to actual body",
+        "orientation; unknown means we cannot determine orientation.",
+        "A recorded death before +30 remains a death after respawn.",
+        "If no frame or an unexplained absence is observed, +30 is censored.","",
+        "| Archived league replay | Turn | Length | Start head distance | Free exits 0 to +3 | Actual first move | Death-free +30? | Comparable peer in same game |",
+        "|---|---:|---:|---:|---|---|---|---|"]
+    for r in out:
+        f0=r["initial_free_exits"]
+        f3=r["free_exits_3"]
+        escape=f"{f0} → {f3 if f3 is not None else 'not observed'}"
+        move=(r["first_actual_move"] or "unknown")+" / "+(r["first_move_style"] or "unknown")
+        peer=r["matched_peer"] or "no matching baseline peer"
+        report.append(
+            f"| [{r['replay'].split('/')[-1]}](../replays/{r['replay']}) | "
+            f"{r['danger_turn']} | {r['body_length']} | {r['initial_head_distance']} | "
+            f"{escape} | {move} | {r['outcome30']} | {peer} |")
+    report += ["",
+        "## How to compare a genuine decision sequence","",
+        "Use the [per-game CSV](../derived/palmer_league_casebook.csv), which",
+        "contains each real replay's measured head distance, unoccupied",
+        "neighbor count and apple captures at turns 0, 1, 3, 10, 20, 30.",
+        "Cells may be empty after a death or when followup is censored.",
+        "The optional matched peer shares the same replay, length band,",
+        "head-proximity band and confined/unconfined category. Their starting",
+        "turn, exact body, apples, and opponent positions may still differ.",
+        "These are descriptive case studies, not a learned or proven policy.",
+        "No competition snake code has been altered.",""]
+    path=data_dir/"reports"/"palmer_casebook.md"
+    path.write_text("\n".join(report),encoding="utf-8")
+    return dict(games=len(out),matched_peer_games=sum(bool(x["matched_peer"]) for x in out),
+                report=str(path))
+
 def build(data_dir,max_files=250):
     data_dir=Path(data_dir)
     rows,qc=load(data_dir,max_files)
@@ -141,6 +222,7 @@ def build(data_dir,max_files=250):
     recovery={mode:by_recovery(rows,mode) for mode in ("league","trial")}
     bootstrap={mode:cluster_bootstrap(rows,mode) for mode in ("league","trial")}
     palmer,palmer_games=palmer_comparison(rows)
+    casebook=palmer_casebook(rows,data_dir)
     figures=data_dir/"reports"/"charts"
     figures.mkdir(parents=True,exist_ok=True)
     plot_survival(figures/"danger_survival_30.svg",{
@@ -226,7 +308,19 @@ def build(data_dir,max_files=250):
                      f"{rec['known30']} | {rec['alive30']} | "
                      f"{fmt(rec['mean_exit_gain3'])} (n={rec['observed3']}) |")
     lines += ["",
-        "## 5. Interpretation and next experiment",
+        "## 5. Palmer's actual decision sequences in individual league replays",
+        f"Audited games in the [Palmer casebook](palmer_casebook.md): "
+        f"**{casebook['games']}**.",
+        f"Games with a comparable starting-danger peer in the SAME replay: "
+        f"**{casebook['matched_peer_games']}**.",
+        "The casebook exposes actual movement direction and straight-versus-turn",
+        "choice plus neighboring-space, head-distance and food observations",
+        "through turns +1, +3, +10, +20 and +30 where recorded.",
+        "We select the earliest qualifying danger in each replay, never",
+        "cherry-pick a successful later move.",
+        "[Open Palmer's complete observed casebook](palmer_casebook.md).",
+        "",
+        "## 6. Interpretation and next experiment",
         "A successful first escape does not guarantee another twenty safe turns.",
         "Early mobility recovery and late survival can be associated without",
         "the move CAUSING survival. Conditioning on +10 survival selects a",
@@ -247,7 +341,8 @@ def build(data_dir,max_files=250):
     report.write_text("\n".join(lines),encoding="utf-8")
     return dict(replays=qc["unique_replays"],league=counts["league"],trial=counts["trial"],
                 recovery=recovery,bootstrap=bootstrap,palmer=palmer,
-                palmer_games=palmer_games,report=str(report))
+                palmer_games=palmer_games,palmer_casebook=casebook,
+                report=str(report))
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
