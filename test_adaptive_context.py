@@ -53,7 +53,8 @@ class AdaptiveEvidenceTests(unittest.TestCase):
 
     def test_no_incomplete_future_counted(self):
         r=fixture()
-        r["frames"]=r["frames"][:9]
+        # Keep >=11 payload frames, but remove a required intermediate turn.
+        r["frames"]=[f for f in r["frames"] if f["turn"]!=5]
         rows,checks=observed_replay(r,"league","s","g","sha")
         self.assertEqual(rows,[])
 
