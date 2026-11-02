@@ -10,6 +10,13 @@ on:
       - 'trial_leaderboard.py'
       - 'docs/**'
       - '.github/workflows/research_ci.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'research/**'
+      - 'test*.py'
+      - 'docs/**'
+      - '.github/workflows/research_ci.yml'
   workflow_dispatch:
 
 permissions:
@@ -43,6 +50,10 @@ jobs:
           sed -n '1,160p' data/reports/route_space.md
           sed -n '1,170p' data/reports/opponent_cones.md
           sed -n '1,135p' data/reports/algorithm_rulebook.md
+      - name: Study league apple contests (read-only replay analysis)
+        run: |
+          python -m research.league_food_contests --data-dir data
+          sed -n '1,120p' data/reports/league_food_contests.md
       - name: Save validated report and charts (never commits data)
         uses: actions/upload-artifact@v4
         with:
@@ -76,6 +87,8 @@ jobs:
             data/derived/route_choice_windows.csv
             data/derived/route_choice_cohorts.csv
             data/reports/algorithm_rulebook.md
+            data/reports/league_food_contests.md
+            data/derived/league_food_contests.csv
             data/reports/charts/cohort_danger_outcomes.svg
             data/derived/competitive_cohort_danger.csv
             data/derived/competitive_matched_decisions.csv
