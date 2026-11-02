@@ -37,6 +37,7 @@ jobs:
           sed -n '1,58p' data/reports/seasonal_disagreement.md
           sed -n '1,115p' data/reports/threat_windows.md
           sed -n '1,120p' data/reports/escape_autopsies.md
+          sed -n '1,155p' data/reports/long_horizon_survival.md
       - name: Save validated report and charts (never commits data)
         uses: actions/upload-artifact@v4
         with:
@@ -57,6 +58,10 @@ jobs:
             data/reports/behavior_by_mode.md
             data/reports/threat_windows.md
             data/reports/escape_autopsies.md
+            data/reports/long_horizon_survival.md
+            data/reports/charts/danger_survival_30.svg
+            data/reports/charts/escape_recovery_late_death.svg
+            data/derived/long_horizon_danger_windows.csv
             data/reports/charts/escape_case_control.svg
             data/reports/charts/escape_example_trace.svg
             data/derived/escape_matched_pairs.csv
