@@ -2,7 +2,9 @@ name: Collect Snake26 intelligence
 
 on:
   schedule:
-    - cron: '15 * * * *'
+    # Primary and backup opportunities; freshness check prevents duplicate Wits requests.
+    - cron: '17 * * * *'
+    - cron: '47 * * * *'
   workflow_dispatch:
     inputs:
       max_replays:
@@ -33,34 +35,51 @@ jobs:
         with:
           persist-credentials: true
           fetch-depth: 0
+      - name: Check whether a missed hour needs collecting
+        id: freshness
+        env:
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+        run: python -m research.schedule_guard --report data/reports/latest.md --min-age 50
       - name: Python version
         run: python --version
       - name: Run unit tests
+        if: steps.freshness.outputs.collect == 'true'
         run: python -m unittest discover -s . -p 'test*.py' -v
       - name: Collect metadata and selected replays
+        if: steps.freshness.outputs.collect == 'true'
         env:
           MAX_REPLAYS: ${{ inputs.max_replays || '10' }}
           LOOKBACK: ${{ inputs.lookback_seasons || '12' }}
         run: python collector.py --max-replays "$MAX_REPLAYS" --lookback-seasons "$LOOKBACK"
       - name: Compare all on-arrival benchmark trials
+        if: steps.freshness.outputs.collect == 'true'
         run: python trial_leaderboard.py
       - name: Compare real league competition against trial rankings
+        if: steps.freshness.outputs.collect == 'true'
         run: python -m research.league_comparison --data-dir data
       - name: Analyze league food acquisition against growth retention and kills
+        if: steps.freshness.outputs.collect == 'true'
         run: python -m research.league_sweet_spot --data-dir data
       - name: Build replay strategy laboratory report
+        if: steps.freshness.outputs.collect == 'true'
         run: python strategy_lab.py --stride 25
       - name: Build data science dashboard and five SVG charts
+        if: steps.freshness.outputs.collect == 'true'
         run: python -m research.dashboard --data-dir data --max-files 250
       - name: Analyze confirmed food races and publish charts
+        if: steps.freshness.outputs.collect == 'true'
         run: python -m research.food_races --data-dir data --max-files 250
       - name: Analyze underdog apple decisions and spatial paths
+        if: steps.freshness.outputs.collect == 'true'
         run: python -m research.underdog_study --data-dir data --max-files 250
       - name: Analyze snapshot path reversal with clustered bootstrap
+        if: steps.freshness.outputs.collect == 'true'
         run: python -m research.path_geometry --data-dir data
       - name: Build canonical joined league and trial research dashboard
+        if: steps.freshness.outputs.collect == 'true'
         run: python -m research.integrated_dashboard --data-dir data
       - name: Commit updated database and compressed replays
+        if: steps.freshness.outputs.collect == 'true'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
