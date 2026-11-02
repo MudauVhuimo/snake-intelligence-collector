@@ -1,6 +1,6 @@
 # Snake26: JOINED league + trials study
 
-Generated UTC: 2026-11-02T06:52:44+00:00
+Generated UTC: 2026-11-02T07:14:01+00:00
 
 **Latest official season:** 2026-11-02-045859-season. This report treats competitive league
 matches and controlled on-arrival trials as **two separate datasets**
@@ -128,6 +128,16 @@ matching on initial length, head proximity, and available neighboring
 cells. Later-turn comparisons exclude early deaths and are subject
 to survivorship selection, not a proof of causal protection.
 ![Matched death versus escape movements](charts/escape_case_control.svg)
+### Does the snake remain safe after its first escape?
+[Palmer's audited danger-response casebook](palmer_casebook.md) gives
+one earliest dangerous position per unique league replay and
+the actual head movements, local exits, opponent distances and apples.
+The [10/20/30-turn survival analysis](long_horizon_survival.md) checks
+recorded deaths after danger, treats respawns as failures, and
+censors missing future frames. It also compares Palmer with actual
+students in his archived league games, not benchmark opponents.
+![Death-free +10 and conditional +30 outcomes](charts/danger_survival_30.svg)
+![Early recovered free cells versus late deaths](charts/escape_recovery_late_death.svg)
 
 ## 6. Longitudinal disagreement: league specialists vs trial specialists
 
@@ -160,6 +170,8 @@ match-derived outcomes, never represented as official league rank.
   actual archived matches; does NOT imply missing official rank.
 - [Historical league–trial student rank gaps](../derived/seasonal_rank_gaps.csv) —
   comparable within-division student-season ranks; snapshots not independent.
+- [Danger follow-ups (10/20/30 turns)](../derived/long_horizon_danger_windows.csv) —
+  death-event validated, with right-censoring and actual +3 actions.
 - [Matched death/survival replay observations](../derived/escape_matched_pairs.csv) —
   baseline-matched cases and real early turn trajectories.
 - [Head-pressure and local-exit exposures](../derived/threat_window_student_seasons.csv) —

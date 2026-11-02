@@ -18,6 +18,10 @@ Read this before interpreting the older single-environment reports.
   works without older official standings; **game-derived proxy** only.
 - [League/trial specialists across historical snapshots](seasonal_disagreement.md):
   matched division ranks, tracked across recorded seasons and bot hashes.
+- [Palmer league danger decision sequences](palmer_casebook.md):
+  one deterministic audited real episode per unique league replay.
+- [Danger escapes: do they stay safe for 20–30 turns?](long_horizon_survival.md):
+  censored follow-ups and same-game Palmer comparison.
 - [Matched death autopsies versus escapes](escape_autopsies.md):
   actual ten-turn outcomes with observable early actions; not a policy test.
 - [Head pressure, local exits, and future deaths](threat_windows.md):
