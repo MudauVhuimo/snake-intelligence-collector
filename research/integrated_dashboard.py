@@ -15,6 +15,7 @@ import json
 
 from .joined_datasets import build as prepare, correlations
 from .behavior_by_mode import build as behavior_report
+from .threat_windows import build as threat_report
 from .seasonal_disagreement import build as seasonal_report
 from .historical_peer_comparison import build as historical_peer_report
 from .league_comparison import chart
@@ -104,6 +105,7 @@ def build(data_dir):
     if not latest:
         raise RuntimeError("No official season to compare")
     movement=behavior_report(data_dir)  # Replay evidence stays separate from catalog outcomes.
+    threat=threat_report(data_dir)  # Forward-looking head danger, matched mode definitions.
     history=seasonal_report(data_dir)  # Longitudinal matched ranking differences, not independent trials.
     peer_history=historical_peer_report(data_dir)  # Older peer-game catalogs without official standings.
     paired,results=correlations(data["joined"],latest,division=1,min_league=3)
@@ -203,6 +205,14 @@ def build(data_dir):
         "observed food-event/death rates and their conditional correlations.",
         "![Student food events per observed move in each mode](charts/observed_food_by_mode.svg)",
         "![Student deaths per observed move in each mode](charts/observed_deaths_by_mode.svg)",
+        "### Forward-looking head pressure and escape space",
+        f"Unique replays with complete frame-based pressure analysis: **{threat['replays']}**",
+        f"(league **{threat['league_replays']}**, trial **{threat['trial_replays']}**).",
+        "Measure danger BEFORE the outcome: each living student's nearest",
+        "opponent head, free adjacent cells, then death events in the NEXT",
+        "ten turns. See [head-pressure and escape study](threat_windows.md)",
+        "for length-stratified results, per-replay counts and uncertainty.",
+        "![10-turn death frequencies by head proximity](charts/head_pressure_vs_death.svg)",
         "",
         "## 6. Longitudinal disagreement: league specialists vs trial specialists","",
         f"Historical Division 1 snapshots with matched outcome comparisons: "
@@ -234,6 +244,8 @@ def build(data_dir):
         "  actual archived matches; does NOT imply missing official rank.",
         "- [Historical league–trial student rank gaps](../derived/seasonal_rank_gaps.csv) —",
         "  comparable within-division student-season ranks; snapshots not independent.",
+        "- [Head-pressure and local-exit exposures](../derived/threat_window_student_seasons.csv) —",
+        "  sampled from actual replay frames, with next-10-turn outcomes.",
         "- [Replay-backed behavior, separated by mode](../derived/replay_behavior_by_mode.csv) —",
         "  only downloaded full match observations.",
         "- [Data validation summary](../derived/quality.json) —",
@@ -270,6 +282,8 @@ def build(data_dir):
         "  works without older official standings; **game-derived proxy** only.",
         "- [League/trial specialists across historical snapshots](seasonal_disagreement.md):",
         "  matched division ranks, tracked across recorded seasons and bot hashes.",
+        "- [Head pressure, local exits, and future deaths](threat_windows.md):",
+        "  actual replay frames; mode- and length-stratified, not a proven policy.",
         "- [Observed league/trial behavior matched by student](behavior_by_mode.md):",
         "  replay-derived food and death measures; report sample coverage first.",
         "- [League food versus growth retained](league_sweet_spot.md):",
@@ -292,7 +306,7 @@ def build(data_dir):
         "executables or source code are extracted. No Java snake changes yet.",""
     ]
     (output/"README.md").write_text("\n".join(home),encoding="utf-8")
-    return dict(season=latest,peer_history_div1_snapshots=peer_history["div1_snapshots"],historical_div1_snapshots=history["division1_snapshots"],replay_paired=movement["paired_student_replays"],paired_division1=len(paired),
+    return dict(season=latest,head_pressure_windows=threat["windows"],peer_history_div1_snapshots=peer_history["div1_snapshots"],historical_div1_snapshots=history["division1_snapshots"],replay_paired=movement["paired_student_replays"],paired_division1=len(paired),
                 comparison={r["metric"]:r["rho"] for r in results},
                 reports=[str(dest),str(output/"README.md")])
 
