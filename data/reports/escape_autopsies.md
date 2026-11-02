@@ -1,6 +1,6 @@
 # Snake26: Death autopsies versus successful real escapes
 
-Generated UTC: 2026-11-02T08:39:29+00:00
+Generated UTC: 2026-11-02T08:43:16+00:00
 
 ## Research question
 

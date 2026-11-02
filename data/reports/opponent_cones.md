@@ -1,6 +1,6 @@
 # Snake26: Opponent next-head reachability across league and trials
 
-Generated UTC: 2026-11-02T08:40:29+00:00
+Generated UTC: 2026-11-02T08:44:00+00:00
 
 ## What was tested
 
@@ -55,6 +55,54 @@ peer IDs can complicate interpretation.
 | trial | middle_half | 4 | 8 | 78 | 12/78 (15.4%) | 0/78 (0.0%) | 74 | 7/74 (9.5%) | 0/74 (0.0%) | 0/78 |
 | trial | bottom_quartile | 1 | 1 | 8 | 2/8 (25.0%) | 0/8 (0.0%) | 8 | 2/8 (25.0%) | 0/8 (0.0%) | 0/8 |
 | trial | unranked | 13 | 32 | 274 | 80/273 (29.3%) | 5/273 (1.8%) | 271 | 39/271 (14.4%) | 0/271 (0.0%) | 3/274 |
+
+### A critical sensitivity check: does a shorter-opponent opportunity exist?
+
+The unconditional rates above MIX states where a weaker opponent
+can enter a candidate destination with states having NO such option.
+Define a shorter-opponent opportunity as at least one modeled
+candidate cell reached by a shorter opponent's cone, but by
+NO equal-or-longer opponent cone. The resulting denominator is
+observed first moves WITH an actual such opportunity.
+
+| Mode | Cohort | Mean body length (observed) | First moves with shorter-only opportunity | Chose shorter-only contest | Conditional % |
+|---|---|---:|---:|---:|---:|
+| league | top_quartile | 97.4 | 66 | 45 | 68.2% |
+| league | middle_half | 70.2 | 81 | 50 | 61.7% |
+| league | bottom_quartile | 54.5 | 19 | 14 | 73.7% |
+| league | unranked | 63.7 | 41 | 27 | 65.9% |
+| trial | top_quartile | 124.4 | 16 | 7 | 43.8% |
+| trial | middle_half | 130.1 | 11 | 7 | 63.6% |
+| trial | bottom_quartile | 182.5 | 2 | 2 | 100.0% |
+| trial | unranked | 109.4 | 75 | 39 | 52.0% |
+
+The top group may encounter MORE weaker opponents because its snakes
+are already longer. Conditional rates can erase or reverse the
+apparent top/middle/bottom trend. An observed shorter-only contest
+is not necessarily deliberate aggression or an advantageous action.
+Still excludes immediate deaths because their attempted destinations
+are not present in next-frame surviving heads.
+
+### Further stratification by length in REAL league matches
+
+| Length at danger position | Cohort | Observed first moves with shorter-only option | Chose it | Rate |
+|---|---|---:|---:|---:|
+| 5-24 | top_quartile | 0 | 0 | insufficient% |
+| 5-24 | middle_half | 4 | 2 | 50.0% |
+| 5-24 | bottom_quartile | 1 | 1 | 100.0% |
+| 25-49 | top_quartile | 2 | 2 | 100.0% |
+| 25-49 | middle_half | 7 | 7 | 100.0% |
+| 25-49 | bottom_quartile | 3 | 2 | 66.7% |
+| 50-99 | top_quartile | 19 | 13 | 68.4% |
+| 50-99 | middle_half | 38 | 23 | 60.5% |
+| 50-99 | bottom_quartile | 10 | 8 | 80.0% |
+| 100+ | top_quartile | 45 | 30 | 66.7% |
+| 100+ | middle_half | 32 | 18 | 56.2% |
+| 100+ | bottom_quartile | 5 | 3 | 60.0% |
+
+These strata are small and not exact-matched relative-length or
+opponent-heading contexts; do NOT extrapolate a universal
+size-based offensive rule.
 
 SELECTION WARNING: observed first moves require a live head at t+1.
 Snakes killed on their first step have NO recorded destination;

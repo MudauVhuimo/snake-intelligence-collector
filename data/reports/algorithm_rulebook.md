@@ -1,24 +1,24 @@
 # Snake26 — Evidence-gated algorithm rulebook
 
-Generated UTC: 2026-11-02T08:40:29+00:00
+Generated UTC: 2026-11-02T08:44:00+00:00
 
 **Purpose:** build a NEW snake from cross-competitor research, NOT
 fix the existing submission or clone a particular league leader.
 Strong snakes (including Palmer), mid-field snakes, struggling
 snakes and benchmark specialists are all evidence sources.
 
-Registered questions: **8**. Open: **3**. Observed association: **5**. Controlled / promoted: **0**.
+Registered questions: **8**. Open: **2**. Observed association: **6**. Controlled / promoted: **0**.
 
 ## Candidate decisions and evidence stages
 
 | ID | Decision | Applicable evidence | Stage | Why still provisional |
 |---|---|---|---|---|
-| SAFETY-01 | Avoid provably fatal next actions | both | Open question | Confirm official collision timing and run transition-validation on real multi-agent replay frames. |
-| DANGER-02 | Estimate head threat jointly with escape-space scarcity | league | Observed association | Compare threats by relative length, heading, body geometry and future opponent reach across whole-game holdouts. |
-| ROUTE-03 | Preserve future routes rather than maximize immediate free neighbors | league | Observed association | Validate route-score prediction across later independent league seasons, include opponent-head reachable sets and growth-aware collision timing; run ablations of the new agent against a locked diverse peer panel. |
+| SAFETY-01 | Avoid provably fatal next actions | both | Open question | Inspect actual current 2026 engine collision order and run replay-transition tests; recorded head-to-head victim events are all shorter or equal to the cited opponent (444 shorter, 28 equal), but they do not alone establish all engine mechanics. |
+| DANGER-02 | Estimate head threat jointly with escape-space scarcity | league | Observed association | Test empirically observed head-to-head and opponent next-move frequencies by body length, exact heading, position, and contested apple state in fresh whole league games; compare calibrated risk predictors and agent ablations. |
+| ROUTE-03 | Preserve future routes rather than maximize immediate free neighbors | league | Observed association | Validate whether opponent-aware route scores improve independent later-season league AUC (the current +0.015 held-out advantage is uncertain), then compare simpler frozen flood-fill, moving-tail and head-cone features in controlled opponent-diverse ablations. |
 | FOOD-04 | Target contest-adjusted safe food, not simply nearest apple | trial | Observed association | Run food appearance event study on actual league student-student contests, with action-level routes and apple-capture outcomes. |
 | RETENTION-05 | Optimize retained growth and competitive placement, not raw apple count | league | Observed association | Estimate food capture, death/reset hazard and final retained length conditional on body length, phase, opponents and available actions. |
-| CONTEST-06 | Use relative strength and opponent paths when contesting cells | league | Open question | Build head-to-head encounter cohorts from league matches with relative length, heading, predicted cell conflict and outcome. |
+| CONTEST-06 | Use relative strength and opponent paths when contesting cells | league | Observed association | Separate opportunities from decisions, stratify by exact relative body length, opponent heading and alive-at-next-frame censoring, audit 2026 head-to-head collision transitions and contested apples, then validate across fresh league seasons. |
 | ADAPT-07 | Change priorities with body size, density and game phase | both | Open question | Estimate interaction effects on risk/retained reward by length, density and phase; test controlled small ablations on fresh seeds. |
 | ROBUST-08 | Promote only decisions that transfer to diverse league opposition | both | Observed association | Design a frozen diverse peer-opponent panel and held-out seeds; benchmark first-place frequency, retained growth, death rate and timeout. |
 
@@ -34,11 +34,11 @@ Registered questions: **8**. Open: **3**. Observed association: **5**. Controlle
 
 **Known counterexample / limitation:** A current tail cell may vacate before collision resolution; a frozen occupancy map may incorrectly ban it.
 
-**Next needed measurement:** Confirm official collision timing and run transition-validation on real multi-agent replay frames.
+**Next needed measurement:** Inspect actual current 2026 engine collision order and run replay-transition tests; recorded head-to-head victim events are all shorter or equal to the cited opponent (444 shorter, 28 equal), but they do not alone establish all engine mechanics.
 
 **Falsify if:** Rule-based predicted next-state legality disagrees with validated replay transitions.
 
-**Supporting reports:** none yet — mechanics or behavioral research needed
+**Supporting reports:** [opponent_cones](opponent_cones.md)
 
 ### DANGER-02 — Estimate head threat jointly with escape-space scarcity
 
@@ -48,13 +48,13 @@ Registered questions: **8**. Open: **3**. Observed association: **5**. Controlle
 
 **Then, HYPOTHESIS only:** Include opponent-head reach and locally available escape directions as joint danger features; do not automatically flee.
 
-**Known counterexample / limitation:** Strong snakes sometimes safely move into apparently fewer free adjacent cells; moving tails and corridors matter.
+**Known counterexample / limitation:** Simple one-step head cones cover normal observed movements, but adding them to route-area predictors improved held-out league AUC only marginally with interval crossing zero. A geometric reach cone includes collision-impossible moves and can overstate actual opponent risk.
 
-**Next needed measurement:** Compare threats by relative length, heading, body geometry and future opponent reach across whole-game holdouts.
+**Next needed measurement:** Test empirically observed head-to-head and opponent next-move frequencies by body length, exact heading, position, and contested apple state in fresh whole league games; compare calibrated risk predictors and agent ablations.
 
 **Falsify if:** In matched held-out league states the joint features do not predict death or loss of safe routes over simpler baselines.
 
-**Supporting reports:** [threat_windows](threat_windows.md)
+**Supporting reports:** [threat_windows](threat_windows.md), [opponent_cones](opponent_cones.md)
 
 ### ROUTE-03 — Preserve future routes rather than maximize immediate free neighbors
 
@@ -66,11 +66,11 @@ Registered questions: **8**. Open: **3**. Observed association: **5**. Controlle
 
 **Known counterexample / limitation:** Moving-tail search showed only a small, uncertain held-out AUC gain over frozen flood-fill; top, middle and bottom snakes selected highest-score modeled moves at similar rates. High predicted reachable area is NOT a proven best first action.
 
-**Next needed measurement:** Validate route-score prediction across later independent league seasons, include opponent-head reachable sets and growth-aware collision timing; run ablations of the new agent against a locked diverse peer panel.
+**Next needed measurement:** Validate whether opponent-aware route scores improve independent later-season league AUC (the current +0.015 held-out advantage is uncertain), then compare simpler frozen flood-fill, moving-tail and head-cone features in controlled opponent-diverse ablations.
 
 **Falsify if:** Dynamic connectivity fails to predict survival or gives poorer league results than a static or simpler heuristic.
 
-**Supporting reports:** [escape_autopsies](escape_autopsies.md), [long_horizon_survival](long_horizon_survival.md), [route_space](route_space.md)
+**Supporting reports:** [escape_autopsies](escape_autopsies.md), [long_horizon_survival](long_horizon_survival.md), [route_space](route_space.md), [opponent_cones](opponent_cones.md)
 
 ### FOOD-04 — Target contest-adjusted safe food, not simply nearest apple
 
@@ -106,19 +106,19 @@ Registered questions: **8**. Open: **3**. Observed association: **5**. Controlle
 
 ### CONTEST-06 — Use relative strength and opponent paths when contesting cells
 
-**Evidence stage:** 0 — Open question. **Domain:** opponents. **Scope:** league.
+**Evidence stage:** 1 — Observed association. **Domain:** opponents. **Scope:** league.
 
 **When:** An opponent can approach the same cell or apple in the next few turns.
 
-**Then, HYPOTHESIS only:** Condition contest or withdrawal decisions on legal head-on mechanics, relative size, projected opponent actions and post-contact escape.
+**Then, HYPOTHESIS only:** Measure each possible move's exposure to reachable opponent heads and relative length; consider state-dependent confrontation versus retreat, but do not infer intent, legality or an approved attack rule.
 
-**Known counterexample / limitation:** Aggressive attacks can be fatal or strand the attacker; kills per game do not reveal intent or proper opportunity.
+**Known counterexample / limitation:** Top-ranked snakes entered possible head-contest cells more frequently overall, but once conditioned on having a shorter-only contest opportunity, top 68.2% and bottom 73.7% (only 19 eligible bottom moves). Growth and opportunity confound apparent aggression; dead-on-first-step choices are missing.
 
-**Next needed measurement:** Build head-to-head encounter cohorts from league matches with relative length, heading, predicted cell conflict and outcome.
+**Next needed measurement:** Separate opportunities from decisions, stratify by exact relative body length, opponent heading and alive-at-next-frame censoring, audit 2026 head-to-head collision transitions and contested apples, then validate across fresh league seasons.
 
 **Falsify if:** Contest-aware decisions degrade league rankings or cannot be predicted across different opponent styles.
 
-**Supporting reports:** none yet — mechanics or behavioral research needed
+**Supporting reports:** [opponent_cones](opponent_cones.md)
 
 ### ADAPT-07 — Change priorities with body size, density and game phase
 
