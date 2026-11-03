@@ -1,6 +1,6 @@
 # Snake26: Replay behavior by environment, then joined by student
 
-Generated UTC: 2026-11-03T12:28:40+00:00
+Generated UTC: 2026-11-03T15:21:39+00:00
 
 **Source:** full replay-derived behavior table, NOT catalog outcome proxies.
 Every student/match is grouped by explicit match kind. A SHA-identical
@@ -10,12 +10,12 @@ excluding one-student matches. Full opponent strength is not controlled.
 
 ## 1. How many students have observations in BOTH environments?
 
-- Current official season: **2026-11-03-115900-season**.
+- Current official season: **2026-11-03-145900-season**.
 - Current season unique students with at least one replay in EACH mode: **3**.
 - Duplicate student/replay SHA observations excluded: **27**.
 - One-student league observations excluded: **0**.
-- Student-replay exposures from league: **252**.
-- Student-replay exposures from trials: **74**.
+- Student-replay exposures from league: **270**.
+- Student-replay exposures from trials: **78**.
 
 ## 2. Two different game environments
 

@@ -1,6 +1,6 @@
 # Snake26: Do strong snakes choose routes with more future space?
 
-Generated UTC: 2026-11-03T12:30:44+00:00
+Generated UTC: 2026-11-03T15:24:14+00:00
 
 ## Research question
 
@@ -34,22 +34,22 @@ Real death outcomes (next 10 turns) remain separate recorded labels.
 
 ## Coverage and validation of ordinary body shifts
 
-Source danger-window observations: **3,778**.
-Unique replay payloads WITH danger observations: **158**
-(league 85, trials 73).
-Audited dangerous windows: **3,778**
-(league 3148, trial 630).
-Observed first movements in model alternatives: league **2996**, trials **620**.
-First moves missing because of death/absence: **9**.
-Observed valid heads outside the simplified model: **153** (NOT silently made legal).
-Recognized duplicated terminal tail cells during growth: **327**.
+Source danger-window observations: **4,049**.
+Unique replay payloads WITH danger observations: **168**
+(league 91, trials 77).
+Audited dangerous windows: **4,049**
+(league 3389, trial 660).
+Observed first movements in model alternatives: league **3225**, trials **650**.
+First moves missing because of death/absence: **10**.
+Observed valid heads outside the simplified model: **164** (NOT silently made legal).
+Recognized duplicated terminal tail cells during growth: **350**.
 Invalid scene/body shape: **0**.
 Missing frame/student: **0**.
 Invalid source windows: **0**.
 SHA mismatch / unreadable replay: **0**.
 Any skipped rows remain excluded rather than silently designated safe.
-Plain no-food-growth actual body transitions consistent with shift: **3702/3702**.
-Modeled windows with no next candidates: **37**.
+Plain no-food-growth actual body transitions consistent with shift: **3971/3971**.
+Modeled windows with no next candidates: **39**.
 
 ## 1. Choices of high predicted future space by actual league/trial bots
 
@@ -57,14 +57,14 @@ Modeled windows with no next candidates: **37**.
 
 | Mode | Official Division 1 cohort | Students | Replays | Dangerous frames | Actual moves | Informative route comparisons | Choose max tail-reach | Choose max frozen flood-fill |
 |---|---|---:|---:|---:|---:|---:|---|---|
-| league | top_quartile | 15 | 56 | 745 | 717 | 452 | 60.40% | 56.25% |
-| league | middle_half | 37 | 60 | 1174 | 1103 | 698 | 61.32% | 62.64% |
-| league | bottom_quartile | 24 | 41 | 466 | 443 | 296 | 64.19% | 74.29% |
-| league | unranked | 55 | 23 | 763 | 733 | 475 | 61.68% | 75.61% |
-| trial | top_quartile | 10 | 17 | 128 | 128 | 94 | 68.09% | 66.67% |
-| trial | middle_half | 10 | 14 | 143 | 136 | 97 | 55.67% | 57.14% |
-| trial | bottom_quartile | 5 | 5 | 45 | 45 | 34 | 55.88% | 100.00% |
-| trial | unranked | 17 | 37 | 314 | 311 | 236 | 66.10% | 64.29% |
+| league | top_quartile | 15 | 60 | 838 | 809 | 505 | 59.60% | 56.06% |
+| league | middle_half | 37 | 64 | 1230 | 1156 | 734 | 60.90% | 61.05% |
+| league | bottom_quartile | 25 | 43 | 480 | 455 | 305 | 64.59% | 74.29% |
+| league | unranked | 56 | 25 | 841 | 805 | 522 | 61.88% | 76.60% |
+| trial | top_quartile | 10 | 18 | 139 | 139 | 101 | 67.33% | 75.00% |
+| trial | middle_half | 11 | 15 | 149 | 142 | 103 | 56.31% | 57.14% |
+| trial | bottom_quartile | 5 | 6 | 53 | 53 | 40 | 60.00% | 100.00% |
+| trial | unranked | 18 | 38 | 319 | 316 | 241 | 66.39% | 66.67% |
 
 A candidate is **informative** only if alternative first moves have
 different modeled scores; all-tie cases cannot demonstrate a
@@ -82,11 +82,11 @@ earlier archive results, this holdout is only a preliminary audit.
 
 | Environment | Predictor (lower mobility => more risk) | All archive AUC | Fixed replay-holdout AUC | Holdout windows | Holdout death events |
 |---|---|---:|---:|---:|---:|
-| league | Current unoccupied neighbors | 0.67 | 0.74 | 1024 | 32 |
+| league | Current unoccupied neighbors | 0.66 | 0.74 | 1024 | 32 |
 | league | Best frozen-body flood-fill | 0.82 | 0.85 | 1024 | 32 |
-| league | Best no-growth moving-tail beam reach | 0.84 | 0.87 | 1024 | 32 |
+| league | Best no-growth moving-tail beam reach | 0.83 | 0.87 | 1024 | 32 |
 | trial | Current unoccupied neighbors | 0.88 | insufficient | 127 | 0 |
-| trial | Best frozen-body flood-fill | 0.99 | insufficient | 127 | 0 |
+| trial | Best frozen-body flood-fill | 0.98 | insufficient | 127 | 0 |
 | trial | Best no-growth moving-tail beam reach | 0.98 | insufficient | 127 | 0 |
 
 ## 2a. Whole-game bootstrap: how reliable is the holdout difference?
@@ -113,10 +113,10 @@ rather than assuming one universally useful mobility estimator.
 
 | League body length | Observed danger windows | 10-turn deaths | Free neighbors AUC | Frozen flood-fill AUC | Moving-tail reach AUC |
 |---|---:|---:|---:|---:|---:|
-| 5-24 | 507 | 10 | 0.68 | 0.74 | 0.70 |
-| 25-49 | 533 | 23 | 0.57 | 0.82 | 0.80 |
-| 50-99 | 1125 | 36 | 0.72 | 0.85 | 0.89 |
-| 100+ | 983 | 30 | 0.69 | 0.85 | 0.89 |
+| 5-24 | 540 | 12 | 0.63 | 0.69 | 0.61 |
+| 25-49 | 574 | 24 | 0.57 | 0.83 | 0.80 |
+| 50-99 | 1214 | 38 | 0.73 | 0.86 | 0.90 |
+| 100+ | 1061 | 34 | 0.66 | 0.85 | 0.88 |
 
 Small snakes and long snakes can differ; individual bins have few
 death events, so these figures are NOT verified optimal thresholds.
@@ -129,16 +129,16 @@ candidate feature. A test with no deaths cannot produce an AUC.
 
 Use prior non-reused top-versus-bottom matched decisions, selected by
 same replay, length band, head closeness, confinement and game phase.
-Matched SAME-GAME pairs with route profiles: **88**.
+Matched SAME-GAME pairs with route profiles: **90**.
 Differences below are **bottom minus top**, where higher choice
 rank means a modeled option preserved more projected future space.
 Resampling full replay clusters gives exploratory intervals.
 
 | Recorded decision measure | Both sides observed | Unique replay clusters | Bottom minus top | Replay bootstrap 95% interval |
 |---|---:|---:|---:|---:|
-| Tail-aware modeled choice percentile | 83 | 27 | 0.021 | [-0.019, +0.060] |
-| Frozen flood-fill choice percentile | 83 | 27 | -0.006 | [-0.026, +0.012] |
-| Chose highest modeled tail space | 53 | 24 | 0.000 | [-0.154, +0.156] |
+| Tail-aware modeled choice percentile | 84 | 28 | 0.029 | [-0.013, +0.073] |
+| Frozen flood-fill choice percentile | 84 | 28 | -0.006 | [-0.029, +0.013] |
+| Chose highest modeled tail space | 54 | 25 | 0.019 | [-0.136, +0.167] |
 | Chose highest frozen area | 0 | 0 | insufficient | insufficient independent matches |
 
 Pairs remain nonidentical board states, even inside one game;

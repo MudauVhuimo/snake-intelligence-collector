@@ -13,6 +13,9 @@ If no frame or an unexplained absence is observed, +30 is censored.
 
 | Archived league replay | Turn | Length | Start head distance | Free exits 0 to +3 | Actual first move | Death-free +30? | Comparable peer in same game |
 |---|---:|---:|---:|---|---|---|---|
+| [game-76004.rep.gz](../replays/2026-11-03-145900-season/game-76004.rep.gz) | 350 | 40 | 3 | 3 → 2 | +y / straight | alive | 408501-asher-urison |
+| [game-75004.rep.gz](../replays/2026-11-03-145900-season/game-75004.rep.gz) | 400 | 70 | 3 | 3 → 3 | -y / turn | alive | 423258-muhammed-dar |
+| [game-73001.rep.gz](../replays/2026-11-03-145900-season/game-73001.rep.gz) | 150 | 20 | 2 | 3 → 3 | +y / turn | alive | 423436-ntobeko-zondi |
 | [game-76007.rep.gz](../replays/2026-11-03-115900-season/game-76007.rep.gz) | 25 | 15 | 1 | 2 → 3 | -x / turn | alive | 426650-babongile-mafantiri |
 | [game-75005.rep.gz](../replays/2026-11-03-115900-season/game-75005.rep.gz) | 925 | 100 | 1 | 2 → 3 | +x / turn | alive | 423436-ntobeko-zondi |
 | [game-73000.rep.gz](../replays/2026-11-03-115900-season/game-73000.rep.gz) | 450 | 60 | 3 | 2 → 1 | +y / turn | alive | 428786-marvellous-sambo |
@@ -39,6 +42,7 @@ If no frame or an unexplained absence is observed, +30 is censored.
 | [game-72007.rep.gz](../replays/2026-11-01-205859-season/game-72007.rep.gz) | 375 | 45 | 2 | 3 → 3 | -x / straight | alive | 402334-angile-saho |
 | [game-72003.rep.gz](../replays/2026-11-01-205859-season/game-72003.rep.gz) | 525 | 90 | 2 | 3 → 2 | -y / turn | alive | 423546-ndabenhle-shabangu |
 | [game-71001.rep.gz](../replays/2026-11-01-205859-season/game-71001.rep.gz) | 525 | 60 | 3 | 3 → 3 | +x / turn | alive | 428786-marvellous-sambo |
+| [game-71004.rep.gz](../replays/2026-10-24-115859-season/game-71004.rep.gz) | 525 | 110 | 3 | 3 → 3 | +y / turn | alive | 419342-ayeshan-puckree |
 | [game-71000.rep.gz](../replays/2026-10-23-235858-season/game-71000.rep.gz) | 250 | 40 | 2 | 2 → 3 | +x / turn | alive | 403501-mashau-mudzanani |
 
 ## How to compare a genuine decision sequence

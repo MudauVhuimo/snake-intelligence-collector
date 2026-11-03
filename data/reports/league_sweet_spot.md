@@ -1,10 +1,10 @@
 # Snake26: League aggression vs growth-retention hypothesis
 
-Generated UTC: 2026-11-03T12:25:24+00:00
+Generated UTC: 2026-11-03T15:17:35+00:00
 
 ## Data design
 
-Latest official season: 2026-11-03-115900-season. Division 1 group: 32 students.
+Latest official season: 2026-11-03-145900-season. Division 1 group: 32 students.
 Included students with at least 3 recorded league matches and usable food/length: 32.
 
 A length-retention proxy is final length divided by 5 plus 5 times ALL apples eaten.
@@ -22,11 +22,11 @@ resulting length in these match samples. It is not a proven optimum.
 
 | Metric | Bots with matches | Spearman agreement with official league rank |
 |---|---:|---:|
-| Mean apples per league match | 32 | 0.336 |
-| Mean retained growth ratio | 32 | 0.584 |
-| Mean kills per league match | 32 | 0.404 |
-| Mean final body length | 32 | 0.677 |
-| League first-place frequency | 32 | 0.769 |
+| Mean apples per league match | 32 | 0.400 |
+| Mean retained growth ratio | 32 | 0.532 |
+| Mean kills per league match | 32 | 0.258 |
+| Mean final body length | 32 | 0.628 |
+| League first-place frequency | 32 | 0.751 |
 
 Positive means higher performance on that metric tends to align with better
 official standing. League win rate and rank are related game outcomes; their
@@ -36,17 +36,17 @@ correlation is NOT independent evidence for a specific movement strategy.
 
 | Student | Division 1 rank | League matches | League win % | Mean apples | Mean length | Mean retained growth | Gauntlet final length |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| 421462-alexander-palmer | 1 | 4 | 75.0 | 31.0 | 160.0 | 1.00 | 215 |
-| 409997-utayan-naidoo | 4 | 5 | 40.0 | 36.6 | 119.0 | 0.65 | 255 |
-| 413538-lelethuthando-nikelo | 2 | 5 | 60.0 | 29.0 | 150.0 | 1.00 | 190 |
-| 424820-elisha-mundalamo | 3 | 5 | 60.0 | 33.2 | 88.0 | 0.53 | 180 |
-| 408501-asher-urison | 4 | 6 | 33.3 | 28.2 | 122.5 | 0.85 | 20 |
-| 427064-khodani-netili | 5 | 6 | 33.3 | 28.0 | 86.7 | 0.61 | 240 |
-| 388828-ngcebo-methula | 6 | 5 | 40.0 | 31.0 | 71.0 | 0.49 | 200 |
-| 419342-ayeshan-puckree | 7 | 5 | 40.0 | 27.6 | 76.0 | 0.48 | 180 |
-| 423239-zeeshaan-bham | 8 | 5 | 20.0 | 35.4 | 56.0 | 0.32 | 170 |
-| 423436-ntobeko-zondi | 9 | 4 | 25.0 | 20.2 | 57.5 | 0.62 | 145 |
-| 404721-khensani-maluleke | 10 | 4 | 25.0 | 37.8 | 92.5 | 0.49 | 30 |
+| 421462-alexander-palmer | 1 | 3 | 66.7 | 34.0 | 115.0 | 0.70 | 215 |
+| 409997-utayan-naidoo | 16 | 5 | 60.0 | 31.4 | 88.0 | 0.54 | 255 |
+| 427064-khodani-netili | 2 | 4 | 50.0 | 26.0 | 103.8 | 0.76 | 240 |
+| 424820-elisha-mundalamo | 3 | 5 | 40.0 | 33.4 | 89.0 | 0.50 | 180 |
+| 388828-ngcebo-methula | 4 | 5 | 60.0 | 30.4 | 90.0 | 0.59 | 200 |
+| 413538-lelethuthando-nikelo | 5 | 5 | 40.0 | 29.4 | 110.0 | 0.76 | 190 |
+| 419342-ayeshan-puckree | 6 | 4 | 50.0 | 30.5 | 140.0 | 0.89 | 180 |
+| 428786-marvellous-sambo | 7 | 5 | 20.0 | 29.0 | 60.0 | 0.46 | 20 |
+| 404721-khensani-maluleke | 8 | 6 | 50.0 | 33.3 | 100.0 | 0.58 | 30 |
+| 419926-mphile-nchabeleng | 9 | 5 | 60.0 | 29.2 | 104.0 | 0.73 | 180 |
+| 426895-mpho-ramasakona | 10 | 6 | 33.3 | 26.5 | 43.3 | 0.30 | 225 |
 
 ## Why we cannot yet declare a sweet spot
 

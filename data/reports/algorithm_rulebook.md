@@ -1,6 +1,6 @@
 # Snake26 — Evidence-gated algorithm rulebook
 
-Generated UTC: 2026-11-03T12:30:46+00:00
+Generated UTC: 2026-11-03T15:24:17+00:00
 
 **Purpose:** build a NEW snake from cross-competitor research, NOT
 fix the existing submission or clone a particular league leader.

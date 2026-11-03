@@ -1,14 +1,14 @@
 # Snake26 — How did the farther snake win?
 
-Generated UTC: 2026-11-03T12:27:04+00:00
+Generated UTC: 2026-11-03T15:19:38+00:00
 
 ## Evidence quality
 
-- Scanned **230** replay files; unique on-arrival trial replays: **74**.
+- Scanned **240** replay files; unique on-arrival trial replays: **78**.
 - Duplicate archived trial files skipped: **13**; unreadable: **0**.
-- Comparable first-visible student-vs-benchmark apple opportunities: **9060**.
-- Captures matched to real next-frame head + eat event: **8985**.
-- Disappearances without verified consumer: **4**.
+- Comparable first-visible student-vs-benchmark apple opportunities: **9595**.
+- Captures matched to real next-frame head + eat event: **9515**.
+- Disappearances without verified consumer: **5**.
 Only on-arrival trials with EXACTLY one active student and at least one living built-in benchmark are included.
 All distance comparisons use toroidal Manhattan geometry, not hypothetical safe paths.
 
@@ -18,24 +18,24 @@ All distance comparisons use toroidal Manhattan geometry, not hypothetical safe 
 
 | Who started at least 3 cells closer? | Student captured | Benchmark captured | Student share |
 |---|---:|---:|---:|
-| Benchmark | 738 | 4,851 | 13.2% |
-| Neither (within 2) | 901 | 819 | 52.4% |
-| Student | 1,450 | 226 | 86.5% |
+| Benchmark | 773 | 5,155 | 13.0% |
+| Neither (within 2) | 955 | 868 | 52.4% |
+| Student | 1,529 | 235 | 86.7% |
 
 The student share above describes captured apples only. One student faces three
 benchmarks and their starting abilities and survival vary; it is NOT a fair head-to-head win rate.
 
 ## Focus: student captured while a benchmark started 3+ closer
 
-- Verified captures: **738**; benchmark wins while initially closer: **4851**.
-- In student wins, initially nearest benchmark died before capture: **120**.
+- Verified captures: **773**; benchmark wins while initially closer: **5155**.
+- In student wins, initially nearest benchmark died before capture: **127**.
 - In student wins, student died before capture: **2**.
 - In student wins, nearest benchmark consumed another apple before this capture: **0**.
-- In student wins, benchmark had NO static path at first sight (all occupied bodies frozen): **132**.
-- In student wins, student had no static path under the same approximation: **49**.
-- In student wins, both static paths existed: **600**.
-- Of those, the student's static path was SHORTER despite longer Manhattan distance: **346**.
-- Median apple lifetime, student wins: **23.0 turns**; benchmark wins: **12 turns**.
+- In student wins, benchmark had NO static path at first sight (all occupied bodies frozen): **135**.
+- In student wins, student had no static path under the same approximation: **51**.
+- In student wins, both static paths existed: **632**.
+- Of those, the student's static path was SHORTER despite longer Manhattan distance: **363**.
+- Median apple lifetime, student wins: **23 turns**; benchmark wins: **12 turns**.
 
 ![Food capture times](charts/underdog_lag.svg)
 
@@ -43,12 +43,12 @@ benchmarks and their starting abilities and survival vary; it is NOT a fair head
 
 ![Fraction moving closer](charts/underdog_progress.svg)
 
-- Complete comparable five-turn, death-free trajectories: **616** student-win
-  and **4217** benchmark-win apple episodes.
-- Student-win: student progress **3.06** cells on average; nearest
-  benchmark progress **0.61** cells (distance decrease positive).
-- Benchmark-win: student progress **1.26** cells; nearest
-  benchmark progress **3.15** cells.
+- Complete comparable five-turn, death-free trajectories: **644** student-win
+  and **4479** benchmark-win apple episodes.
+- Student-win: student progress **3.04** cells on average; nearest
+  benchmark progress **0.62** cells (distance decrease positive).
+- Benchmark-win: student progress **1.24** cells; nearest
+  benchmark progress **3.13** cells.
 We exclude episodes with a death or respawn of either focal snake anywhere before capture
 from this particular five-turn comparison. The selection is intentional but may bias results.
 The apple must remain visible for 5 turns; fast captures are also excluded.

@@ -1,6 +1,6 @@
 # Snake26: Do escapes stay safe for the next 20–30 turns?
 
-Generated UTC: 2026-11-03T12:30:04+00:00
+Generated UTC: 2026-11-03T15:23:21+00:00
 
 ## Study design
 Actual student replay frames are sampled every 25 turns when the nearest
@@ -14,11 +14,11 @@ covers longer than the 25-turn sampling stride, windows from the same
 snake and match can overlap; resample entire replay clusters.
 
 ## Data quality
-Files scanned: **230** / 230.
-Unique replay payloads: **159** (league 85, trials 74).
+Files scanned: **240** / 240.
+Unique replay payloads: **169** (league 91, trials 78).
 Duplicate payloads: **71**.
 Unreadable files: **0**.
-Dangerous starting positions: **3,778**.
+Dangerous starting positions: **4,049**.
 Silent snake disappearances censored: **0**.
 
 ## 1. Actual death-free followup
@@ -26,8 +26,8 @@ Silent snake disappearances censored: **0**.
 
 | Mode | Baseline danger windows | Dead by +10 | Survived +10 | Alive at +20 after +10 (known only) | Alive at +30 after +10 (known only) | Censored before +30 |
 |---|---:|---:|---:|---|---|---:|
-| league | 3148 | 99 | 3049 | 3010/3049 (98.72%) | 2934/3004 (97.67%) | 45 |
-| trial | 630 | 4 | 626 | 622/626 (99.36%) | 615/621 (99.03%) | 5 |
+| league | 3389 | 108 | 3281 | 3241/3281 (98.78%) | 3157/3233 (97.65%) | 48 |
+| trial | 660 | 5 | 655 | 651/655 (99.39%) | 644/650 (99.08%) | 5 |
 
 The +20 and +30 percentages condition on first-ten survival AND having
 a known future outcome. Never confuse them with unconditional survival.
@@ -39,10 +39,10 @@ Analyze only snakes surviving to +10. Exits are an immediate geometry
 proxy, not guaranteed legal directions or long-horizon path safety.
 | Mode | +3 escape-space change | Survived first 10 | Known outcome at +30 | Dead in +11..+30 | Conditional death % | Censored |
 |---|---|---:|---:|---:|---:|---:|
-| league | Gained at least one exit | 1180 | 1157 | 16 | 1.38% | 23 |
-| league | No new exit | 1869 | 1847 | 54 | 2.92% | 22 |
-| trial | Gained at least one exit | 198 | 196 | 2 | 1.02% | 2 |
-| trial | No new exit | 428 | 425 | 4 | 0.94% | 3 |
+| league | Gained at least one exit | 1261 | 1237 | 17 | 1.37% | 24 |
+| league | No new exit | 2020 | 1996 | 59 | 2.96% | 24 |
+| trial | Gained at least one exit | 208 | 206 | 2 | 0.97% | 2 |
+| trial | No new exit | 447 | 444 | 4 | 0.90% | 3 |
 
 ## 3. Match-cluster bootstrap for late death difference
 Difference is exit-GAINERS minus NON-gainers, in percentage points.
@@ -51,22 +51,22 @@ This is observational and subject to selection and opponent confounding.
 
 | Mode | Observed difference (percentage points) | Exploratory 95% replay-bootstrap CI | Replay clusters |
 |---|---:|---:|---:|
-| league | -1.54 | [-2.49, -0.60] | 85 |
-| trial | 0.08 | [-1.48, 2.16] | 73 |
+| league | -1.58 | [-2.46, -0.66] | 91 |
+| trial | 0.07 | [-1.56, 1.81] | 77 |
 
 ## 4. Palmer compared with actual students in the same league games
-Unique league replays with Palmer danger windows: **27**.
+Unique league replays with Palmer danger windows: **31**.
 These are real same-game opponent observations, but not exactly
 matched head positions, lengths, or player skill.
 
 | Role | Danger windows | Survived +10 | Known +30 after +10 | Survived +30 | Mean +3 free-exit change |
 |---|---:|---:|---:|---:|---:|
-| Palmer | 259 | 259 | 256 | 255 | 0.31 (n=259) |
-| Other students in Palmer games | 782 | 750 | 744 | 727 | 0.37 (n=750) |
+| Palmer | 301 | 300 | 296 | 294 | 0.30 (n=300) |
+| Other students in Palmer games | 900 | 866 | 859 | 840 | 0.36 (n=866) |
 
 ## 5. Palmer's actual decision sequences in individual league replays
-Audited games in the [Palmer casebook](palmer_casebook.md): **27**.
-Games with a comparable starting-danger peer in the SAME replay: **26**.
+Audited games in the [Palmer casebook](palmer_casebook.md): **31**.
+Games with a comparable starting-danger peer in the SAME replay: **30**.
 The casebook exposes actual movement direction and straight-versus-turn
 choice plus neighboring-space, head-distance and food observations
 through turns +1, +3, +10, +20 and +30 where recorded.
