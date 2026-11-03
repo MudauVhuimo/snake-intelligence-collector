@@ -43,6 +43,7 @@ season,replay_sha,top_student,bottom_student,top_turn,bottom_turn,top_length,bot
 2026-11-01-225859-season,693c5b7e9cbecdccb637028763f00b9a9d45bcca85aecc309a68f55a6f8ec2c8,428786-marvellous-sambo,408008-bradley-buys,75,125,15,20,1,3,2,3,straight,straight,1,1,0,0,alive,alive
 2026-11-01-225859-season,693c5b7e9cbecdccb637028763f00b9a9d45bcca85aecc309a68f55a6f8ec2c8,428786-marvellous-sambo,408008-bradley-buys,675,800,90,70,4,20,1,1,turn,straight,-1,-1,2,2,alive,alive
 2026-11-01-225859-season,79bb920fffcb8e7249d2dfcbd8a2e2dda5aafa0ebeb1d57680023efc14ccf149,421462-alexander-palmer,410193-vhugala-makhwathane,575,600,75,65,2,1,3,2,straight,straight,1,1,-1,0,alive,alive
+2026-11-03-025900-season,ad9dfb83dce870c5a1e7c0ae331e8232cd5574ce890dbf19dcc2ed00dd7d4114,427064-khodani-netili,423436-ntobeko-zondi,575,625,40,25,2,2,3,3,straight,straight,-1,1,0,-2,alive,dead
 2026-11-02-045859-season,b8e7cfbb50e553df09045221e19d5d24e2f849fa3fa0a730c73d469be4b33293,421462-alexander-palmer,388060-tshepang-tshabalala,925,925,110,110,3,3,1,1,turn,straight,-1,-1,0,-1,alive,alive
 2026-11-02-045859-season,bacc2549a1d86fb822537820993e7636b96d859f780bd08dc51f77a5969f3881,419926-mphile-nchabeleng,419810-sokhna-diop,175,325,25,25,2,3,3,3,turn,straight,1,-1,0,0,alive,alive
 2026-11-02-045859-season,bacc2549a1d86fb822537820993e7636b96d859f780bd08dc51f77a5969f3881,419926-mphile-nchabeleng,419810-sokhna-diop,325,475,45,40,3,1,3,2,turn,turn,1,-1,0,0,alive,alive

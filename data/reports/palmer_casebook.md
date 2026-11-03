@@ -13,6 +13,10 @@ If no frame or an unexplained absence is observed, +30 is censored.
 
 | Archived league replay | Turn | Length | Start head distance | Free exits 0 to +3 | Actual first move | Death-free +30? | Comparable peer in same game |
 |---|---:|---:|---:|---|---|---|---|
+| [game-74000.rep.gz](../replays/2026-11-03-025900-season/game-74000.rep.gz) | 625 | 90 | 3 | 3 → 3 | -y / straight | alive | 402334-angile-saho |
+| [game-73005.rep.gz](../replays/2026-11-03-025900-season/game-73005.rep.gz) | 25 | 5 | 3 | 3 → 3 | -y / straight | alive | 400861-sibusisomlungisi-dlamini |
+| [game-72004.rep.gz](../replays/2026-11-03-025900-season/game-72004.rep.gz) | 375 | 85 | 2 | 2 → 1 | -x / turn | alive | 413538-lelethuthando-nikelo |
+| [game-71004.rep.gz](../replays/2026-11-03-025900-season/game-71004.rep.gz) | 625 | 60 | 1 | 2 → 2 | -x / turn | alive | 424820-elisha-mundalamo |
 | [game-76004.rep.gz](../replays/2026-11-02-045859-season/game-76004.rep.gz) | 525 | 75 | 8 | 1 → 3 | -y / straight | alive | 429782-maseeha-seedat |
 | [game-75004.rep.gz](../replays/2026-11-02-045859-season/game-75004.rep.gz) | 750 | 110 | 1 | 2 → 2 | -y / turn | alive | no matching baseline peer |
 | [game-74007.rep.gz](../replays/2026-11-02-045859-season/game-74007.rep.gz) | 125 | 35 | 3 | 3 → 2 | -y / turn | alive | 388060-tshepang-tshabalala |

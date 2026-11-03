@@ -22,6 +22,7 @@ sha,mode,season,student,replay,windows,close,confined,future_death
 0a8e49c3e265215506315e1f1367f9cd5595cc33b59e0ef5a194a0b77b69fed8,league,2026-11-01-225859-season,426895-mpho-ramasakona,2026-11-01-225859-season/game-71002.rep.gz,80,7,3,1
 1101dc993102351a04d712cdc21788e9777792789cfde55bb66963ed1157c62c,trial,2026-11-02-225901-season,408008-bradley-buys,2026-11-02-225901-season/trials/408008-bradley-buys/trial-911000.rep.gz,80,7,1,0
 112fe991a63efb81365bc8638716e478a30aebdd5941393f89fee377f5663b42,trial,2026-11-01-215859-season,419636-jason-chen,2026-11-01-215859-season/trials/419636-jason-chen/trial-912000.rep.gz,80,6,2,0
+1278e462f080b0f02222dc83504cd4a611394dce4a1facf0c425404d41573ee4,trial,2026-11-03-025900-season,427064-khodani-netili,2026-11-03-025900-season/trials/427064-khodani-netili/trial-911000.rep.gz,80,6,1,0
 15fbeb6de404ae22a44b90c3e45a91d6d9600fe7a1d1e17e33fcf20ba094b66b,league,2026-11-01-205859-season,403339-david-ndambo,2026-11-01-205859-season/game-72004.rep.gz,80,10,3,0
 15fbeb6de404ae22a44b90c3e45a91d6d9600fe7a1d1e17e33fcf20ba094b66b,league,2026-11-01-205859-season,403501-mashau-mudzanani,2026-11-01-205859-season/game-72004.rep.gz,80,4,1,1
 15fbeb6de404ae22a44b90c3e45a91d6d9600fe7a1d1e17e33fcf20ba094b66b,league,2026-11-01-205859-season,424820-elisha-mundalamo,2026-11-01-205859-season/game-72004.rep.gz,80,4,3,0
@@ -158,6 +159,10 @@ sha,mode,season,student,replay,windows,close,confined,future_death
 693c5b7e9cbecdccb637028763f00b9a9d45bcca85aecc309a68f55a6f8ec2c8,league,2026-11-01-225859-season,428786-marvellous-sambo,2026-11-01-225859-season/game-72003.rep.gz,80,6,2,0
 69f1360370102846c823915c966b02ffbb82f78da490a9b597c0fd6a623c81b5,trial,2026-10-14-123340-season,409997-utayan-naidoo,2026-10-14-123340-season/trials/409997-utayan-naidoo/trial-910000.rep.gz,80,5,3,0
 6a8ee9c9ceec14b5e161e0f442e0bdd1b4242f7110ba480130f9aab1bda03165,trial,2026-11-02-035859-season,422453-mauricetshepo-frost,2026-11-02-035859-season/trials/422453-mauricetshepo-frost/trial-912000.rep.gz,80,4,3,0
+6ca2310248fb5259bb9f2dc101720758f73e6bdd315aafcd45e4e48586f8caa1,league,2026-11-03-025900-season,388060-tshepang-tshabalala,2026-11-03-025900-season/game-71004.rep.gz,79,10,8,0
+6ca2310248fb5259bb9f2dc101720758f73e6bdd315aafcd45e4e48586f8caa1,league,2026-11-03-025900-season,410193-vhugala-makhwathane,2026-11-03-025900-season/game-71004.rep.gz,80,4,7,0
+6ca2310248fb5259bb9f2dc101720758f73e6bdd315aafcd45e4e48586f8caa1,league,2026-11-03-025900-season,421462-alexander-palmer,2026-11-03-025900-season/game-71004.rep.gz,80,10,4,0
+6ca2310248fb5259bb9f2dc101720758f73e6bdd315aafcd45e4e48586f8caa1,league,2026-11-03-025900-season,424820-elisha-mundalamo,2026-11-03-025900-season/game-71004.rep.gz,80,8,6,0
 707b38f206236a8c8b47cc592245dd181e7f492005a7a9dc7ae5370783c0d68e,trial,2026-10-14-123340-season,409997-utayan-naidoo,2026-10-14-123340-season/trials/409997-utayan-naidoo/trial-911000.rep.gz,80,6,1,0
 720b01be88c4d871a60cfaf6fcc4c91bc955cba2bebc9dc1d73db779edb91333,trial,2026-11-02-035859-season,421538-tshifhiwa-bvumbi,2026-11-02-035859-season/trials/421538-tshifhiwa-bvumbi/trial-910000.rep.gz,80,6,1,0
 722d4e818d8e24a65422776f77cd75d69fd04ff69789a0defc3d9ce651a719a3,trial,2026-11-01-225859-season,421349-phathutshedzo-mudzanani,2026-11-01-225859-season/trials/421349-phathutshedzo-mudzanani/trial-912000.rep.gz,80,4,1,0
@@ -171,6 +176,7 @@ sha,mode,season,student,replay,windows,close,confined,future_death
 79bb920fffcb8e7249d2dfcbd8a2e2dda5aafa0ebeb1d57680023efc14ccf149,league,2026-11-01-225859-season,410193-vhugala-makhwathane,2026-11-01-225859-season/game-75004.rep.gz,80,5,4,0
 79bb920fffcb8e7249d2dfcbd8a2e2dda5aafa0ebeb1d57680023efc14ccf149,league,2026-11-01-225859-season,421462-alexander-palmer,2026-11-01-225859-season/game-75004.rep.gz,80,8,3,0
 79bb920fffcb8e7249d2dfcbd8a2e2dda5aafa0ebeb1d57680023efc14ccf149,league,2026-11-01-225859-season,424820-elisha-mundalamo,2026-11-01-225859-season/game-75004.rep.gz,80,5,3,0
+7c5d5859113c3e95e6d8afadd45bf590cceff6c52f3b9bf54b9bec89783d482e,trial,2026-11-03-025900-season,424820-elisha-mundalamo,2026-11-03-025900-season/trials/424820-elisha-mundalamo/trial-910000.rep.gz,80,13,5,0
 7d0b728ccbc3fe6d4380bc6f64879c057834973999877c09a23bb2e93771bff3,trial,2026-10-23-145906-season,388060-tshepang-tshabalala,2026-10-23-145906-season/trials/388060-tshepang-tshabalala/trial-911000.rep.gz,80,9,3,0
 7ec6e72dc9c077088aa27562eabeba48f76ed09bf57471e16e06fc409e66395a,trial,2026-11-01-205859-season,388828-ngcebo-methula,2026-11-01-205859-season/trials/388828-ngcebo-methula/trial-911000.rep.gz,80,4,5,0
 81c22b5947abe7bda3cbeb49818966261ddde7ef8fd010807f85ed62cd9dae32,trial,2026-11-02-145901-season,403501-mashau-mudzanani,2026-11-02-145901-season/trials/403501-mashau-mudzanani/trial-912000.rep.gz,80,9,2,0
@@ -203,6 +209,7 @@ sha,mode,season,student,replay,windows,close,confined,future_death
 94717ce18bf5e3ddd738f3215064da3dba1aa3ed359b3427358ebb85d0538cab,league,2026-11-02-145901-season,409997-utayan-naidoo,2026-11-02-145901-season/game-72003.rep.gz,80,4,5,1
 94717ce18bf5e3ddd738f3215064da3dba1aa3ed359b3427358ebb85d0538cab,league,2026-11-02-145901-season,421349-phathutshedzo-mudzanani,2026-11-02-145901-season/game-72003.rep.gz,80,4,6,0
 94717ce18bf5e3ddd738f3215064da3dba1aa3ed359b3427358ebb85d0538cab,league,2026-11-02-145901-season,424820-elisha-mundalamo,2026-11-02-145901-season/game-72003.rep.gz,80,4,8,0
+981b41d7f2672b511e5dc4d0ceff174bdeb6beea0cefcec12de9d9c65cdace13,trial,2026-10-24-055857-season,403798-lufunopearl-moyo,2026-10-24-055857-season/trials/403798-lufunopearl-moyo/trial-912000.rep.gz,80,7,4,0
 9b894d1f9da0e5a823d7e3e302a1419e15c023b4d8c6366ddd037b14d18299cf,league,2026-11-01-205859-season,403339-david-ndambo,2026-11-01-205859-season/game-73000.rep.gz,80,7,5,1
 9b894d1f9da0e5a823d7e3e302a1419e15c023b4d8c6366ddd037b14d18299cf,league,2026-11-01-205859-season,413538-lelethuthando-nikelo,2026-11-01-205859-season/game-73000.rep.gz,80,6,4,0
 9b894d1f9da0e5a823d7e3e302a1419e15c023b4d8c6366ddd037b14d18299cf,league,2026-11-01-205859-season,419342-ayeshan-puckree,2026-11-01-205859-season/game-73000.rep.gz,80,10,4,1
@@ -230,6 +237,10 @@ a99da72fa08b553d5e394b7c467c2db072dc95d82e7e11ae5b6fa8f0eda74524,league,2026-11-
 a99da72fa08b553d5e394b7c467c2db072dc95d82e7e11ae5b6fa8f0eda74524,league,2026-11-01-225859-season,423436-ntobeko-zondi,2026-11-01-225859-season/game-72005.rep.gz,80,9,0,2
 a99da72fa08b553d5e394b7c467c2db072dc95d82e7e11ae5b6fa8f0eda74524,league,2026-11-01-225859-season,427417-phophi-shavhani,2026-11-01-225859-season/game-72005.rep.gz,79,4,4,0
 ab0bc6c41b4e325120ef686e2e2a48e32acb07384ab9ac5ff41048dbd4c0f54a,trial,2026-11-01-235859-season,421538-tshifhiwa-bvumbi,2026-11-01-235859-season/trials/421538-tshifhiwa-bvumbi/trial-912000.rep.gz,80,1,1,0
+ad9dfb83dce870c5a1e7c0ae331e8232cd5574ce890dbf19dcc2ed00dd7d4114,league,2026-11-03-025900-season,413538-lelethuthando-nikelo,2026-11-03-025900-season/game-72004.rep.gz,80,3,8,1
+ad9dfb83dce870c5a1e7c0ae331e8232cd5574ce890dbf19dcc2ed00dd7d4114,league,2026-11-03-025900-season,421462-alexander-palmer,2026-11-03-025900-season/game-72004.rep.gz,80,8,4,0
+ad9dfb83dce870c5a1e7c0ae331e8232cd5574ce890dbf19dcc2ed00dd7d4114,league,2026-11-03-025900-season,423436-ntobeko-zondi,2026-11-03-025900-season/game-72004.rep.gz,80,9,2,1
+ad9dfb83dce870c5a1e7c0ae331e8232cd5574ce890dbf19dcc2ed00dd7d4114,league,2026-11-03-025900-season,427064-khodani-netili,2026-11-03-025900-season/game-72004.rep.gz,80,6,9,0
 ae3f321f5e5ae64eec18c29768e07937bb6eec00f59c9f05a607939707acfb89,trial,2026-10-14-123340-season,388060-tshepang-tshabalala,2026-10-14-123340-season/trials/388060-tshepang-tshabalala/trial-910000.rep.gz,80,5,1,0
 b05eba542934181d90eb4d65a6d376fa88f90ed7406d6f516b95229710b4e6e3,league,2026-11-02-215901-season,388828-ngcebo-methula,2026-11-02-215901-season/game-71000.rep.gz,80,3,8,0
 b05eba542934181d90eb4d65a6d376fa88f90ed7406d6f516b95229710b4e6e3,league,2026-11-02-215901-season,409997-utayan-naidoo,2026-11-02-215901-season/game-71000.rep.gz,80,5,8,3
@@ -284,6 +295,10 @@ c5099e2c4780d7471ac2b9b09ec0c806531ce2af9e7dc1e6e5e2e6031ea8fc6f,league,2026-11-
 c5099e2c4780d7471ac2b9b09ec0c806531ce2af9e7dc1e6e5e2e6031ea8fc6f,league,2026-11-01-205859-season,410193-vhugala-makhwathane,2026-11-01-205859-season/game-72002.rep.gz,80,5,5,0
 c5099e2c4780d7471ac2b9b09ec0c806531ce2af9e7dc1e6e5e2e6031ea8fc6f,league,2026-11-01-205859-season,428786-marvellous-sambo,2026-11-01-205859-season/game-72002.rep.gz,80,3,4,1
 c5099e2c4780d7471ac2b9b09ec0c806531ce2af9e7dc1e6e5e2e6031ea8fc6f,league,2026-11-01-205859-season,429782-maseeha-seedat,2026-11-01-205859-season/game-72002.rep.gz,80,6,5,1
+c784fed5ed6fcc353ead8ca4a7687792fcea46d85d6c0bcd2aae2ed57393e53c,league,2026-11-03-025900-season,402334-angile-saho,2026-11-03-025900-season/game-74000.rep.gz,79,5,5,1
+c784fed5ed6fcc353ead8ca4a7687792fcea46d85d6c0bcd2aae2ed57393e53c,league,2026-11-03-025900-season,406000-mulimisi-rammela,2026-11-03-025900-season/game-74000.rep.gz,80,4,5,0
+c784fed5ed6fcc353ead8ca4a7687792fcea46d85d6c0bcd2aae2ed57393e53c,league,2026-11-03-025900-season,408501-asher-urison,2026-11-03-025900-season/game-74000.rep.gz,80,3,5,1
+c784fed5ed6fcc353ead8ca4a7687792fcea46d85d6c0bcd2aae2ed57393e53c,league,2026-11-03-025900-season,421462-alexander-palmer,2026-11-03-025900-season/game-74000.rep.gz,80,2,2,1
 c81b765c8392f45254347b3343ddb67e820cfd253e6f6e9f02d4e1112901d82d,trial,2026-11-01-225859-season,419926-mphile-nchabeleng,2026-11-01-225859-season/trials/419926-mphile-nchabeleng/trial-910000.rep.gz,80,9,2,0
 c90f6290b17bd6f977a0404919e45e96fb85165967d59c97bd7aed4e1a2d2595,trial,2026-11-02-045859-season,422453-mauricetshepo-frost,2026-11-02-045859-season/trials/422453-mauricetshepo-frost/trial-911000.rep.gz,80,9,2,0
 cd07a0bde0829ef55ec1eedecd60a4a6af69f96d76ad949bf245850c1e4b4fc2,trial,2026-11-01-225859-season,421349-phathutshedzo-mudzanani,2026-11-01-225859-season/trials/421349-phathutshedzo-mudzanani/trial-910000.rep.gz,80,6,1,1
@@ -340,8 +355,13 @@ f1a76a0362cf0a3f5c2dc07eef8430dab48502e84b829a50fdf42644781d8a62,league,2026-11-
 f1a76a0362cf0a3f5c2dc07eef8430dab48502e84b829a50fdf42644781d8a62,league,2026-11-01-205859-season,421462-alexander-palmer,2026-11-01-205859-season/game-72003.rep.gz,80,7,4,0
 f1a76a0362cf0a3f5c2dc07eef8430dab48502e84b829a50fdf42644781d8a62,league,2026-11-01-205859-season,423546-ndabenhle-shabangu,2026-11-01-205859-season/game-72003.rep.gz,80,7,1,0
 f2b8907b5870bfd63cf7b724abb26e0ad6f77f81a5511a4eb43b3bb56c44541c,trial,2026-11-01-205859-season,405469-adham-soror,2026-11-01-205859-season/trials/405469-adham-soror/trial-910000.rep.gz,80,11,2,0
+f85205d9197d7a72457f6bc6ea93b8e562df402283aa762ad05146cb38b16faf,trial,2026-11-03-025900-season,389160-lwandle-ramanugu,2026-11-03-025900-season/trials/389160-lwandle-ramanugu/trial-912000.rep.gz,80,5,6,1
 fa26efcb72fad5fc00135e7769e6d31eeb6ca3b1f3ad04ebaf57817f99c2929a,league,2026-11-01-215859-season,386901-amanda-huo,2026-11-01-215859-season/game-71001.rep.gz,80,6,4,0
 fa26efcb72fad5fc00135e7769e6d31eeb6ca3b1f3ad04ebaf57817f99c2929a,league,2026-11-01-215859-season,403339-david-ndambo,2026-11-01-215859-season/game-71001.rep.gz,80,6,3,0
 fa26efcb72fad5fc00135e7769e6d31eeb6ca3b1f3ad04ebaf57817f99c2929a,league,2026-11-01-215859-season,419342-ayeshan-puckree,2026-11-01-215859-season/game-71001.rep.gz,79,4,5,1
 fa26efcb72fad5fc00135e7769e6d31eeb6ca3b1f3ad04ebaf57817f99c2929a,league,2026-11-01-215859-season,428464-madalitso-mnqanqeni,2026-11-01-215859-season/game-71001.rep.gz,80,2,5,1
+fce12466973142f5dded5a8b0d59fccd966c2ea07db48c84f4e85fa10fce4ec5,league,2026-11-03-025900-season,389160-lwandle-ramanugu,2026-11-03-025900-season/game-73005.rep.gz,80,6,3,1
+fce12466973142f5dded5a8b0d59fccd966c2ea07db48c84f4e85fa10fce4ec5,league,2026-11-03-025900-season,400861-sibusisomlungisi-dlamini,2026-11-03-025900-season/game-73005.rep.gz,80,6,1,1
+fce12466973142f5dded5a8b0d59fccd966c2ea07db48c84f4e85fa10fce4ec5,league,2026-11-03-025900-season,408070-collen-mthombeni,2026-11-03-025900-season/game-73005.rep.gz,80,8,3,1
+fce12466973142f5dded5a8b0d59fccd966c2ea07db48c84f4e85fa10fce4ec5,league,2026-11-03-025900-season,421462-alexander-palmer,2026-11-03-025900-season/game-73005.rep.gz,80,6,3,0
 fd846a7e63c421c91908c1eadd6d368074c6763b5393856aab3827c7b1aeb5e9,trial,2026-11-01-215859-season,408070-collen-mthombeni,2026-11-01-215859-season/trials/408070-collen-mthombeni/trial-912000.rep.gz,80,5,2,0

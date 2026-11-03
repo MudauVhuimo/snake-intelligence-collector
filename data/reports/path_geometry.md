@@ -1,6 +1,6 @@
 # Snake26: does occupied-space geometry explain underdog apples?
 
-Generated UTC: 2026-11-02T23:41:36+00:00
+Generated UTC: 2026-11-03T04:08:21+00:00
 
 ## Critical definition
 
@@ -17,13 +17,13 @@ Exclude episodes with no static path for either head, which can bias results.
 
 | Frozen-body path ordering | Student captures | Benchmark captures | Student capture share |
 |---|---:|---:|---:|
-| Student shortest | 293 | 312 | 48.4% |
-| Benchmark shortest or tied | 220 | 3361 | 6.1% |
+| Student shortest | 307 | 323 | 48.7% |
+| Benchmark shortest or tied | 239 | 3590 | 6.2% |
 
-Observed difference in student capture share: **42.3 percentage points**.
+Observed difference in student capture share: **42.5 percentage points**.
 Exploratory 95% **match-cluster bootstrap** interval for the difference:
-**37.3 to 47.2 percentage points**
-(4000 valid bootstrap draws, resampling 62 complete replay matches).
+**37.7 to 47.3 percentage points**
+(4000 valid bootstrap draws, resampling 66 complete replay matches).
 This interval reflects match-level resampling variability in this selected archive;
 it does not adjust for bot version, different opponent skill or hidden strategy choices.
 
@@ -31,12 +31,12 @@ it does not adjust for bot version, different opponent skill or hidden strategy 
 
 | Initially closest benchmark | Reversal: student captures / all | Not reversed: student captures / all |
 |---|---:|---:|
-| ~benchmark | 83/166 (50.0%) | 33/1081 (3.1%) |
-| ~gauntlet_1 | 40/83 (48.2%) | 17/376 (4.5%) |
-| ~hungry | 29/54 (53.7%) | 11/381 (2.9%) |
-| ~hunter | 36/71 (50.7%) | 8/367 (2.2%) |
-| ~survivor | 82/178 (46.1%) | 49/912 (5.4%) |
-| ~wander | 23/53 (43.4%) | 102/464 (22.0%) |
+| ~benchmark | 89/176 (50.6%) | 36/1147 (3.1%) |
+| ~gauntlet_1 | 43/87 (49.4%) | 19/422 (4.5%) |
+| ~hungry | 31/57 (54.4%) | 12/400 (3.0%) |
+| ~hunter | 36/71 (50.7%) | 10/392 (2.6%) |
+| ~survivor | 84/184 (45.7%) | 55/980 (5.6%) |
+| ~wander | 24/55 (43.6%) | 107/488 (21.9%) |
 
 ## What this does and DOES NOT establish
 

@@ -1,6 +1,6 @@
 # Snake26: Head pressure, escape options, and subsequent deaths
 
-Generated UTC: 2026-11-02T23:43:33+00:00
+Generated UTC: 2026-11-03T04:10:07+00:00
 
 ## Study design — actual replay frames, not a simulator
 
@@ -17,16 +17,16 @@ They are STILL correlated within snake and replay match.
 
 ## Coverage and quality first
 
-- Archived files scanned: **200** of 200 candidate files.
-- Unique replay payloads: **133**
-(league **71**, trials **62**).
-- Exact byte-identical duplicates skipped: **67**.
+- Archived files scanned: **210** of 210 candidate files.
+- Unique replay payloads: **141**
+(league **75**, trials **66**).
+- Exact byte-identical duplicates skipped: **69**.
 - Unreadable / invalid: **0**.
 - Single-student league games excluded: **0**.
 - Nonstandard trial rosters excluded: **0**.
-- Student windows with complete follow-up: **27,456**.
-- Distinct student/replay summaries: **346**.
-- Latest sampled season: **2026-11-02-225901-season**.
+- Student windows with complete follow-up: **29,054**.
+- Distinct student/replay summaries: **366**.
+- Latest sampled season: **2026-11-03-025900-season**.
 - Latest sampled student-season with BOTH replay modes: **3**.
 
 ## 1. Head pressure and observed future death
@@ -35,12 +35,12 @@ They are STILL correlated within snake and replay match.
 
 | Environment | Nearest opponent head | Windows | Death in next 10 turns | Observed frequency | Unique replays |
 |---|---|---:|---:|---:|---:|
-| league | Opponent head ≤3 | 1,666 | 37 | 2.22% | 71 |
-| league | Head 4–7 | 4,329 | 30 | 0.69% | 71 |
-| league | Head ≥8 | 16,504 | 52 | 0.32% | 71 |
-| trial | Opponent head ≤3 | 389 | 3 | 0.77% | 61 |
-| trial | Head 4–7 | 980 | 0 | 0.00% | 62 |
-| trial | Head ≥8 | 3,588 | 2 | 0.06% | 62 |
+| league | Opponent head ≤3 | 1,764 | 40 | 2.27% | 75 |
+| league | Head 4–7 | 4,615 | 32 | 0.69% | 75 |
+| league | Head ≥8 | 17,398 | 55 | 0.32% | 75 |
+| trial | Opponent head ≤3 | 420 | 3 | 0.71% | 65 |
+| trial | Head 4–7 | 1,040 | 0 | 0.00% | 66 |
+| trial | Head ≥8 | 3,817 | 3 | 0.08% | 66 |
 
 A close opponent head does NOT imply an aggressive attack or a collision.
 This is a selected replay sample. Risk differences are not causal effects
@@ -48,8 +48,8 @@ and are not comparisons between equally skilled opponent populations.
 
 ## 2. Pressure vs distance alone: match-level uncertainty
 
-- **league:** close-minus-far risk = **+1.91 percentage points**; exploratory 95% match-resampled interval **[+1.23, +2.65]**, 71 distinct replay clusters.
-- **trial:** close-minus-far risk = **+0.72 percentage points**; exploratory 95% match-resampled interval **[-0.06, +1.71]**, 62 distinct replay clusters.
+- **league:** close-minus-far risk = **+1.95 percentage points**; exploratory 95% match-resampled interval **[+1.28, +2.63]**, 75 distinct replay clusters.
+- **trial:** close-minus-far risk = **+0.64 percentage points**; exploratory 95% match-resampled interval **[-0.08, +1.46]**, 66 distinct replay clusters.
 
 Resampling entire REPLAYS reduces pseudo-replication from repeated turns.
 It does not adjust confounding from body length, opponent type, code
@@ -59,27 +59,27 @@ versions, player ability or game phase.
 
 | Mode | Length | Head ≤3: death/windows | Head ≥8: death/windows | Close - far frequency |
 |---|---|---:|---:|---:|
-| league | 5-24 | 5/323 | 6/3624 | 1.38 pp |
-| league | 25-49 | 11/309 | 9/3587 | 3.31 pp |
-| league | 50-99 | 13/609 | 18/5545 | 1.81 pp |
-| league | 100+ | 8/425 | 19/3748 | 1.38 pp |
-| trial | 5-24 | 0/37 | 0/328 | 0.00 pp |
-| trial | 25-49 | 1/66 | 0/373 | 1.52 pp |
-| trial | 50-99 | 1/90 | 0/739 | 1.11 pp |
-| trial | 100+ | 1/196 | 2/2148 | 0.42 pp |
+| league | 5-24 | 5/337 | 6/3824 | 1.33 pp |
+| league | 25-49 | 13/333 | 9/3809 | 3.67 pp |
+| league | 50-99 | 13/644 | 21/5815 | 1.66 pp |
+| league | 100+ | 9/450 | 19/3950 | 1.52 pp |
+| trial | 5-24 | 0/40 | 0/360 | 0.00 pp |
+| trial | 25-49 | 1/71 | 0/404 | 1.41 pp |
+| trial | 50-99 | 1/101 | 1/793 | 0.86 pp |
+| trial | 100+ | 1/208 | 2/2260 | 0.39 pp |
 
 ## 4. Immediate escape space at the same head pressure
 
 | Mode | Head proximity | Free neighboring cells | Death events/windows | Observed frequency |
 |---|---|---|---:|---:|
-| league | Opponent head ≤3 | 0-1 free sides | 14/127 | 11.02% |
-| league | Opponent head ≤3 | 2-4 free sides | 23/1539 | 1.49% |
-| league | Head ≥8 | 0-1 free sides | 30/708 | 4.24% |
-| league | Head ≥8 | 2-4 free sides | 22/15796 | 0.14% |
+| league | Opponent head ≤3 | 0-1 free sides | 15/139 | 10.79% |
+| league | Opponent head ≤3 | 2-4 free sides | 25/1625 | 1.54% |
+| league | Head ≥8 | 0-1 free sides | 33/758 | 4.35% |
+| league | Head ≥8 | 2-4 free sides | 22/16640 | 0.13% |
 | trial | Opponent head ≤3 | 0-1 free sides | 3/30 | 10.00% |
-| trial | Opponent head ≤3 | 2-4 free sides | 0/359 | 0.00% |
-| trial | Head ≥8 | 0-1 free sides | 1/94 | 1.06% |
-| trial | Head ≥8 | 2-4 free sides | 1/3494 | 0.03% |
+| trial | Opponent head ≤3 | 2-4 free sides | 0/390 | 0.00% |
+| trial | Head ≥8 | 0-1 free sides | 1/106 | 0.94% |
+| trial | Head ≥8 | 2-4 free sides | 2/3711 | 0.05% |
 
 This helps distinguish crowded **local geometry** from opponent-head
 pressure, but is still a snapshot association, not an actual 10-turn
@@ -89,9 +89,9 @@ pathfinding or safety proof.
 
 | Student | Mode | Replay matches | Sampled windows | Head ≤3 share | 0–1 free-side share | Death in next 10-turn window |
 |---|---|---:|---:|---:|---:|---:|
-| 421462-alexander-palmer | league | 18 | 1439 | 8.3% | 4.2% | 2/1439 |
+| 421462-alexander-palmer | league | 22 | 1759 | 8.2% | 4.2% | 3/1759 |
 | 421462-alexander-palmer | trial | 3 | 240 | 7.5% | 2.5% | 0/240 |
-| 388060-tshepang-tshabalala | league | 11 | 878 | 7.4% | 4.6% | 3/878 |
+| 388060-tshepang-tshabalala | league | 12 | 957 | 7.8% | 5.0% | 3/957 |
 | 388060-tshepang-tshabalala | trial | 3 | 240 | 7.5% | 2.5% | 0/240 |
 | 428786-marvellous-sambo | league | 6 | 480 | 6.9% | 4.2% | 3/480 |
 | 409997-utayan-naidoo | league | 9 | 717 | 7.5% | 4.5% | 7/717 |

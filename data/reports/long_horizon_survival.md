@@ -1,6 +1,6 @@
 # Snake26: Do escapes stay safe for the next 20–30 turns?
 
-Generated UTC: 2026-11-02T23:44:28+00:00
+Generated UTC: 2026-11-03T04:10:54+00:00
 
 ## Study design
 Actual student replay frames are sampled every 25 turns when the nearest
@@ -14,11 +14,11 @@ covers longer than the 25-turn sampling stride, windows from the same
 snake and match can overlap; resample entire replay clusters.
 
 ## Data quality
-Files scanned: **200** / 200.
-Unique replay payloads: **133** (league 71, trials 62).
-Duplicate payloads: **67**.
+Files scanned: **210** / 210.
+Unique replay payloads: **141** (league 75, trials 66).
+Duplicate payloads: **69**.
 Unreadable files: **0**.
-Dangerous starting positions: **3,093**.
+Dangerous starting positions: **3,301**.
 Silent snake disappearances censored: **0**.
 
 ## 1. Actual death-free followup
@@ -26,8 +26,8 @@ Silent snake disappearances censored: **0**.
 
 | Mode | Baseline danger windows | Dead by +10 | Survived +10 | Alive at +20 after +10 (known only) | Alive at +30 after +10 (known only) | Censored before +30 |
 |---|---:|---:|---:|---|---|---:|
-| league | 2584 | 78 | 2506 | 2473/2506 (98.68%) | 2409/2470 (97.53%) | 36 |
-| trial | 509 | 4 | 505 | 502/505 (99.41%) | 496/501 (99.00%) | 4 |
+| league | 2745 | 85 | 2660 | 2625/2660 (98.68%) | 2561/2624 (97.60%) | 36 |
+| trial | 556 | 4 | 552 | 548/552 (99.28%) | 542/548 (98.91%) | 4 |
 
 The +20 and +30 percentages condition on first-ten survival AND having
 a known future outcome. Never confuse them with unconditional survival.
@@ -39,10 +39,10 @@ Analyze only snakes surviving to +10. Exits are an immediate geometry
 proxy, not guaranteed legal directions or long-horizon path safety.
 | Mode | +3 escape-space change | Survived first 10 | Known outcome at +30 | Dead in +11..+30 | Conditional death % | Censored |
 |---|---|---:|---:|---:|---:|---:|
-| league | Gained at least one exit | 960 | 939 | 15 | 1.60% | 21 |
-| league | No new exit | 1546 | 1531 | 46 | 3.00% | 15 |
-| trial | Gained at least one exit | 158 | 156 | 2 | 1.28% | 2 |
-| trial | No new exit | 347 | 345 | 3 | 0.87% | 2 |
+| league | Gained at least one exit | 1026 | 1005 | 15 | 1.49% | 21 |
+| league | No new exit | 1634 | 1619 | 48 | 2.96% | 15 |
+| trial | Gained at least one exit | 175 | 173 | 2 | 1.16% | 2 |
+| trial | No new exit | 377 | 375 | 4 | 1.07% | 2 |
 
 ## 3. Match-cluster bootstrap for late death difference
 Difference is exit-GAINERS minus NON-gainers, in percentage points.
@@ -51,22 +51,22 @@ This is observational and subject to selection and opponent confounding.
 
 | Mode | Observed difference (percentage points) | Exploratory 95% replay-bootstrap CI | Replay clusters |
 |---|---:|---:|---:|
-| league | -1.41 | [-2.50, -0.36] | 71 |
-| trial | 0.41 | [-1.47, 2.77] | 61 |
+| league | -1.47 | [-2.49, -0.43] | 75 |
+| trial | 0.09 | [-1.66, 2.45] | 65 |
 
 ## 4. Palmer compared with actual students in the same league games
-Unique league replays with Palmer danger windows: **18**.
+Unique league replays with Palmer danger windows: **22**.
 These are real same-game opponent observations, but not exactly
 matched head positions, lengths, or player skill.
 
 | Role | Danger windows | Survived +10 | Known +30 after +10 | Survived +30 | Mean +3 free-exit change |
 |---|---:|---:|---:|---:|---:|
-| Palmer | 170 | 170 | 168 | 167 | 0.26 (n=170) |
-| Other students in Palmer games | 517 | 498 | 493 | 481 | 0.35 (n=498) |
+| Palmer | 206 | 206 | 204 | 203 | 0.31 (n=206) |
+| Other students in Palmer games | 642 | 616 | 611 | 597 | 0.36 (n=616) |
 
 ## 5. Palmer's actual decision sequences in individual league replays
-Audited games in the [Palmer casebook](palmer_casebook.md): **18**.
-Games with a comparable starting-danger peer in the SAME replay: **17**.
+Audited games in the [Palmer casebook](palmer_casebook.md): **22**.
+Games with a comparable starting-danger peer in the SAME replay: **21**.
 The casebook exposes actual movement direction and straight-versus-turn
 choice plus neighboring-space, head-distance and food observations
 through turns +1, +3, +10, +20 and +30 where recorded.

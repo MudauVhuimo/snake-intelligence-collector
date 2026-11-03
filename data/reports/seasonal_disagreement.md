@@ -1,6 +1,6 @@
 # Snake26: historical league versus trial specialization
 
-Generated UTC: 2026-11-02T23:45:14+00:00
+Generated UTC: 2026-11-03T04:11:33+00:00
 
 ## Design and guardrails
 
@@ -14,10 +14,10 @@ A normalized rank difference of +1 means excellent trials relative to
 league, and -1 means excellent league performance relative to trials.
 These are ranks, NOT inferred policy scores or match-level causal effects.
 
-Current season: **2026-11-02-225901-season**.
-Eligible historical Division 1 standings snapshots: **7**.
-Positive league/trial rank correlation: **7** snapshots.
-Median Division 1 correlation: **+0.401**.
+Current season: **2026-11-03-025900-season**.
+Eligible historical Division 1 standings snapshots: **8**.
+Positive league/trial rank correlation: **8** snapshots.
+Median Division 1 correlation: **+0.378**.
 
 Hourly seasons, repeated seeds, and unchanged bot versions are strongly
 correlated. The history is a trajectory of recorded competition snapshots,
@@ -29,6 +29,7 @@ correlated. The history is a trajectory of recorded competition snapshots,
 
 | Season | Division 1 students | Spearman rho: league rank vs trial growth rank |
 |---|---:|---:|
+| 2026-11-03-025900-season | 32 | +0.277 |
 | 2026-11-02-225901-season | 32 | +0.488 |
 | 2026-11-02-145901-season | 32 | +0.354 |
 | 2026-11-02-045859-season | 32 | +0.417 |
@@ -46,23 +47,23 @@ correlated. The history is a trajectory of recorded competition snapshots,
 
 | Trial specialists (Division 1) | League rank | Trial rank within Division 1 | Gap | League games | League full replays |
 |---|---:|---:|---:|---:|---:|
-| 402334-angile-saho | 20 | 1.0 | +0.61 | 6 | 0 |
-| 407318-deo-kabunda | 28 | 14.0 | +0.45 | 6 | 0 |
-| 419342-ayeshan-puckree | 31 | 19.0 | +0.39 | 4 | 1 |
-| 421538-tshifhiwa-bvumbi | 16 | 4.0 | +0.39 | 4 | 0 |
-| 388060-tshepang-tshabalala | 13 | 2.0 | +0.35 | 5 | 1 |
-| 409997-utayan-naidoo | 23 | 12.0 | +0.35 | 5 | 0 |
-| 420285-kgotlelelo-aphane | 26 | 15.5 | +0.34 | 6 | 0 |
+| 402334-angile-saho | 22 | 1.0 | +0.68 | 5 | 1 |
+| 388060-tshepang-tshabalala | 20 | 2.0 | +0.58 | 4 | 1 |
+| 407318-deo-kabunda | 30 | 12.0 | +0.58 | 4 | 0 |
+| 408008-bradley-buys | 32 | 14.0 | +0.58 | 4 | 0 |
+| 421349-phathutshedzo-mudzanani | 21 | 5.0 | +0.52 | 6 | 0 |
+| 419926-mphile-nchabeleng | 26 | 13.0 | +0.42 | 4 | 0 |
+| 423436-ntobeko-zondi | 29 | 16.0 | +0.42 | 5 | 1 |
 
 | League specialists (Division 1) | League rank | Trial rank within Division 1 | Gap | League games | League full replays |
 |---|---:|---:|---:|---:|---:|
-| 404721-khensani-maluleke | 11 | 28.0 | -0.55 | 6 | 0 |
-| 408070-collen-mthombeni | 15 | 29.0 | -0.45 | 5 | 0 |
-| 408501-asher-urison | 10 | 21.0 | -0.35 | 5 | 0 |
-| 410193-vhugala-makhwathane | 12 | 22.5 | -0.34 | 6 | 0 |
-| 421462-alexander-palmer | 3 | 13.0 | -0.32 | 4 | 0 |
-| 424820-elisha-mundalamo | 2 | 11.0 | -0.29 | 6 | 0 |
-| 426895-mpho-ramasakona | 18 | 27.0 | -0.29 | 5 | 0 |
+| 404721-khensani-maluleke | 3 | 30.5 | -0.89 | 5 | 0 |
+| 428786-marvellous-sambo | 8 | 26.0 | -0.58 | 4 | 0 |
+| 406000-mulimisi-rammela | 12 | 23.5 | -0.37 | 5 | 1 |
+| 421462-alexander-palmer | 1 | 11.0 | -0.32 | 6 | 4 |
+| 408070-collen-mthombeni | 23 | 32.0 | -0.29 | 4 | 1 |
+| 419342-ayeshan-puckree | 6 | 15.0 | -0.29 | 5 | 0 |
+| 428954-njabulo-ndlozi | 13 | 21.5 | -0.27 | 4 | 0 |
 
 ## 3. Repeated snapshots and bot changes
 
@@ -73,14 +74,14 @@ new independent evidence.
 
 | Student | Eligible Division 1 snapshots | Distinct snapshot hashes | Median rank gap |
 |---|---:|---:|---:|
-| 402334-angile-saho | 7 | 2 | +0.39 |
-| 407318-deo-kabunda | 1 | 1 | +0.45 |
-| 419342-ayeshan-puckree | 7 | 1 | +0.19 |
-| 421538-tshifhiwa-bvumbi | 3 | 1 | +0.39 |
-| 404721-khensani-maluleke | 7 | 1 | -0.53 |
-| 408070-collen-mthombeni | 7 | 1 | -0.47 |
-| 408501-asher-urison | 5 | 1 | +0.03 |
-| 410193-vhugala-makhwathane | 4 | 1 | -0.03 |
+| 402334-angile-saho | 8 | 2 | +0.40 |
+| 388060-tshepang-tshabalala | 7 | 1 | +0.45 |
+| 407318-deo-kabunda | 2 | 1 | +0.52 |
+| 408008-bradley-buys | 5 | 1 | +0.42 |
+| 404721-khensani-maluleke | 8 | 1 | -0.54 |
+| 428786-marvellous-sambo | 8 | 1 | -0.58 |
+| 406000-mulimisi-rammela | 8 | 1 | -0.31 |
+| 421462-alexander-palmer | 8 | 1 | -0.35 |
 
 ## 4. What this changes in our replay investigation
 
