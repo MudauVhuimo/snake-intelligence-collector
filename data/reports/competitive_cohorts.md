@@ -1,6 +1,6 @@
 # Snake26: Strong, middle, and struggling league competitors — comparison
 
-Generated UTC: 2026-11-03T04:10:55+00:00
+Generated UTC: 2026-11-03T07:00:48+00:00
 
 ## Scientific question
 
@@ -28,11 +28,11 @@ are eligible. Palmer is one top-division example, not the baseline.
   draw from all official matches. Rankings include game results;
   ranking groups are outcome-selected, not randomized policies.
 
-Baseline windows available across BOTH environments: **3,301**.
-Same-season Division 1 ranked league windows: **2,054**.
-Same-season Division 1 ranked trial windows: **255**.
-League windows without qualifying same-season rank: **691**.
-Trial windows without qualifying same-season rank: **301**.
+Baseline windows available across BOTH environments: **3,531**.
+Same-season Division 1 ranked league windows: **2,222**.
+Same-season Division 1 ranked trial windows: **284**.
+League windows without qualifying same-season rank: **721**.
+Trial windows without qualifying same-season rank: **304**.
 Duplicate rows excluded: **0**.
 
 ## 1. Observed danger exposure and outcomes by performance cohort
@@ -41,12 +41,12 @@ Duplicate rows excluded: **0**.
 
 | Match mode | Division 1 cohort | Students | Unique replays | Danger windows | Nearby heads | Confinement | Death by +10 (events/windows) | Death by +30 (events/windows) | Gained exit by +3 (among +10 survivors) | First move straight | Moved toward a persistent apple |
 |---|---|---:|---:|---:|---|---|---|---|---|---|---|
-| league | top_quartile | 15 | 48 | 632 | 65.03% | 41.61% | 9/632 (1.42%) | 14/622 (2.25%) | 623 sampled, 40.45% | 632 moves, 54.27% | 600 moves, 55.50% |
-| league | middle_half | 35 | 53 | 1012 | 61.96% | 42.49% | 33/1012 (3.26%) | 59/999 (5.91%) | 979 sampled, 38.61% | 1007 moves, 57.89% | 961 moves, 56.09% |
-| league | bottom_quartile | 21 | 37 | 410 | 65.37% | 39.02% | 17/410 (4.15%) | 26/407 (6.39%) | 393 sampled, 35.62% | 409 moves, 62.59% | 385 moves, 53.51% |
-| trial | top_quartile | 9 | 16 | 118 | 72.88% | 31.36% | 1/118 (0.85%) | 2/118 (1.69%) | 117 sampled, 31.62% | 118 moves, 68.64% | 110 moves, 66.36% |
-| trial | middle_half | 7 | 11 | 110 | 63.64% | 44.55% | 0/110 (0.00%) | 0/109 (0.00%) | 110 sampled, 40.00% | 110 moves, 67.27% | 101 moves, 51.49% |
-| trial | bottom_quartile | 3 | 3 | 27 | 81.48% | 18.52% | 0/27 (0.00%) | 0/27 (0.00%) | 27 sampled, 33.33% | 27 moves, 66.67% | 26 moves, 61.54% |
+| league | top_quartile | 15 | 52 | 690 | 65.07% | 41.88% | 10/690 (1.45%) | 16/679 (2.36%) | 680 sampled, 39.71% | 690 moves, 55.51% | 655 moves, 55.88% |
+| league | middle_half | 35 | 56 | 1074 | 62.29% | 42.09% | 39/1074 (3.63%) | 66/1059 (6.23%) | 1035 sampled, 38.65% | 1069 moves, 57.81% | 1016 moves, 56.30% |
+| league | bottom_quartile | 23 | 40 | 458 | 66.59% | 37.99% | 18/458 (3.93%) | 27/453 (5.96%) | 440 sampled, 35.68% | 457 moves, 63.46% | 430 moves, 54.42% |
+| trial | top_quartile | 10 | 17 | 128 | 75.00% | 29.69% | 1/128 (0.78%) | 2/127 (1.57%) | 127 sampled, 29.92% | 128 moves, 67.19% | 119 moves, 67.23% |
+| trial | middle_half | 8 | 12 | 121 | 65.29% | 42.98% | 0/121 (0.00%) | 0/120 (0.00%) | 121 sampled, 40.50% | 121 moves, 66.12% | 110 moves, 52.73% |
+| trial | bottom_quartile | 4 | 4 | 35 | 85.71% | 17.14% | 0/35 (0.00%) | 0/35 (0.00%) | 35 sampled, 31.43% | 35 moves, 65.71% | 32 moves, 65.62% |
 
 First-move straight/turn is reconstructed from two consecutive REAL frames.
 Food progress means closing distance to the SAME apple still visible
@@ -61,17 +61,17 @@ SAME environment, body length band, near-head yes/no, restricted
 neighbor count yes/no, and 500-turn phase. Each group must contain
 actual observations; we do not extrapolate outside overlap.
 
-- Common strata across both modes: **44**.
-- League replays with ranked student exposures: **57**.
-- Those containing BOTH extreme cohorts: **32**.
-- Distinct top/bottom students in overlapping games: **33**.
+- Common strata across both modes: **46**.
+- League replays with ranked student exposures: **61**.
+- Those containing BOTH extreme cohorts: **35**.
+- Distinct top/bottom students in overlapping games: **34**.
 
 | Mode | Cohort within overlap | Windows | Distinct replays | +10 death frequency | +3 exit gain frequency | First-move straight | Same-apple progress |
 |---|---|---:|---:|---|---|---|---|
-| league | top_quartile | 614 | 48 | 1.30% | 39.27% | 54.89% | 55.57% |
-| league | bottom_quartile | 404 | 37 | 3.96% | 35.31% | 63.03% | 53.30% |
-| trial | top_quartile | 104 | 16 | 0.00% | 28.85% | 72.12% | 67.71% |
-| trial | bottom_quartile | 26 | 3 | 0.00% | 30.77% | 65.38% | 60.00% |
+| league | top_quartile | 687 | 52 | 1.46% | 39.59% | 55.60% | 56.13% |
+| league | bottom_quartile | 451 | 40 | 3.77% | 35.48% | 63.78% | 54.14% |
+| trial | top_quartile | 114 | 17 | 0.00% | 26.32% | 71.05% | 68.57% |
+| trial | bottom_quartile | 29 | 4 | 0.00% | 27.59% | 65.52% | 60.71% |
 
 ## 3. Strong versus struggling snakes in the SAME real match
 
@@ -83,15 +83,15 @@ This is a harder comparison than grouping results across unrelated
 games, but pairs may still differ in exact body location, apples,
 opponent responses and how much time passes between snapshots.
 
-Matched dangerous-position pairs: **71**.
-Distinct league replays with strict matched pairs: **24**.
+Matched dangerous-position pairs: **88**.
+Distinct league replays with strict matched pairs: **27**.
 
 | Measured outcome (bottom minus top) | Both decisions observable | Replay clusters | Difference (percentage points) | Replay-resampled 95% interval |
 |---|---:|---:|---:|---|
-| Died in next 10 turns | 71 | 24 | +5.63 | [+1.28, +10.91] |
-| First step was a turn/reversal rather than straight | 71 | 24 | -11.27 | [-28.21, +2.86] |
-| Moved toward same still-visible apple | 66 | 24 | -3.03 | [-21.92, +15.62] |
-| Gained 1+ neighboring cell by turn 3, among +10 survivors | 67 | 23 | -10.45 | [-22.06, +1.82] |
+| Died in next 10 turns | 88 | 27 | +4.55 | [+1.02, +9.21] |
+| First step was a turn/reversal rather than straight | 88 | 27 | -9.09 | [-23.38, +2.59] |
+| Moved toward same still-visible apple | 82 | 27 | -4.88 | [-20.78, +11.36] |
+| Gained 1+ neighboring cell by turn 3, among +10 survivors | 82 | 26 | -7.32 | [-18.64, +2.38] |
 
 Positive values mean the bottom cohort exhibited the behavior or
 death more frequently; negative values mean the top did.

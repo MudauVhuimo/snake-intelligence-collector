@@ -1,7 +1,7 @@
 # Snake26 on-arrival trial comparison
 
-Generated UTC: 2026-11-03T04:06:52+00:00
-Latest season: `2026-11-03-025900-season`
+Generated UTC: 2026-11-03T06:57:20+00:00
+Latest season: `2026-11-03-055900-season`
 Student trial sets found: **147**
 Complete three-trial sets: **147**
 
@@ -21,41 +21,41 @@ Sorted by mean placement (lower is better), then mean final length as a tiebreak
 
 | # | Student bot | 910000 place | 911000 place | 912000 place | Mean place | Mean final length | Current division/rank |
 |---:|---|---:|---:|---:|---:|---:|---|
-| 1 | `422453-mauricetshepo-frost` | 1 | 1 | 1 | 1.00 | 248.3 | 2/25 |
-| 2 | `402334-angile-saho` | 1 | 1 | 1 | 1.00 | 236.7 | 1/22 |
-| 3 | `388060-tshepang-tshabalala` | 1 | 1 | 1 | 1.00 | 228.3 | 1/20 |
-| 4 | `413538-lelethuthando-nikelo` | 1 | 1 | 1 | 1.00 | 221.7 | 1/4 |
-| 5 | `419636-jason-chen` | 1 | 1 | 1 | 1.00 | 218.3 | 2/17 |
-| 6 | `421538-tshifhiwa-bvumbi` | 1 | 1 | 1 | 1.00 | 216.7 | 2/6 |
-| 7 | `427064-khodani-netili` | 1 | 1 | 1 | 1.00 | 215.0 | 1/7 |
-| 8 | `421349-phathutshedzo-mudzanani` | 1 | 1 | 1 | 1.00 | 213.3 | 1/21 |
-| 9 | `403339-david-ndambo` | 1 | 1 | 1 | 1.00 | 211.7 | 1/5 |
-| 10 | `423239-zeeshaan-bham` | 1 | 1 | 1 | 1.00 | 210.0 | 1/11 |
-| 11 | `388828-ngcebo-methula` | 1 | 1 | 1 | 1.00 | 205.0 | 1/14 |
-| 12 | `409987-sbongakonke-shange` | 1 | 1 | 1 | 1.00 | 203.3 | 2/10 |
-| 13 | `420236-nathan-gebremichael` | 1 | 1 | 1 | 1.00 | 198.3 | 2/22 |
-| 14 | `427039-sameeha-miabala` | 1 | 1 | 1 | 1.00 | 198.3 | 1/9 |
-| 15 | `420627-amila-nyembezi` | 1 | 1 | 1 | 1.00 | 195.0 | 3/29 |
+| 1 | `422453-mauricetshepo-frost` | 1 | 1 | 1 | 1.00 | 248.3 | 2/5 |
+| 2 | `402334-angile-saho` | 1 | 1 | 1 | 1.00 | 236.7 | 1/20 |
+| 3 | `388060-tshepang-tshabalala` | 1 | 1 | 1 | 1.00 | 228.3 | 2/26 |
+| 4 | `413538-lelethuthando-nikelo` | 1 | 1 | 1 | 1.00 | 221.7 | 1/8 |
+| 5 | `419636-jason-chen` | 1 | 1 | 1 | 1.00 | 218.3 | 1/22 |
+| 6 | `421538-tshifhiwa-bvumbi` | 1 | 1 | 1 | 1.00 | 216.7 | 1/24 |
+| 7 | `427064-khodani-netili` | 1 | 1 | 1 | 1.00 | 215.0 | 1/1 |
+| 8 | `421349-phathutshedzo-mudzanani` | 1 | 1 | 1 | 1.00 | 213.3 | 1/9 |
+| 9 | `403339-david-ndambo` | 1 | 1 | 1 | 1.00 | 211.7 | 1/3 |
+| 10 | `423239-zeeshaan-bham` | 1 | 1 | 1 | 1.00 | 210.0 | 1/15 |
+| 11 | `388828-ngcebo-methula` | 1 | 1 | 1 | 1.00 | 205.0 | 1/6 |
+| 12 | `409987-sbongakonke-shange` | 1 | 1 | 1 | 1.00 | 203.3 | 2/23 |
+| 13 | `420236-nathan-gebremichael` | 1 | 1 | 1 | 1.00 | 198.3 | 2/7 |
+| 14 | `427039-sameeha-miabala` | 1 | 1 | 1 | 1.00 | 198.3 | 1/23 |
+| 15 | `420627-amila-nyembezi` | 1 | 1 | 1 | 1.00 | 195.0 | 4/13 |
 | 16 | `424820-elisha-mundalamo` | 1 | 1 | 1 | 1.00 | 195.0 | 1/2 |
-| 17 | `409997-utayan-naidoo` | 1 | 1 | 1 | 1.00 | 193.3 | 2/2 |
-| 18 | `409598-langelihle-funeka` | 1 | 1 | 1 | 1.00 | 191.7 | 3/3 |
-| 19 | `421462-alexander-palmer` | 1 | 1 | 1 | 1.00 | 190.0 | 1/1 |
-| 20 | `408647-mellisa-mofokeng` | 1 | 1 | 1 | 1.00 | 186.7 | 2/11 |
-| 21 | `407318-deo-kabunda` | 1 | 1 | 1 | 1.00 | 183.3 | 1/30 |
-| 22 | `424251-thandolwethu-zondi` | 1 | 1 | 1 | 1.00 | 183.3 | 3/11 |
-| 23 | `403754-vhuimo-mudau` | 1 | 1 | 1 | 1.00 | 181.7 | 2/13 |
-| 24 | `419926-mphile-nchabeleng` | 1 | 1 | 1 | 1.00 | 180.0 | 1/26 |
-| 25 | `420285-kgotlelelo-aphane` | 1 | 1 | 1 | 1.00 | 180.0 | 2/26 |
-| 26 | `411347-mustafa-karodia` | 1 | 1 | 1 | 1.00 | 176.7 | 2/31 |
-| 27 | `404543-daelen-moodley` | 1 | 1 | 1 | 1.00 | 168.3 | 3/12 |
-| 28 | `426650-babongile-mafantiri` | 1 | 1 | 1 | 1.00 | 168.3 | 2/7 |
-| 29 | `429653-elohim-mahungele` | 1 | 1 | 1 | 1.00 | 168.3 | 2/27 |
-| 30 | `408008-bradley-buys` | 1 | 1 | 1 | 1.00 | 166.7 | 1/32 |
-| 31 | `419342-ayeshan-puckree` | 1 | 1 | 1 | 1.00 | 165.0 | 1/6 |
-| 32 | `423158-risima-mashele` | 1 | 1 | 1 | 1.00 | 163.3 | 2/4 |
+| 17 | `409997-utayan-naidoo` | 1 | 1 | 1 | 1.00 | 193.3 | 1/30 |
+| 18 | `409598-langelihle-funeka` | 1 | 1 | 1 | 1.00 | 191.7 | 3/4 |
+| 19 | `421462-alexander-palmer` | 1 | 1 | 1 | 1.00 | 190.0 | 1/5 |
+| 20 | `408647-mellisa-mofokeng` | 1 | 1 | 1 | 1.00 | 186.7 | 3/1 |
+| 21 | `407318-deo-kabunda` | 1 | 1 | 1 | 1.00 | 183.3 | 2/11 |
+| 22 | `424251-thandolwethu-zondi` | 1 | 1 | 1 | 1.00 | 183.3 | 3/27 |
+| 23 | `403754-vhuimo-mudau` | 1 | 1 | 1 | 1.00 | 181.7 | 1/32 |
+| 24 | `419926-mphile-nchabeleng` | 1 | 1 | 1 | 1.00 | 180.0 | 1/19 |
+| 25 | `420285-kgotlelelo-aphane` | 1 | 1 | 1 | 1.00 | 180.0 | 1/18 |
+| 26 | `411347-mustafa-karodia` | 1 | 1 | 1 | 1.00 | 176.7 | 2/30 |
+| 27 | `404543-daelen-moodley` | 1 | 1 | 1 | 1.00 | 168.3 | 3/13 |
+| 28 | `426650-babongile-mafantiri` | 1 | 1 | 1 | 1.00 | 168.3 | 2/3 |
+| 29 | `429653-elohim-mahungele` | 1 | 1 | 1 | 1.00 | 168.3 | 3/3 |
+| 30 | `408008-bradley-buys` | 1 | 1 | 1 | 1.00 | 166.7 | 2/4 |
+| 31 | `419342-ayeshan-puckree` | 1 | 1 | 1 | 1.00 | 165.0 | 1/14 |
+| 32 | `423158-risima-mashele` | 1 | 1 | 1 | 1.00 | 163.3 | 2/8 |
 | 33 | `423436-ntobeko-zondi` | 1 | 1 | 1 | 1.00 | 163.3 | 1/29 |
-| 34 | `405469-adham-soror` | 1 | 1 | 1 | 1.00 | 161.7 | 3/24 |
-| 35 | `391560-neliswa-jones` | 1 | 1 | 1 | 1.00 | 158.3 | 2/24 |
+| 34 | `405469-adham-soror` | 1 | 1 | 1 | 1.00 | 161.7 | 3/20 |
+| 35 | `391560-neliswa-jones` | 1 | 1 | 1 | 1.00 | 158.3 | 2/25 |
 
 ## Best performers specifically against gauntlet_1
 

@@ -1,14 +1,14 @@
 # Snake26 — Data Science Dashboard: Phase I
 
-Generated UTC: 2026-11-03T04:07:41+00:00
+Generated UTC: 2026-11-03T06:58:01+00:00
 
 ## Data coverage and quality
 
-- Cataloged seasons: **99**; match records: **47,892**.
-- Replay records marked downloaded in SQLite: **210**.
-- Files on disk: **210**; sampled: **210**.
-- Unique replay payloads (SHA-256): **141**; duplicate payloads skipped: **69**; unreadable: **0**.
-- Latest season: **2026-11-03-025900-season**; published gauntlet_1 trial results: **147**.
+- Cataloged seasons: **109**; match records: **53,298**.
+- Replay records marked downloaded in SQLite: **220**.
+- Files on disk: **220**; sampled: **220**.
+- Unique replay payloads (SHA-256): **150**; duplicate payloads skipped: **70**; unreadable: **0**.
+- Latest season: **2026-11-03-055900-season**; published gauntlet_1 trial results: **147**.
 
 > Thousands of catalog records are not thousands of independent replay observations.
 > Adjacent turns are correlated. Same bot, version, opponent setup or seed can recur.
@@ -48,11 +48,11 @@ Raw counts mix opponent groups and survival exposure; they are not comparable ri
 
 | Length range | Student alive turns | Student deaths | Deaths / 1,000 alive turns | Benchmark alive turns | Benchmark deaths |
 |---|---:|---:|---:|---:|---:|
-| 5-24 | 140,923 | 42 | 0.298 | 261,450 | 1,161 |
-| 25-49 | 144,829 | 65 | 0.449 | 85,301 | 374 |
-| 50-99 | 227,761 | 127 | 0.558 | 38,578 | 114 |
-| 100-149 | 141,359 | 75 | 0.531 | 1,950 | 5 |
-| 150+ | 71,389 | 26 | 0.364 | 0 | 0 |
+| 5-24 | 150,521 | 44 | 0.292 | 277,068 | 1,230 |
+| 25-49 | 155,303 | 70 | 0.451 | 91,250 | 401 |
+| 50-99 | 241,853 | 137 | 0.566 | 40,417 | 121 |
+| 100-149 | 151,222 | 80 | 0.529 | 1,994 | 6 |
+| 150+ | 75,232 | 29 | 0.385 | 0 | 0 |
 
 Exposure: one alive snake at the start of an observed turn. A death is attributed
 to its previous alive state, not the dead/respawned frame's length. A zero-exposure
@@ -65,13 +65,13 @@ These pooled figures DO NOT establish differences between the two game environme
 
 | Length | League alive turns | League deaths | League rate / 1000 | Trial alive turns | Trial deaths | Trial rate / 1000 |
 |---|---:|---:|---:|---:|---:|---:|
-| 5-24 | 129,210 | 42 | 0.325 | 11,713 | 0 | 0.000 |
-| 25-49 | 129,845 | 64 | 0.493 | 14,984 | 1 | 0.067 |
-| 50-99 | 199,064 | 124 | 0.623 | 28,697 | 3 | 0.105 |
-| 100-149 | 110,036 | 75 | 0.682 | 31,323 | 0 | 0.000 |
-| 150+ | 26,176 | 15 | 0.573 | 45,213 | 11 | 0.243 |
+| 5-24 | 138,142 | 44 | 0.319 | 12,379 | 0 | 0.000 |
+| 25-49 | 139,235 | 69 | 0.496 | 16,068 | 1 | 0.062 |
+| 50-99 | 210,853 | 133 | 0.631 | 31,000 | 4 | 0.129 |
+| 100-149 | 117,896 | 80 | 0.679 | 33,326 | 0 | 0.000 |
+| 150+ | 28,080 | 18 | 0.641 | 47,152 | 11 | 0.233 |
 
-Unique full replay payloads sampled: league 75, trials 66.
+Unique full replay payloads sampled: league 80, trials 70.
 A missing bar denotes NO exposure, not zero risk. Different opponents,
 seeds and bot versions make these observational, non-causal comparisons.
 

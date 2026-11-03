@@ -1,13 +1,13 @@
 # Snake26 — How did the farther snake win?
 
-Generated UTC: 2026-11-03T04:08:19+00:00
+Generated UTC: 2026-11-03T06:58:34+00:00
 
 ## Evidence quality
 
-- Scanned **210** replay files; unique on-arrival trial replays: **66**.
+- Scanned **220** replay files; unique on-arrival trial replays: **70**.
 - Duplicate archived trial files skipped: **13**; unreadable: **0**.
-- Comparable first-visible student-vs-benchmark apple opportunities: **8131**.
-- Captures matched to real next-frame head + eat event: **8063**.
+- Comparable first-visible student-vs-benchmark apple opportunities: **8652**.
+- Captures matched to real next-frame head + eat event: **8580**.
 - Disappearances without verified consumer: **4**.
 Only on-arrival trials with EXACTLY one active student and at least one living built-in benchmark are included.
 All distance comparisons use toroidal Manhattan geometry, not hypothetical safe paths.
@@ -18,24 +18,24 @@ All distance comparisons use toroidal Manhattan geometry, not hypothetical safe 
 
 | Who started at least 3 cells closer? | Student captured | Benchmark captured | Student share |
 |---|---:|---:|---:|
-| Benchmark | 676 | 4,315 | 13.5% |
-| Neither (within 2) | 829 | 739 | 52.9% |
-| Student | 1,298 | 206 | 86.3% |
+| Benchmark | 706 | 4,627 | 13.2% |
+| Neither (within 2) | 871 | 780 | 52.8% |
+| Student | 1,380 | 216 | 86.5% |
 
 The student share above describes captured apples only. One student faces three
 benchmarks and their starting abilities and survival vary; it is NOT a fair head-to-head win rate.
 
 ## Focus: student captured while a benchmark started 3+ closer
 
-- Verified captures: **676**; benchmark wins while initially closer: **4315**.
-- In student wins, initially nearest benchmark died before capture: **111**.
+- Verified captures: **706**; benchmark wins while initially closer: **4627**.
+- In student wins, initially nearest benchmark died before capture: **114**.
 - In student wins, student died before capture: **2**.
 - In student wins, nearest benchmark consumed another apple before this capture: **0**.
-- In student wins, benchmark had NO static path at first sight (all occupied bodies frozen): **124**.
-- In student wins, student had no static path under the same approximation: **47**.
-- In student wins, both static paths existed: **546**.
-- Of those, the student's static path was SHORTER despite longer Manhattan distance: **307**.
-- Median apple lifetime, student wins: **23.0 turns**; benchmark wins: **12 turns**.
+- In student wins, benchmark had NO static path at first sight (all occupied bodies frozen): **127**.
+- In student wins, student had no static path under the same approximation: **48**.
+- In student wins, both static paths existed: **573**.
+- Of those, the student's static path was SHORTER despite longer Manhattan distance: **327**.
+- Median apple lifetime, student wins: **22.0 turns**; benchmark wins: **12 turns**.
 
 ![Food capture times](charts/underdog_lag.svg)
 
@@ -43,12 +43,12 @@ benchmarks and their starting abilities and survival vary; it is NOT a fair head
 
 ![Fraction moving closer](charts/underdog_progress.svg)
 
-- Complete comparable five-turn, death-free trajectories: **563** student-win
-  and **3753** benchmark-win apple episodes.
-- Student-win: student progress **3.06** cells on average; nearest
+- Complete comparable five-turn, death-free trajectories: **590** student-win
+  and **4019** benchmark-win apple episodes.
+- Student-win: student progress **3.07** cells on average; nearest
   benchmark progress **0.57** cells (distance decrease positive).
-- Benchmark-win: student progress **1.26** cells; nearest
-  benchmark progress **3.12** cells.
+- Benchmark-win: student progress **1.27** cells; nearest
+  benchmark progress **3.16** cells.
 We exclude episodes with a death or respawn of either focal snake anywhere before capture
 from this particular five-turn comparison. The selection is intentional but may bias results.
 The apple must remain visible for 5 turns; fast captures are also excluded.
@@ -68,11 +68,11 @@ time, death flags, and early-distance progress.
 | 2026-11-02-225901-season/trials/408008-bradley-buys/trial-911000.rep | 1821 | 29 | ~wander | 5 | 57 |
 | 2026-11-02-045859-season/trials/423158-risima-mashele/trial-912000.rep | 1542 | 27 | ~benchmark | 4 | 45 |
 | 2026-11-02-225901-season/trials/406000-mulimisi-rammela/trial-910000.rep | 1382 | 32 | ~survivor | 10 | 32 |
+| 2026-11-03-055900-season/trials/428786-marvellous-sambo/trial-910000.rep | 1743 | 32 | ~benchmark | 10 | 78 |
 | 2026-11-01-225859-season/trials/419926-mphile-nchabeleng/trial-910000.rep | 1290 | 28 | ~survivor | 7 | 67 |
 | 2026-11-01-225859-season/trials/413538-lelethuthando-nikelo/trial-911000.rep | 663 | 24 | ~hunter | 4 | 24 |
 | 2026-10-14-123340-season/trials/409997-utayan-naidoo/trial-910000.rep | 516 | 31 | ~survivor | 11 | 34 |
 | 2026-10-24-035858-season/trials/402334-angile-saho/trial-912000.rep | 1256 | 31 | ~gauntlet_1 | 11 | 42 |
-| 2026-11-03-025900-season/trials/427064-khodani-netili/trial-911000.rep | 1815 | 28 | ~wander | 8 | 68 |
 
 ## Interpretation and next work
 

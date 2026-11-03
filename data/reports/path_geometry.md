@@ -1,6 +1,6 @@
 # Snake26: does occupied-space geometry explain underdog apples?
 
-Generated UTC: 2026-11-03T04:08:21+00:00
+Generated UTC: 2026-11-03T06:58:36+00:00
 
 ## Critical definition
 
@@ -17,13 +17,13 @@ Exclude episodes with no static path for either head, which can bias results.
 
 | Frozen-body path ordering | Student captures | Benchmark captures | Student capture share |
 |---|---:|---:|---:|
-| Student shortest | 307 | 323 | 48.7% |
-| Benchmark shortest or tied | 239 | 3590 | 6.2% |
+| Student shortest | 327 | 346 | 48.6% |
+| Benchmark shortest or tied | 246 | 3843 | 6.0% |
 
-Observed difference in student capture share: **42.5 percentage points**.
+Observed difference in student capture share: **42.6 percentage points**.
 Exploratory 95% **match-cluster bootstrap** interval for the difference:
-**37.7 to 47.3 percentage points**
-(4000 valid bootstrap draws, resampling 66 complete replay matches).
+**38.1 to 47.1 percentage points**
+(4000 valid bootstrap draws, resampling 70 complete replay matches).
 This interval reflects match-level resampling variability in this selected archive;
 it does not adjust for bot version, different opponent skill or hidden strategy choices.
 
@@ -31,11 +31,11 @@ it does not adjust for bot version, different opponent skill or hidden strategy 
 
 | Initially closest benchmark | Reversal: student captures / all | Not reversed: student captures / all |
 |---|---:|---:|
-| ~benchmark | 89/176 (50.6%) | 36/1147 (3.1%) |
-| ~gauntlet_1 | 43/87 (49.4%) | 19/422 (4.5%) |
-| ~hungry | 31/57 (54.4%) | 12/400 (3.0%) |
+| ~benchmark | 95/186 (51.1%) | 38/1231 (3.1%) |
+| ~gauntlet_1 | 49/100 (49.0%) | 20/451 (4.4%) |
+| ~hungry | 32/62 (51.6%) | 12/448 (2.7%) |
 | ~hunter | 36/71 (50.7%) | 10/392 (2.6%) |
-| ~survivor | 84/184 (45.7%) | 55/980 (5.6%) |
+| ~survivor | 91/199 (45.7%) | 59/1079 (5.5%) |
 | ~wander | 24/55 (43.6%) | 107/488 (21.9%) |
 
 ## What this does and DOES NOT establish

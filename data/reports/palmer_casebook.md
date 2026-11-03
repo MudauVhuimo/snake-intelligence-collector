@@ -13,6 +13,7 @@ If no frame or an unexplained absence is observed, +30 is censored.
 
 | Archived league replay | Turn | Length | Start head distance | Free exits 0 to +3 | Actual first move | Death-free +30? | Comparable peer in same game |
 |---|---:|---:|---:|---|---|---|---|
+| [game-71004.rep.gz](../replays/2026-11-03-045900-season/game-71004.rep.gz) | 250 | 30 | 2 | 3 → 3 | +x / turn | alive | 423239-zeeshaan-bham |
 | [game-74000.rep.gz](../replays/2026-11-03-025900-season/game-74000.rep.gz) | 625 | 90 | 3 | 3 → 3 | -y / straight | alive | 402334-angile-saho |
 | [game-73005.rep.gz](../replays/2026-11-03-025900-season/game-73005.rep.gz) | 25 | 5 | 3 | 3 → 3 | -y / straight | alive | 400861-sibusisomlungisi-dlamini |
 | [game-72004.rep.gz](../replays/2026-11-03-025900-season/game-72004.rep.gz) | 375 | 85 | 2 | 2 → 1 | -x / turn | alive | 413538-lelethuthando-nikelo |

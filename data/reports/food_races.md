@@ -1,17 +1,17 @@
 # Snake26 Food Races: Observational Study
 
-Generated UTC: 2026-11-03T04:08:07+00:00
+Generated UTC: 2026-11-03T06:58:24+00:00
 
 ## Data validity FIRST
 
-- Replay files scanned: **210** of 210; unique content: **141**.
-- Exact duplicates skipped: **69**; unreadable replays: **0**.
-- First-visible apple episodes: **16908**.
-- Apples disappearing between adjacent states: **16772**.
-- Captures matched to next-head position AND explicit eat event: **16768**.
+- Replay files scanned: **220** of 220; unique content: **150**.
+- Exact duplicates skipped: **70**; unreadable replays: **0**.
+- First-visible apple episodes: **18054**.
+- Apples disappearing between adjacent states: **17909**.
+- Captures matched to next-head position AND explicit eat event: **17905**.
 - Unmatched disappearances: **4**.
 - Confirmation rate among disappeared apples: **100.0%**.
-- On-arrival matched apple events: **8063**; league matched events: **8705**.
+- On-arrival matched apple events: **8580**; league matched events: **9325**.
 
 > The measurement is conservative. A disappearing apple without BOTH
 > a matching eat event and next-frame head is not assigned a winner.
@@ -41,9 +41,9 @@ Unconsumed/censored opportunities are not included in the lifetime histogram.
 We call an apple initially contested when the student versus benchmark
 nearest-head distances differ by at most two cells, and at least one head
 is at toroidal Manhattan distance ten or less at first appearance.
-Observed matched contested captures: **477**.
-- Student captured: **255**.
-- Built-in benchmark captured: **222**.
+Observed matched contested captures: **506**.
+- Student captured: **268**.
+- Built-in benchmark captured: **238**.
 
 That is an operational distance-based definition, not proof of
 the actual safe paths, intentions or likelihood of winning.
@@ -52,8 +52,8 @@ the actual safe paths, intentions or likelihood of winning.
 
 | Mode | Matched apple captures | Student captures | Benchmark captures |
 |---|---:|---:|---:|
-| On-arrival | 8063 | 2803 | 5260 |
-| League | 8705 | 8705 | 0 |
+| On-arrival | 8580 | 2957 | 5623 |
+| League | 9325 | 9325 | 0 |
 
 ## Next research questions
 
