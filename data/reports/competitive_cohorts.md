@@ -1,6 +1,6 @@
 # Snake26: Strong, middle, and struggling league competitors — comparison
 
-Generated UTC: 2026-11-03T07:00:48+00:00
+Generated UTC: 2026-11-03T12:30:04+00:00
 
 ## Scientific question
 
@@ -28,11 +28,11 @@ are eligible. Palmer is one top-division example, not the baseline.
   draw from all official matches. Rankings include game results;
   ranking groups are outcome-selected, not randomized policies.
 
-Baseline windows available across BOTH environments: **3,531**.
-Same-season Division 1 ranked league windows: **2,222**.
-Same-season Division 1 ranked trial windows: **284**.
-League windows without qualifying same-season rank: **721**.
-Trial windows without qualifying same-season rank: **304**.
+Baseline windows available across BOTH environments: **3,778**.
+Same-season Division 1 ranked league windows: **2,385**.
+Same-season Division 1 ranked trial windows: **316**.
+League windows without qualifying same-season rank: **763**.
+Trial windows without qualifying same-season rank: **314**.
 Duplicate rows excluded: **0**.
 
 ## 1. Observed danger exposure and outcomes by performance cohort
@@ -41,12 +41,12 @@ Duplicate rows excluded: **0**.
 
 | Match mode | Division 1 cohort | Students | Unique replays | Danger windows | Nearby heads | Confinement | Death by +10 (events/windows) | Death by +30 (events/windows) | Gained exit by +3 (among +10 survivors) | First move straight | Moved toward a persistent apple |
 |---|---|---:|---:|---:|---|---|---|---|---|---|---|
-| league | top_quartile | 15 | 52 | 690 | 65.07% | 41.88% | 10/690 (1.45%) | 16/679 (2.36%) | 680 sampled, 39.71% | 690 moves, 55.51% | 655 moves, 55.88% |
-| league | middle_half | 35 | 56 | 1074 | 62.29% | 42.09% | 39/1074 (3.63%) | 66/1059 (6.23%) | 1035 sampled, 38.65% | 1069 moves, 57.81% | 1016 moves, 56.30% |
-| league | bottom_quartile | 23 | 40 | 458 | 66.59% | 37.99% | 18/458 (3.93%) | 27/453 (5.96%) | 440 sampled, 35.68% | 457 moves, 63.46% | 430 moves, 54.42% |
+| league | top_quartile | 15 | 56 | 745 | 65.23% | 41.74% | 11/745 (1.48%) | 17/733 (2.32%) | 734 sampled, 40.19% | 745 moves, 55.17% | 705 moves, 55.18% |
+| league | middle_half | 37 | 60 | 1174 | 62.78% | 42.25% | 44/1174 (3.75%) | 73/1158 (6.30%) | 1130 sampled, 38.58% | 1169 moves, 57.23% | 1112 moves, 56.03% |
+| league | bottom_quartile | 24 | 41 | 466 | 66.09% | 38.41% | 18/466 (3.86%) | 27/461 (5.86%) | 448 sampled, 35.71% | 465 moves, 63.66% | 438 moves, 54.34% |
 | trial | top_quartile | 10 | 17 | 128 | 75.00% | 29.69% | 1/128 (0.78%) | 2/127 (1.57%) | 127 sampled, 29.92% | 128 moves, 67.19% | 119 moves, 67.23% |
-| trial | middle_half | 8 | 12 | 121 | 65.29% | 42.98% | 0/121 (0.00%) | 0/120 (0.00%) | 121 sampled, 40.50% | 121 moves, 66.12% | 110 moves, 52.73% |
-| trial | bottom_quartile | 4 | 4 | 35 | 85.71% | 17.14% | 0/35 (0.00%) | 0/35 (0.00%) | 35 sampled, 31.43% | 35 moves, 65.71% | 32 moves, 65.62% |
+| trial | middle_half | 10 | 14 | 143 | 65.73% | 43.36% | 0/143 (0.00%) | 0/142 (0.00%) | 143 sampled, 40.56% | 143 moves, 67.13% | 131 moves, 55.73% |
+| trial | bottom_quartile | 5 | 5 | 45 | 84.44% | 20.00% | 0/45 (0.00%) | 0/45 (0.00%) | 45 sampled, 28.89% | 45 moves, 62.22% | 40 moves, 67.50% |
 
 First-move straight/turn is reconstructed from two consecutive REAL frames.
 Food progress means closing distance to the SAME apple still visible
@@ -61,17 +61,17 @@ SAME environment, body length band, near-head yes/no, restricted
 neighbor count yes/no, and 500-turn phase. Each group must contain
 actual observations; we do not extrapolate outside overlap.
 
-- Common strata across both modes: **46**.
-- League replays with ranked student exposures: **61**.
-- Those containing BOTH extreme cohorts: **35**.
-- Distinct top/bottom students in overlapping games: **34**.
+- Common strata across both modes: **49**.
+- League replays with ranked student exposures: **65**.
+- Those containing BOTH extreme cohorts: **36**.
+- Distinct top/bottom students in overlapping games: **35**.
 
 | Mode | Cohort within overlap | Windows | Distinct replays | +10 death frequency | +3 exit gain frequency | First-move straight | Same-apple progress |
 |---|---|---:|---:|---|---|---|---|
-| league | top_quartile | 687 | 52 | 1.46% | 39.59% | 55.60% | 56.13% |
-| league | bottom_quartile | 451 | 40 | 3.77% | 35.48% | 63.78% | 54.14% |
-| trial | top_quartile | 114 | 17 | 0.00% | 26.32% | 71.05% | 68.57% |
-| trial | bottom_quartile | 29 | 4 | 0.00% | 27.59% | 65.52% | 60.71% |
+| league | top_quartile | 744 | 56 | 1.48% | 40.25% | 55.11% | 55.26% |
+| league | bottom_quartile | 459 | 41 | 3.70% | 35.52% | 63.97% | 54.06% |
+| trial | top_quartile | 120 | 17 | 0.83% | 28.57% | 69.17% | 67.57% |
+| trial | bottom_quartile | 37 | 5 | 0.00% | 24.32% | 62.16% | 61.76% |
 
 ## 3. Strong versus struggling snakes in the SAME real match
 

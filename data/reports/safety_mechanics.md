@@ -1,6 +1,6 @@
 # Snake26: observed collision and movement mechanics audit
 
-Generated UTC: 2026-11-03T06:59:18+00:00
+Generated UTC: 2026-11-03T12:28:06+00:00
 
 ## Evidence and limits
 
@@ -13,38 +13,38 @@ The authoritative engine's simultaneous action resolution is still the
 source of truth. Verify game-specific collision order against that
 engine before declaring a Java next-move filter 'provably safe'.
 
-Unique league replays: **80**;
-unique trials: **70**;
-duplicate payloads removed: **70**;
+Unique league replays: **85**;
+unique trials: **74**;
+duplicate payloads removed: **71**;
 unreadable replays: **0**.
 
 ## Verified observed outcomes by environment
 
 | Audit | Peer league | On-arrival trials |
 |---|---:|---:|
-| Previously living snake-turns | 634206 | 550654 |
-| Normal surviving one-cell head moves | 633860 | 548880 |
+| Previously living snake-turns | 672123 | 582259 |
+| Normal surviving one-cell head moves | 671759 | 580406 |
 | Invalid observed head motion | 0 | 0 |
-| Observed toroidal wrap moves | 18111 | 15721 |
-| Surviving move into OWN old tail coordinate | 7179 | 1871 |
-| Surviving move into OPPONENT old tail coordinate | 7055 | 444 |
-| Survivors with recorded eat event | 9325 | 8580 |
+| Observed toroidal wrap moves | 19189 | 16612 |
+| Surviving move into OWN old tail coordinate | 7958 | 2034 |
+| Surviving move into OPPONENT old tail coordinate | 7707 | 558 |
+| Survivors with recorded eat event | 9858 | 8985 |
 | Eat without previous-frame apple | 0 | 0 |
-| Explicit recorded death events | 344 | 1774 |
-| Self-collision victim events | 158 | 401 |
-| Body/obstacle collision victim events | 123 | 797 |
-| Head-to-head victim events | 63 | 576 |
-| Head-on victim shorter than attributed rival | 63 | 540 |
-| Head-on victim equal to attributed rival | 0 | 36 |
+| Explicit recorded death events | 361 | 1853 |
+| Self-collision victim events | 162 | 417 |
+| Body/obstacle collision victim events | 134 | 830 |
+| Head-to-head victim events | 65 | 606 |
+| Head-on victim shorter than attributed rival | 65 | 568 |
+| Head-on victim equal to attributed rival | 0 | 38 |
 | Head-on victim longer than attributed rival | 0 | 0 |
 | Head-on attribution peer unavailable | 0 | 0 |
-| Unexplained missing living head next frame | 2 | 0 |
+| Unexplained missing living head next frame | 3 | 0 |
 
 ## Eating growth length changes among observed survivors
 
 | Next-frame body segment count minus previous | League | Trials |
 |---|---:|---:|
-| +5 | 9325 | 8580 |
+| +5 | 9858 | 8985 |
 
 ## Interpretation for SAFETY-01
 

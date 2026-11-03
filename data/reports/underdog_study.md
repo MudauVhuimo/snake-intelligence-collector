@@ -1,13 +1,13 @@
 # Snake26 — How did the farther snake win?
 
-Generated UTC: 2026-11-03T06:58:34+00:00
+Generated UTC: 2026-11-03T12:27:04+00:00
 
 ## Evidence quality
 
-- Scanned **220** replay files; unique on-arrival trial replays: **70**.
+- Scanned **230** replay files; unique on-arrival trial replays: **74**.
 - Duplicate archived trial files skipped: **13**; unreadable: **0**.
-- Comparable first-visible student-vs-benchmark apple opportunities: **8652**.
-- Captures matched to real next-frame head + eat event: **8580**.
+- Comparable first-visible student-vs-benchmark apple opportunities: **9060**.
+- Captures matched to real next-frame head + eat event: **8985**.
 - Disappearances without verified consumer: **4**.
 Only on-arrival trials with EXACTLY one active student and at least one living built-in benchmark are included.
 All distance comparisons use toroidal Manhattan geometry, not hypothetical safe paths.
@@ -18,24 +18,24 @@ All distance comparisons use toroidal Manhattan geometry, not hypothetical safe 
 
 | Who started at least 3 cells closer? | Student captured | Benchmark captured | Student share |
 |---|---:|---:|---:|
-| Benchmark | 706 | 4,627 | 13.2% |
-| Neither (within 2) | 871 | 780 | 52.8% |
-| Student | 1,380 | 216 | 86.5% |
+| Benchmark | 738 | 4,851 | 13.2% |
+| Neither (within 2) | 901 | 819 | 52.4% |
+| Student | 1,450 | 226 | 86.5% |
 
 The student share above describes captured apples only. One student faces three
 benchmarks and their starting abilities and survival vary; it is NOT a fair head-to-head win rate.
 
 ## Focus: student captured while a benchmark started 3+ closer
 
-- Verified captures: **706**; benchmark wins while initially closer: **4627**.
-- In student wins, initially nearest benchmark died before capture: **114**.
+- Verified captures: **738**; benchmark wins while initially closer: **4851**.
+- In student wins, initially nearest benchmark died before capture: **120**.
 - In student wins, student died before capture: **2**.
 - In student wins, nearest benchmark consumed another apple before this capture: **0**.
-- In student wins, benchmark had NO static path at first sight (all occupied bodies frozen): **127**.
-- In student wins, student had no static path under the same approximation: **48**.
-- In student wins, both static paths existed: **573**.
-- Of those, the student's static path was SHORTER despite longer Manhattan distance: **327**.
-- Median apple lifetime, student wins: **22.0 turns**; benchmark wins: **12 turns**.
+- In student wins, benchmark had NO static path at first sight (all occupied bodies frozen): **132**.
+- In student wins, student had no static path under the same approximation: **49**.
+- In student wins, both static paths existed: **600**.
+- Of those, the student's static path was SHORTER despite longer Manhattan distance: **346**.
+- Median apple lifetime, student wins: **23.0 turns**; benchmark wins: **12 turns**.
 
 ![Food capture times](charts/underdog_lag.svg)
 
@@ -43,12 +43,12 @@ benchmarks and their starting abilities and survival vary; it is NOT a fair head
 
 ![Fraction moving closer](charts/underdog_progress.svg)
 
-- Complete comparable five-turn, death-free trajectories: **590** student-win
-  and **4019** benchmark-win apple episodes.
-- Student-win: student progress **3.07** cells on average; nearest
-  benchmark progress **0.57** cells (distance decrease positive).
-- Benchmark-win: student progress **1.27** cells; nearest
-  benchmark progress **3.16** cells.
+- Complete comparable five-turn, death-free trajectories: **616** student-win
+  and **4217** benchmark-win apple episodes.
+- Student-win: student progress **3.06** cells on average; nearest
+  benchmark progress **0.61** cells (distance decrease positive).
+- Benchmark-win: student progress **1.26** cells; nearest
+  benchmark progress **3.15** cells.
 We exclude episodes with a death or respawn of either focal snake anywhere before capture
 from this particular five-turn comparison. The selection is intentional but may bias results.
 The apple must remain visible for 5 turns; fast captures are also excluded.

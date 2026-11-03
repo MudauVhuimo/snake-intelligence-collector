@@ -1,55 +1,55 @@
 {
   "catalog": {
-    "league": 6695,
-    "trial": 45276
+    "league": 7524,
+    "trial": 50127
   },
   "replays": {
-    "league": 137,
-    "trial": 83
+    "league": 143,
+    "trial": 87
   },
   "unique": {
-    "league": 80,
-    "trial": 70
+    "league": 85,
+    "trial": 74
   },
-  "game_rows": 71209,
+  "game_rows": 79323,
   "bad_retention": 0,
-  "current_season": "2026-11-03-055900-season",
-  "league_team_seasons": 5188,
-  "trial_team_seasons": 15092,
-  "joined_rows": 15115,
+  "current_season": "2026-11-03-115900-season",
+  "league_team_seasons": 5892,
+  "trial_team_seasons": 16709,
+  "joined_rows": 16733,
   "latest_div1_matched": 32,
   "latest_season_paired": 147,
   "correlations": [
     {
       "metric": "Apples per game",
       "n": 32,
-      "rho": 0.298,
-      "ci_low": -0.081,
-      "ci_high": 0.603,
+      "rho": 0.544,
+      "ci_low": 0.211,
+      "ci_high": 0.771,
       "ci_draws": 2000
     },
     {
       "metric": "Final body length",
       "n": 32,
-      "rho": 0.488,
-      "ci_low": 0.14,
-      "ci_high": 0.743,
+      "rho": 0.209,
+      "ci_low": -0.174,
+      "ci_high": 0.539,
       "ci_draws": 2000
     },
     {
       "metric": "Kills per game",
       "n": 32,
-      "rho": 0.562,
-      "ci_low": 0.24,
-      "ci_high": 0.763,
+      "rho": 0.256,
+      "ci_low": -0.077,
+      "ci_high": 0.543,
       "ci_draws": 2000
     },
     {
       "metric": "Retained growth / expected no-reset growth",
       "n": 32,
-      "rho": 0.525,
-      "ci_low": 0.233,
-      "ci_high": 0.751,
+      "rho": 0.178,
+      "ci_low": -0.216,
+      "ci_high": 0.512,
       "ci_draws": 2000
     }
   ]

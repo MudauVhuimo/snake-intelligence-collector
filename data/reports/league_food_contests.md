@@ -1,6 +1,6 @@
 # Snake26: real league apple contests
 
-Generated UTC: 2026-11-03T06:58:47+00:00
+Generated UTC: 2026-11-03T12:27:22+00:00
 
 ## Opportunity definition
 
@@ -9,20 +9,20 @@ One observation is a newly visible apple with two living STUDENT heads within
 First-frame food is flagged in the CSV. Replays with only one student are excluded.
 Distance is NOT a safe-path estimate; this is selected, observational replay data.
 
-Unique replay payloads: **80**; exact duplicates: **57**.
-Close-peer opportunities: **812**.
-Captures verified within 40 turns: **767/812 (94.5%)**.
+Unique replay payloads: **85**; exact duplicates: **58**.
+Close-peer opportunities: **853**.
+Captures verified within 40 turns: **808/853 (94.7%)**.
 Unverified disappearances: **0**; horizon/end censored: **45**; frame gaps: **0**.
 
 ## Actual capturer among verified outcomes
 
 | Position at first visibility | Captures | Share of confirmed |
 |---|---:|---:|
-| Strictly closest | 443 | 57.8% |
-| Strictly second-closest | 100 | 13.0% |
-| Tied first (ID-order tie break) | 81 | 10.6% |
-| Tied second (ID-order tie break) | 85 | 11.1% |
-| Other participant | 58 | 7.6% |
+| Strictly closest | 470 | 58.2% |
+| Strictly second-closest | 106 | 13.1% |
+| Tied first (ID-order tie break) | 86 | 10.6% |
+| Tied second (ID-order tie break) | 87 | 10.8% |
+| Other participant | 59 | 7.3% |
 
 These shares are conditional on confirmed captures, NOT an intervention or
 the chance that chasing an apple will win it.
@@ -31,10 +31,10 @@ the chance that chasing an apple will win it.
 
 | Starting distance rank | Closer | Sideways | Farther | Died at +1 | Unobserved normal step |
 |---|---:|---:|---:|---:|---:|
-| nearest | 593 | 0 | 219 | 0 | 0 |
-| second | 492 | 0 | 320 | 0 | 0 |
-- Nearest first moves into possible opponent head cones: **16/812 (2.0%)**; equal/longer cones: **0/812 (0.0%)**.
-- Second first moves into possible opponent head cones: **27/812 (3.3%)**; equal/longer cones: **1/812 (0.1%)**.
+| nearest | 624 | 0 | 229 | 0 | 0 |
+| second | 517 | 0 | 336 | 0 | 0 |
+- Nearest first moves into possible opponent head cones: **18/853 (2.1%)**; equal/longer cones: **0/853 (0.0%)**.
+- Second first moves into possible opponent head cones: **28/853 (3.3%)**; equal/longer cones: **2/853 (0.2%)**.
 
 A geometric cone includes collision-impossible opponent moves; it is NOT
 a calibrated likelihood. Dead/unobserved first moves never become assumed safe
@@ -42,8 +42,8 @@ movements. Movement observations are survivor-selected.
 
 ## Palmer: distinct reference subset
 
-Eligible apple appearances involving Palmer: **112**.
-Palmer captured **53**; another participant captured **54**; censored/unverified **5**.
+Eligible apple appearances involving Palmer: **127**.
+Palmer captured **61**; another participant captured **61**; censored/unverified **5**.
 These are not opponent-matched skill ratings.
 
 ## Research limitations
