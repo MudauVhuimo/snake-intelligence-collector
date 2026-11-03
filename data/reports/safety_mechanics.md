@@ -1,6 +1,6 @@
 # Snake26: observed collision and movement mechanics audit
 
-Generated UTC: 2026-11-03T15:20:59+00:00
+Generated UTC: 2026-11-03T19:56:44+00:00
 
 ## Evidence and limits
 
@@ -13,8 +13,8 @@ The authoritative engine's simultaneous action resolution is still the
 source of truth. Verify game-specific collision order against that
 engine before declaring a Java next-move filter 'provably safe'.
 
-Unique league replays: **91**;
-unique trials: **78**;
+Unique league replays: **97**;
+unique trials: **82**;
 duplicate payloads removed: **71**;
 unreadable replays: **0**.
 
@@ -22,19 +22,19 @@ unreadable replays: **0**.
 
 | Audit | Peer league | On-arrival trials |
 |---|---:|---:|
-| Previously living snake-turns | 719963 | 613764 |
-| Normal surviving one-cell head moves | 719573 | 611817 |
+| Previously living snake-turns | 767838 | 645292 |
+| Normal surviving one-cell head moves | 767425 | 643256 |
 | Invalid observed head motion | 0 | 0 |
-| Observed toroidal wrap moves | 20578 | 17486 |
-| Surviving move into OWN old tail coordinate | 8440 | 2105 |
-| Surviving move into OPPONENT old tail coordinate | 8221 | 586 |
-| Survivors with recorded eat event | 10587 | 9515 |
+| Observed toroidal wrap moves | 21974 | 18409 |
+| Surviving move into OWN old tail coordinate | 8871 | 2301 |
+| Surviving move into OPPONENT old tail coordinate | 8857 | 596 |
+| Survivors with recorded eat event | 11305 | 9991 |
 | Eat without previous-frame apple | 0 | 0 |
-| Explicit recorded death events | 387 | 1947 |
-| Self-collision victim events | 174 | 444 |
-| Body/obstacle collision victim events | 140 | 866 |
-| Head-to-head victim events | 73 | 637 |
-| Head-on victim shorter than attributed rival | 73 | 595 |
+| Explicit recorded death events | 410 | 2036 |
+| Self-collision victim events | 186 | 459 |
+| Body/obstacle collision victim events | 148 | 915 |
+| Head-to-head victim events | 76 | 662 |
+| Head-on victim shorter than attributed rival | 76 | 620 |
 | Head-on victim equal to attributed rival | 0 | 42 |
 | Head-on victim longer than attributed rival | 0 | 0 |
 | Head-on attribution peer unavailable | 0 | 0 |
@@ -44,7 +44,7 @@ unreadable replays: **0**.
 
 | Next-frame body segment count minus previous | League | Trials |
 |---|---:|---:|
-| +5 | 10587 | 9515 |
+| +5 | 11305 | 9991 |
 
 ## Interpretation for SAFETY-01
 

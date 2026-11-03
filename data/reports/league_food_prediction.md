@@ -1,6 +1,6 @@
 # Snake26: apple contest pre-action prediction check
 
-Generated UTC: 2026-11-03T15:20:01+00:00
+Generated UTC: 2026-11-03T19:56:05+00:00
 
 ## Frozen predictors and population
 
@@ -12,21 +12,21 @@ equal lengths also receive half-credit. A win by any other snake scores
 zero for both. This is expected classification credit, not an agent outcome.
 No future movement is an input to either predictor.
 
-Eligible apple episodes: **912**.
-Verified captures: **863**; unverified/censored excluded: **49**.
-Confirmed captures by one of two competitors: **800**;
-by a different student: **63**.
-Distinct replay SHA clusters in verified set: **91**.
+Eligible apple episodes: **968**.
+Verified captures: **917**; unverified/censored excluded: **51**.
+Confirmed captures by one of two competitors: **847**;
+by a different student: **70**.
+Distinct replay SHA clusters in verified set: **97**.
 
 ## Predicted capturer accuracy (verified episodes only)
 
 | Fixed rule | Expected accuracy |
 |---|---:|
-| Geometric nearest, 50/50 at ties | 69.2% |
-| Nearest, break exact distance ties by longer body | 73.0% |
-| Difference | +3.82 pp |
+| Geometric nearest, 50/50 at ties | 69.0% |
+| Nearest, break exact distance ties by longer body | 72.9% |
+| Difference | +3.93 pp |
 
-Exploratory 95% cluster-bootstrap interval for accuracy difference: **[+2.53 pp, +5.14 pp]**.
+Exploratory 95% cluster-bootstrap interval for accuracy difference: **[+2.66 pp, +5.20 pp]**.
 Resampled whole unique replay files (2000 seeded draws), not turns or apple events.
 This interval does not adjust for repeated students, bot versions,
 similar seeds, match schedule or prior exploration of the same data.
@@ -35,9 +35,9 @@ similar seeds, match schedule or prior exploration of the same data.
 
 | Initial distance gap | Confirmed apples | Nearest baseline | Length tie-break |
 |---|---:|---:|---:|
-| 0 cells | 205 | 45.4% | 61.5% |
-| 1 cells | 363 | 73.0% | 73.0% |
-| 2 cells | 295 | 81.0% | 81.0% |
+| 0 cells | 224 | 44.9% | 60.9% |
+| 1 cells | 382 | 73.3% | 73.3% |
+| 2 cells | 311 | 81.0% | 81.0% |
 
 Distance tie is the ONLY stratum where the predictors differ.
 For distance gaps of 1 or 2 cells, both predict the nearer head;
@@ -47,9 +47,9 @@ this does not claim that nearer is a safe or optimal movement policy.
 
 | Initial body lengths | First head captured | Second head captured |
 |---|---:|---:|
-| First is longer | 57 | 24 |
-| Equal length | 6 | 8 |
-| Second is longer | 29 | 62 |
+| First is longer | 60 | 25 |
+| Equal length | 6 | 9 |
+| Second is longer | 32 | 69 |
 
 ## Actual first moves (retrospective description ONLY)
 
@@ -59,11 +59,11 @@ of deliberate pursuit or that imitating its move would cause success.
 
 | First head step | Second head step | First head captured | Second head captured |
 |---|---|---:|---:|
-| closer | closer | 318 | 74 |
-| closer | farther | 223 | 10 |
+| closer | closer | 331 | 80 |
+| closer | farther | 242 | 10 |
 | closer | died | 1 | 0 |
-| farther | closer | 16 | 97 |
-| farther | farther | 38 | 23 |
+| farther | closer | 18 | 103 |
+| farther | farther | 38 | 24 |
 
 ## What this does NOT establish
 

@@ -1,6 +1,6 @@
 # Snake26: Death autopsies versus successful real escapes
 
-Generated UTC: 2026-11-03T15:22:47+00:00
+Generated UTC: 2026-11-03T19:58:15+00:00
 
 ## Research question
 
@@ -29,19 +29,19 @@ observation, not a randomized experiment or a policy recommendation.
    Multiple cases from the same game remain dependent; cross-replay
    control matching creates further dependency.
 
-Files scanned: **240** of 240.
-Unique replay payloads: **169**
-(league 91, trial 78).
+Files scanned: **250** of 250.
+Unique replay payloads: **179**
+(league 97, trial 82).
 Duplicate replays skipped: **71**.
 Unreadable: **0**.
-Valid dangerous baseline positions: **4,049**.
+Valid dangerous baseline positions: **4,310**.
 
 ## 1. Baseline-matched death cases and observed survivor controls
 
 | Match mode | Death cases | Survivor control candidates | Matched pairs | Same replay | Phase relaxed | Unmatched deaths |
 |---|---:|---:|---:|---:|---:|---:|
-| league | 108 | 3281 | 108 | 62 | 2 | 0 |
-| trial | 5 | 655 | 5 | 0 | 1 | 0 |
+| league | 115 | 3495 | 115 | 65 | 2 | 0 |
+| trial | 6 | 694 | 6 | 0 | 1 | 0 |
 
 Matching minimizes observable baseline differences. It does NOT balance
 unobserved bot policy, opponent skill, map future, or specific matchup.
@@ -53,11 +53,11 @@ Some controls come from other real games; report same-match counts.
 
 | Mode | Step | Real measured change | Alive and measured matched pairs | Death cases mean | Survivor controls mean | Survivor − case | Exploratory match-bootstrap interval |
 |---|---:|---|---:|---:|---:|---:|---|
-| league | +1 | exits_gain | 99 | -0.12 | +0.43 | +0.56 | [+0.36, +0.76], 58 case-replay clusters |
-| league | +1 | head_gain | 99 | +0.12 | +0.23 | +0.11 | [-0.18, +0.41], 58 case-replay clusters |
-| league | +1 | stable_food_progress | 87 | +0.08 | +0.14 | +0.06 | [-0.20, +0.33], 55 case-replay clusters |
-| league | +3 | exits_gain | 71 | -0.32 | +0.65 | +0.97 | [+0.72, +1.22], 49 case-replay clusters |
-| league | +3 | head_gain | 71 | +0.45 | +1.31 | +0.86 | [+0.22, +1.61], 49 case-replay clusters |
+| league | +1 | exits_gain | 106 | -0.09 | +0.41 | +0.50 | [+0.31, +0.68], 63 case-replay clusters |
+| league | +1 | head_gain | 106 | +0.13 | +0.19 | +0.06 | [-0.24, +0.33], 63 case-replay clusters |
+| league | +1 | stable_food_progress | 91 | +0.12 | +0.13 | +0.01 | [-0.24, +0.28], 57 case-replay clusters |
+| league | +3 | exits_gain | 78 | -0.32 | +0.62 | +0.94 | [+0.71, +1.19], 54 case-replay clusters |
+| league | +3 | head_gain | 78 | +0.36 | +1.19 | +0.83 | [+0.19, +1.57], 54 case-replay clusters |
 | trial | +1 | exits_gain | 4 | +0.00 | +0.50 | +0.50 | insufficient distinct case-replay clusters |
 | trial | +1 | head_gain | 4 | +1.50 | +0.50 | -1.00 | insufficient distinct case-replay clusters |
 | trial | +1 | stable_food_progress | 3 | +0.67 | +0.33 | -0.33 | insufficient distinct case-replay clusters |
@@ -68,13 +68,13 @@ Some controls come from other real games; report same-match counts.
 
 | League comparison subset | Baseline matched pairs | Both alive/observed at +1 | Mean +1 free-exit gain difference (survivor − case) |
 |---|---:|---:|---:|
-| All baseline-matched league pairs | 108 | 99 | +0.56 |
-| Same replay ONLY | 62 | 55 | +0.49 |
-| Same 500-turn phase | 106 | 97 | +0.58 |
-| Exact starting free-exit count | 79 | 77 | +0.66 |
-| Exact free exits AND head distance | 28 | 27 | +0.44 |
-| Opponent head <=3 cells | 55 | 53 | +0.36 |
-| At most one free neighboring cell | 71 | 63 | +0.81 |
+| All baseline-matched league pairs | 115 | 106 | +0.50 |
+| Same replay ONLY | 65 | 58 | +0.43 |
+| Same 500-turn phase | 113 | 104 | +0.52 |
+| Exact starting free-exit count | 84 | 82 | +0.61 |
+| Exact free exits AND head distance | 31 | 30 | +0.37 |
+| Opponent head <=3 cells | 58 | 56 | +0.32 |
+| At most one free neighboring cell | 75 | 67 | +0.75 |
 
 These are nested exploratory subsets, NOT independent confirmations.
 If a strict subset has few pairs, its mean is especially unstable.
@@ -85,10 +85,10 @@ not proof of identical maps, opponents or goals.
 
 | League baseline comparison | Death case average | Survivor control average |
 |---|---:|---:|
-| Free adjacent cells | +1.38 | +1.52 |
-| Opponent head distance | +6.56 | +6.63 |
-| Body length | +72.73 | +73.15 |
-| Game turn | +1222.69 | +1206.48 |
+| Free adjacent cells | +1.38 | +1.51 |
+| Opponent head distance | +6.56 | +6.57 |
+| Body length | +74.26 | +74.30 |
+| Game turn | +1225.87 | +1206.74 |
 
 Our matching enforces body LENGTH BAND, head PRESSURE BAND and
 limited-exit BAND, but individual numerical values can still differ.

@@ -1,31 +1,31 @@
 # Snake intelligence — collection status
 
-Generated (UTC): 2026-11-03T15:17:35+00:00
-Latest season: `2026-11-03-145900-season`
-Cataloged seasons: 131
-Cataloged matches: 65172
-Downloaded replays (all seasons): 240
+Generated (UTC): 2026-11-03T19:54:15+00:00
+Latest season: `2026-11-03-185906-season`
+Cataloged seasons: 142
+Cataloged matches: 71298
+Downloaded replays (all seasons): 250
 
 ## Most-observed snakes in downloaded current-season replays
 
 | Team | Matches | Wins | Avg final length | Observed moves | Deaths | Self-deaths | Food events |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| `421462-alexander-palmer` | 3 | 2 | 115.0 | 5991 | 1 | 1 | 102 |
-| `427064-khodani-netili` | 3 | 2 | 153.3 | 5997 | 0 | 0 | 89 |
-| `~benchmark` | 3 | 0 | 16.7 | 5758 | 40 | 9 | 105 |
-| `403501-mashau-mudzanani` | 2 | 1 | 30.0 | 3963 | 6 | 2 | 79 |
-| `423258-muhammed-dar` | 2 | 1 | 102.5 | 3986 | 2 | 2 | 89 |
-| `423239-zeeshaan-bham` | 2 | 0 | 57.5 | 3980 | 3 | 1 | 74 |
-| `423436-ntobeko-zondi` | 2 | 0 | 32.5 | 3975 | 4 | 0 | 53 |
-| `~hungry` | 2 | 0 | 5.0 | 3897 | 17 | 6 | 79 |
-| `~survivor` | 2 | 0 | 32.5 | 3957 | 7 | 2 | 49 |
-| `419342-ayeshan-puckree` | 1 | 1 | 155.0 | 1999 | 0 | 0 | 30 |
-| `404721-khensani-maluleke` | 1 | 0 | 50.0 | 1993 | 1 | 1 | 27 |
-| `408070-collen-mthombeni` | 1 | 0 | 55.0 | 1993 | 1 | 0 | 26 |
-| `408501-asher-urison` | 1 | 0 | 15.0 | 1993 | 1 | 1 | 23 |
-| `413538-lelethuthando-nikelo` | 1 | 0 | 140.0 | 1999 | 0 | 0 | 27 |
-| `~hunter` | 1 | 0 | 60.0 | 1953 | 8 | 3 | 28 |
-| `~wander` | 1 | 0 | 5.0 | 1975 | 4 | 0 | 0 |
+| `421462-alexander-palmer` | 3 | 3 | 95.0 | 5980 | 3 | 1 | 110 |
+| `389160-lwandle-ramanugu` | 3 | 1 | 78.3 | 5985 | 2 | 1 | 94 |
+| `~benchmark` | 3 | 0 | 18.3 | 5790 | 35 | 6 | 91 |
+| `408008-bradley-buys` | 2 | 1 | 65.0 | 3986 | 2 | 0 | 69 |
+| `424820-elisha-mundalamo` | 2 | 1 | 102.5 | 3992 | 1 | 1 | 57 |
+| `426895-mpho-ramasakona` | 2 | 1 | 120.0 | 3984 | 3 | 2 | 69 |
+| `403339-david-ndambo` | 2 | 0 | 35.0 | 3980 | 3 | 1 | 65 |
+| `~gauntlet_1` | 2 | 0 | 62.5 | 3920 | 13 | 0 | 62 |
+| `~survivor` | 2 | 0 | 25.0 | 3980 | 3 | 1 | 54 |
+| `388060-tshepang-tshabalala` | 1 | 0 | 30.0 | 1987 | 2 | 2 | 25 |
+| `408070-collen-mthombeni` | 1 | 0 | 40.0 | 1993 | 1 | 1 | 34 |
+| `413538-lelethuthando-nikelo` | 1 | 0 | 105.0 | 1999 | 0 | 0 | 20 |
+| `419342-ayeshan-puckree` | 1 | 0 | 70.0 | 1987 | 2 | 0 | 36 |
+| `429782-maseeha-seedat` | 1 | 0 | 25.0 | 1993 | 1 | 0 | 26 |
+| `~hunter` | 1 | 0 | 20.0 | 1929 | 12 | 0 | 26 |
+| `~wander` | 1 | 0 | 5.0 | 1951 | 8 | 0 | 0 |
 
 Counts reflect downloaded replays only, not the whole league. Actions are inferred from adjacent alive frames, excluding discontinuities.
 No strategy or win-rate advantage is assumed from these descriptive numbers.

@@ -1,9 +1,9 @@
 # Snake26 on-arrival trial comparison
 
-Generated UTC: 2026-11-03T15:17:35+00:00
-Latest season: `2026-11-03-145900-season`
-Student trial sets found: **147**
-Complete three-trial sets: **147**
+Generated UTC: 2026-11-03T19:54:15+00:00
+Latest season: `2026-11-03-185906-season`
+Student trial sets found: **152**
+Complete three-trial sets: **152**
 
 ## Common benchmark setups
 
@@ -21,41 +21,41 @@ Sorted by mean placement (lower is better), then mean final length as a tiebreak
 
 | # | Student bot | 910000 place | 911000 place | 912000 place | Mean place | Mean final length | Current division/rank |
 |---:|---|---:|---:|---:|---:|---:|---|
-| 1 | `422453-mauricetshepo-frost` | 1 | 1 | 1 | 1.00 | 248.3 | 2/28 |
-| 2 | `402334-angile-saho` | 1 | 1 | 1 | 1.00 | 236.7 | 1/23 |
-| 3 | `388060-tshepang-tshabalala` | 1 | 1 | 1 | 1.00 | 228.3 | 1/13 |
-| 4 | `413538-lelethuthando-nikelo` | 1 | 1 | 1 | 1.00 | 221.7 | 1/5 |
-| 5 | `419636-jason-chen` | 1 | 1 | 1 | 1.00 | 218.3 | 2/20 |
-| 6 | `421538-tshifhiwa-bvumbi` | 1 | 1 | 1 | 1.00 | 216.7 | 1/28 |
+| 1 | `422453-mauricetshepo-frost` | 1 | 1 | 1 | 1.00 | 248.3 | 1/24 |
+| 2 | `402334-angile-saho` | 1 | 1 | 1 | 1.00 | 243.3 | 1/3 |
+| 3 | `388060-tshepang-tshabalala` | 1 | 1 | 1 | 1.00 | 228.3 | 1/22 |
+| 4 | `413538-lelethuthando-nikelo` | 1 | 1 | 1 | 1.00 | 221.7 | 1/6 |
+| 5 | `419636-jason-chen` | 1 | 1 | 1 | 1.00 | 218.3 | 1/26 |
+| 6 | `421538-tshifhiwa-bvumbi` | 1 | 1 | 1 | 1.00 | 216.7 | 1/14 |
 | 7 | `427064-khodani-netili` | 1 | 1 | 1 | 1.00 | 215.0 | 1/2 |
 | 8 | `421349-phathutshedzo-mudzanani` | 1 | 1 | 1 | 1.00 | 213.3 | 1/12 |
-| 9 | `403339-david-ndambo` | 1 | 1 | 1 | 1.00 | 211.7 | 1/22 |
-| 10 | `423239-zeeshaan-bham` | 1 | 1 | 1 | 1.00 | 210.0 | 1/14 |
-| 11 | `388828-ngcebo-methula` | 1 | 1 | 1 | 1.00 | 205.0 | 1/4 |
-| 12 | `409987-sbongakonke-shange` | 1 | 1 | 1 | 1.00 | 203.3 | 2/2 |
-| 13 | `420236-nathan-gebremichael` | 1 | 1 | 1 | 1.00 | 198.3 | 2/1 |
-| 14 | `427039-sameeha-miabala` | 1 | 1 | 1 | 1.00 | 198.3 | 1/17 |
-| 15 | `420627-amila-nyembezi` | 1 | 1 | 1 | 1.00 | 195.0 | 3/18 |
-| 16 | `424820-elisha-mundalamo` | 1 | 1 | 1 | 1.00 | 195.0 | 1/3 |
-| 17 | `409997-utayan-naidoo` | 1 | 1 | 1 | 1.00 | 193.3 | 1/16 |
-| 18 | `409598-langelihle-funeka` | 1 | 1 | 1 | 1.00 | 191.7 | 3/14 |
+| 9 | `403339-david-ndambo` | 1 | 1 | 1 | 1.00 | 211.7 | 1/8 |
+| 10 | `423239-zeeshaan-bham` | 1 | 1 | 1 | 1.00 | 210.0 | 1/10 |
+| 11 | `388828-ngcebo-methula` | 1 | 1 | 1 | 1.00 | 205.0 | 1/5 |
+| 12 | `409987-sbongakonke-shange` | 1 | 1 | 1 | 1.00 | 203.3 | 2/25 |
+| 13 | `420236-nathan-gebremichael` | 1 | 1 | 1 | 1.00 | 198.3 | 2/19 |
+| 14 | `427039-sameeha-miabala` | 1 | 1 | 1 | 1.00 | 198.3 | 1/18 |
+| 15 | `420627-amila-nyembezi` | 1 | 1 | 1 | 1.00 | 195.0 | 3/24 |
+| 16 | `424820-elisha-mundalamo` | 1 | 1 | 1 | 1.00 | 195.0 | 1/4 |
+| 17 | `409997-utayan-naidoo` | 1 | 1 | 1 | 1.00 | 193.3 | 1/15 |
+| 18 | `409598-langelihle-funeka` | 1 | 1 | 1 | 1.00 | 191.7 | 3/22 |
 | 19 | `421462-alexander-palmer` | 1 | 1 | 1 | 1.00 | 190.0 | 1/1 |
-| 20 | `408647-mellisa-mofokeng` | 1 | 1 | 1 | 1.00 | 186.7 | 2/15 |
-| 21 | `407318-deo-kabunda` | 1 | 1 | 1 | 1.00 | 183.3 | 2/23 |
-| 22 | `424251-thandolwethu-zondi` | 1 | 1 | 1 | 1.00 | 183.3 | 3/21 |
-| 23 | `403754-vhuimo-mudau` | 1 | 1 | 1 | 1.00 | 181.7 | 2/6 |
-| 24 | `419926-mphile-nchabeleng` | 1 | 1 | 1 | 1.00 | 180.0 | 1/9 |
-| 25 | `420285-kgotlelelo-aphane` | 1 | 1 | 1 | 1.00 | 180.0 | 2/26 |
+| 20 | `408647-mellisa-mofokeng` | 1 | 1 | 1 | 1.00 | 186.7 | 3/1 |
+| 21 | `407318-deo-kabunda` | 1 | 1 | 1 | 1.00 | 183.3 | 2/32 |
+| 22 | `424251-thandolwethu-zondi` | 1 | 1 | 1 | 1.00 | 183.3 | 3/15 |
+| 23 | `403754-vhuimo-mudau` | 1 | 1 | 1 | 1.00 | 181.7 | 1/27 |
+| 24 | `419926-mphile-nchabeleng` | 1 | 1 | 1 | 1.00 | 180.0 | 2/1 |
+| 25 | `420285-kgotlelelo-aphane` | 1 | 1 | 1 | 1.00 | 180.0 | 2/8 |
 | 26 | `411347-mustafa-karodia` | 1 | 1 | 1 | 1.00 | 176.7 | 2/31 |
-| 27 | `404543-daelen-moodley` | 1 | 1 | 1 | 1.00 | 168.3 | 3/7 |
-| 28 | `426650-babongile-mafantiri` | 1 | 1 | 1 | 1.00 | 168.3 | 1/11 |
-| 29 | `429653-elohim-mahungele` | 1 | 1 | 1 | 1.00 | 168.3 | 3/1 |
-| 30 | `408008-bradley-buys` | 1 | 1 | 1 | 1.00 | 166.7 | 2/21 |
-| 31 | `419342-ayeshan-puckree` | 1 | 1 | 1 | 1.00 | 165.0 | 1/6 |
-| 32 | `423158-risima-mashele` | 1 | 1 | 1 | 1.00 | 163.3 | 1/32 |
-| 33 | `423436-ntobeko-zondi` | 1 | 1 | 1 | 1.00 | 163.3 | 1/20 |
-| 34 | `405469-adham-soror` | 1 | 1 | 1 | 1.00 | 161.7 | 3/25 |
-| 35 | `391560-neliswa-jones` | 1 | 1 | 1 | 1.00 | 158.3 | 2/13 |
+| 27 | `431512-manuel-malila` | 1 | 1 | 1 | 1.00 | 176.7 | 3/13 |
+| 28 | `404543-daelen-moodley` | 1 | 1 | 1 | 1.00 | 168.3 | 3/11 |
+| 29 | `426650-babongile-mafantiri` | 1 | 1 | 1 | 1.00 | 168.3 | 2/3 |
+| 30 | `429653-elohim-mahungele` | 1 | 1 | 1 | 1.00 | 168.3 | 2/21 |
+| 31 | `408008-bradley-buys` | 1 | 1 | 1 | 1.00 | 166.7 | 1/28 |
+| 32 | `419342-ayeshan-puckree` | 1 | 1 | 1 | 1.00 | 165.0 | 1/11 |
+| 33 | `423158-risima-mashele` | 1 | 1 | 1 | 1.00 | 163.3 | 2/26 |
+| 34 | `423436-ntobeko-zondi` | 1 | 1 | 1 | 1.00 | 163.3 | 2/6 |
+| 35 | `405469-adham-soror` | 1 | 1 | 1 | 1.00 | 161.7 | 4/2 |
 
 ## Best performers specifically against gauntlet_1
 
@@ -64,9 +64,9 @@ Official placement and final length from the trial that also includes survivor a
 | # | Student bot | Placement | Final length | Food | Kills | Archived replay path |
 |---:|---|---:|---:|---:|---:|---|
 | 1 | `409997-utayan-naidoo` | 1 | 255 | 50 | 11 | `trials/409997-utayan-naidoo/trial-912000.rep` |
-| 2 | `421349-phathutshedzo-mudzanani` | 1 | 240 | 47 | 8 | `trials/421349-phathutshedzo-mudzanani/trial-912000.rep` |
-| 3 | `427064-khodani-netili` | 1 | 240 | 47 | 12 | `trials/427064-khodani-netili/trial-912000.rep` |
-| 4 | `402334-angile-saho` | 1 | 235 | 46 | 20 | `trials/402334-angile-saho/trial-912000.rep` |
+| 2 | `402334-angile-saho` | 1 | 240 | 60 | 14 | `trials/402334-angile-saho/trial-912000.rep` |
+| 3 | `421349-phathutshedzo-mudzanani` | 1 | 240 | 47 | 8 | `trials/421349-phathutshedzo-mudzanani/trial-912000.rep` |
+| 4 | `427064-khodani-netili` | 1 | 240 | 47 | 12 | `trials/427064-khodani-netili/trial-912000.rep` |
 | 5 | `422453-mauricetshepo-frost` | 1 | 235 | 46 | 30 | `trials/422453-mauricetshepo-frost/trial-912000.rep` |
 | 6 | `419636-jason-chen` | 1 | 230 | 45 | 8 | `trials/419636-jason-chen/trial-912000.rep` |
 | 7 | `421538-tshifhiwa-bvumbi` | 1 | 230 | 45 | 13 | `trials/421538-tshifhiwa-bvumbi/trial-912000.rep` |
@@ -89,15 +89,15 @@ Official placement and final length from the trial that also includes survivor a
 | 24 | `407318-deo-kabunda` | 1 | 190 | 37 | 9 | `trials/407318-deo-kabunda/trial-912000.rep` |
 | 25 | `408647-mellisa-mofokeng` | 1 | 190 | 37 | 6 | `trials/408647-mellisa-mofokeng/trial-912000.rep` |
 | 26 | `413538-lelethuthando-nikelo` | 1 | 190 | 37 | 16 | `trials/413538-lelethuthando-nikelo/trial-912000.rep` |
-| 27 | `427594-rolivhuwa-muthelo` | 1 | 185 | 36 | 13 | `trials/427594-rolivhuwa-muthelo/trial-912000.rep` |
-| 28 | `429782-maseeha-seedat` | 1 | 185 | 36 | 16 | `trials/429782-maseeha-seedat/trial-912000.rep` |
-| 29 | `391560-neliswa-jones` | 1 | 180 | 48 | 9 | `trials/391560-neliswa-jones/trial-912000.rep` |
-| 30 | `411347-mustafa-karodia` | 1 | 180 | 35 | 7 | `trials/411347-mustafa-karodia/trial-912000.rep` |
-| 31 | `419222-asisipho-ngaba` | 1 | 180 | 35 | 11 | `trials/419222-asisipho-ngaba/trial-912000.rep` |
-| 32 | `419342-ayeshan-puckree` | 1 | 180 | 35 | 10 | `trials/419342-ayeshan-puckree/trial-912000.rep` |
-| 33 | `419926-mphile-nchabeleng` | 1 | 180 | 35 | 16 | `trials/419926-mphile-nchabeleng/trial-912000.rep` |
-| 34 | `420393-diya-mistri` | 1 | 180 | 42 | 6 | `trials/420393-diya-mistri/trial-912000.rep` |
-| 35 | `424820-elisha-mundalamo` | 1 | 180 | 35 | 14 | `trials/424820-elisha-mundalamo/trial-912000.rep` |
+| 27 | `420790-damian-nel` | 1 | 190 | 37 | 6 | `trials/420790-damian-nel/trial-912000.rep` |
+| 28 | `422504-benno-fourie` | 1 | 185 | 36 | 22 | `trials/422504-benno-fourie/trial-912000.rep` |
+| 29 | `425476-bongani-ndwandwe` | 1 | 185 | 36 | 15 | `trials/425476-bongani-ndwandwe/trial-912000.rep` |
+| 30 | `427594-rolivhuwa-muthelo` | 1 | 185 | 36 | 13 | `trials/427594-rolivhuwa-muthelo/trial-912000.rep` |
+| 31 | `429782-maseeha-seedat` | 1 | 185 | 36 | 16 | `trials/429782-maseeha-seedat/trial-912000.rep` |
+| 32 | `391560-neliswa-jones` | 1 | 180 | 48 | 9 | `trials/391560-neliswa-jones/trial-912000.rep` |
+| 33 | `411347-mustafa-karodia` | 1 | 180 | 35 | 7 | `trials/411347-mustafa-karodia/trial-912000.rep` |
+| 34 | `419222-asisipho-ngaba` | 1 | 180 | 35 | 11 | `trials/419222-asisipho-ngaba/trial-912000.rep` |
+| 35 | `419342-ayeshan-puckree` | 1 | 180 | 35 | 10 | `trials/419342-ayeshan-puckree/trial-912000.rep` |
 
 ## Research next steps (no competition-bot implementation yet)
 

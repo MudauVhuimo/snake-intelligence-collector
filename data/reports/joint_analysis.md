@@ -1,8 +1,8 @@
 # Snake26: JOINED league + trials study
 
-Generated UTC: 2026-11-03T15:24:21+00:00
+Generated UTC: 2026-11-03T19:59:23+00:00
 
-**Latest official season:** 2026-11-03-145900-season. This report treats competitive league
+**Latest official season:** 2026-11-03-185906-season. This report treats competitive league
 matches and controlled on-arrival trials as **two separate datasets**
 and joins them at the **same season + same student**. The published
 end-of-season code SHA, when known, is attached for auditing, but is
@@ -14,13 +14,13 @@ end-of-season code SHA, when known, is attached for auditing, but is
 
 | Separate data source | Cataloged matches | Full replays | Unique replay hashes |
 |---|---:|---:|---:|
-| League | 8,371 | 149 | 91 |
-| Trial | 54,978 | 91 | 78 |
+| League | 9,226 | 155 | 97 |
+| Trial | 59,994 | 95 | 82 |
 
-**Historical student-season rows:** league 6,610,
-trials 18,326, union 18,351.
+**Historical student-season rows:** league 7,336,
+trials 19,998, union 20,024.
 **Current season paired students (at least 2 student-opponent league games
-plus all 3 trials): 147**.
+plus all 3 trials): 151**.
 **Division 1 study sample (at least 3 league games + all trials): 32**.
 
 Important: a cataloged game is not automatically a recorded full replay.
@@ -37,10 +37,10 @@ Investigate any nonzero cases before interpreting reset behavior.
 
 | Paired measurement | Division 1 students | Spearman rho | Exploratory 95% paired-student bootstrap interval |
 |---|---:|---:|---:|
-| Apples per game | 32 | 0.453 | [+0.130, +0.683] |
-| Final body length | 32 | 0.332 | [-0.045, +0.624] |
-| Kills per game | 32 | 0.141 | [-0.289, +0.533] |
-| Retained growth / expected no-reset growth | 32 | 0.471 | [+0.152, +0.715] |
+| Apples per game | 32 | 0.284 | [-0.089, +0.580] |
+| Final body length | 32 | 0.197 | [-0.209, +0.579] |
+| Kills per game | 32 | 0.028 | [-0.357, +0.391] |
+| Retained growth / expected no-reset growth | 32 | 0.257 | [-0.112, +0.565] |
 
 Correlations are calculated only among students from **the same division
 and season**, to avoid comparing ranks of different divisions. These are
@@ -70,38 +70,38 @@ match opponents, seats and seeds vary by schedule.
 
 | Rank | Student | League games | League wins % | League apples | League retained | League kills | Trial apples | Trial retained | Trial kills | Replay coverage L/T |
 |---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 1 | 421462-alexander-palmer | 3 | 66.7 | 34.0 | 0.70 | 1.00 | 48.0 | 0.79 | 15.33 | 3/0 |
-| 2 | 427064-khodani-netili | 4 | 50.0 | 26.0 | 0.76 | 0.75 | 42.0 | 1.00 | 11.33 | 2/1 |
-| 3 | 424820-elisha-mundalamo | 5 | 40.0 | 33.4 | 0.50 | 1.00 | 40.3 | 0.95 | 13.33 | 0/0 |
-| 4 | 388828-ngcebo-methula | 5 | 60.0 | 30.4 | 0.59 | 1.00 | 40.0 | 1.00 | 14.67 | 0/0 |
-| 5 | 413538-lelethuthando-nikelo | 5 | 40.0 | 29.4 | 0.76 | 1.20 | 43.3 | 1.00 | 22.33 | 1/0 |
-| 6 | 419342-ayeshan-puckree | 4 | 50.0 | 30.5 | 0.89 | 1.25 | 32.0 | 1.00 | 12.33 | 1/0 |
-| 7 | 428786-marvellous-sambo | 5 | 20.0 | 29.0 | 0.46 | 0.40 | 34.7 | 0.70 | 16.00 | 0/0 |
-| 8 | 404721-khensani-maluleke | 6 | 50.0 | 33.3 | 0.58 | 1.17 | 45.0 | 0.43 | 13.00 | 1/0 |
-| 9 | 419926-mphile-nchabeleng | 5 | 60.0 | 29.2 | 0.73 | 1.20 | 35.0 | 1.00 | 14.00 | 0/0 |
-| 10 | 426895-mpho-ramasakona | 6 | 33.3 | 26.5 | 0.30 | 1.33 | 40.7 | 0.54 | 15.67 | 0/0 |
-| 11 | 426650-babongile-mafantiri | 6 | 33.3 | 29.8 | 0.31 | 0.83 | 32.7 | 1.00 | 20.33 | 0/0 |
-| 12 | 421349-phathutshedzo-mudzanani | 4 | 25.0 | 28.8 | 0.34 | 1.25 | 43.7 | 0.95 | 10.33 | 0/0 |
-| 13 | 388060-tshepang-tshabalala | 6 | 33.3 | 31.5 | 0.25 | 0.33 | 44.7 | 1.00 | 15.00 | 0/0 |
-| 14 | 423239-zeeshaan-bham | 6 | 16.7 | 35.7 | 0.49 | 1.17 | 41.0 | 1.00 | 13.33 | 2/0 |
-| 15 | 410193-vhugala-makhwathane | 6 | 33.3 | 26.3 | 0.66 | 3.67 | 27.0 | 1.00 | 8.67 | 0/0 |
-| 16 | 409997-utayan-naidoo | 5 | 60.0 | 31.4 | 0.54 | 1.20 | 48.7 | 0.77 | 10.67 | 0/0 |
-| 17 | 427039-sameeha-miabala | 5 | 0.0 | 26.4 | 0.69 | 1.00 | 38.7 | 1.00 | 14.33 | 0/0 |
-| 18 | 408501-asher-urison | 5 | 0.0 | 28.0 | 0.38 | 1.00 | 38.3 | 0.70 | 8.00 | 1/0 |
-| 19 | 429782-maseeha-seedat | 6 | 16.7 | 29.2 | 0.32 | 2.83 | 37.3 | 0.79 | 12.33 | 0/0 |
-| 20 | 423436-ntobeko-zondi | 4 | 25.0 | 29.0 | 0.47 | 0.75 | 31.7 | 1.00 | 10.00 | 2/0 |
-| 21 | 423258-muhammed-dar | 4 | 25.0 | 31.2 | 0.61 | 1.00 | 48.3 | 0.22 | 11.33 | 1/1 |
-| 22 | 403339-david-ndambo | 6 | 33.3 | 29.2 | 0.70 | 1.33 | 41.3 | 1.00 | 12.67 | 0/0 |
-| 23 | 402334-angile-saho | 5 | 40.0 | 29.4 | 0.59 | 2.40 | 46.3 | 1.00 | 23.33 | 0/0 |
-| 24 | 406000-mulimisi-rammela | 4 | 0.0 | 21.8 | 0.82 | 1.25 | 25.0 | 1.00 | 12.00 | 0/0 |
-| 25 | 428954-njabulo-ndlozi | 6 | 16.7 | 26.0 | 0.24 | 3.17 | 37.3 | 0.75 | 17.00 | 0/0 |
-| 26 | 389160-lwandle-ramanugu | 4 | 0.0 | 22.0 | 0.29 | 0.25 | 38.0 | 0.54 | 17.33 | 0/0 |
-| 27 | 403501-mashau-mudzanani | 5 | 0.0 | 34.2 | 0.16 | 0.20 | 41.3 | 0.75 | 8.33 | 1/1 |
-| 28 | 421538-tshifhiwa-bvumbi | 5 | 0.0 | 29.6 | 0.26 | 0.00 | 42.3 | 1.00 | 15.67 | 0/0 |
-| 29 | 419222-asisipho-ngaba | 6 | 0.0 | 27.3 | 0.23 | 0.83 | 41.3 | 0.64 | 11.67 | 0/0 |
-| 30 | 408070-collen-mthombeni | 5 | 0.0 | 29.2 | 0.38 | 0.00 | 42.3 | 0.50 | 4.67 | 1/0 |
-| 31 | 424907-sibongakonke-ntsele | 5 | 0.0 | 25.6 | 0.17 | 0.40 | 36.7 | 0.62 | 8.00 | 0/0 |
-| 32 | 423158-risima-mashele | 4 | 25.0 | 24.2 | 0.36 | 0.50 | 41.7 | 0.78 | 11.33 | 0/0 |
+| 1 | 421462-alexander-palmer | 3 | 100.0 | 36.7 | 0.55 | 1.33 | 48.0 | 0.79 | 15.33 | 3/0 |
+| 2 | 427064-khodani-netili | 6 | 66.7 | 30.2 | 1.00 | 1.67 | 42.0 | 1.00 | 11.33 | 0/0 |
+| 3 | 402334-angile-saho | 6 | 66.7 | 33.2 | 0.60 | 1.00 | 52.0 | 0.93 | 25.00 | 0/0 |
+| 4 | 424820-elisha-mundalamo | 5 | 60.0 | 31.4 | 0.72 | 0.60 | 40.3 | 0.95 | 13.33 | 2/0 |
+| 5 | 388828-ngcebo-methula | 4 | 25.0 | 30.8 | 0.58 | 1.50 | 40.0 | 1.00 | 14.67 | 0/0 |
+| 6 | 413538-lelethuthando-nikelo | 5 | 60.0 | 32.2 | 0.82 | 1.20 | 43.3 | 1.00 | 22.33 | 1/0 |
+| 7 | 428786-marvellous-sambo | 3 | 33.3 | 29.7 | 0.72 | 0.00 | 34.7 | 0.70 | 16.00 | 0/0 |
+| 8 | 403339-david-ndambo | 6 | 33.3 | 32.5 | 0.65 | 0.33 | 41.3 | 1.00 | 12.67 | 2/0 |
+| 9 | 408070-collen-mthombeni | 4 | 25.0 | 32.0 | 0.37 | 0.50 | 42.3 | 0.50 | 4.67 | 1/0 |
+| 10 | 423239-zeeshaan-bham | 6 | 33.3 | 34.8 | 0.50 | 0.33 | 41.0 | 1.00 | 13.33 | 0/0 |
+| 11 | 419342-ayeshan-puckree | 4 | 25.0 | 30.8 | 0.66 | 0.50 | 32.0 | 1.00 | 12.33 | 1/0 |
+| 12 | 421349-phathutshedzo-mudzanani | 4 | 25.0 | 26.8 | 0.53 | 0.00 | 43.7 | 0.95 | 10.33 | 0/0 |
+| 13 | 423258-muhammed-dar | 5 | 20.0 | 29.6 | 0.41 | 1.20 | 48.3 | 0.22 | 11.33 | 0/0 |
+| 14 | 421538-tshifhiwa-bvumbi | 6 | 33.3 | 31.0 | 0.42 | 1.17 | 42.3 | 1.00 | 15.67 | 0/0 |
+| 15 | 409997-utayan-naidoo | 4 | 50.0 | 29.2 | 0.83 | 1.75 | 48.7 | 0.77 | 10.67 | 0/0 |
+| 16 | 389160-lwandle-ramanugu | 4 | 25.0 | 29.0 | 0.78 | 0.25 | 38.0 | 0.54 | 17.33 | 2/1 |
+| 17 | 426895-mpho-ramasakona | 5 | 0.0 | 25.8 | 0.25 | 0.20 | 40.7 | 0.54 | 15.67 | 1/1 |
+| 18 | 427039-sameeha-miabala | 6 | 16.7 | 26.8 | 0.44 | 0.67 | 38.7 | 1.00 | 14.33 | 0/0 |
+| 19 | 428954-njabulo-ndlozi | 6 | 16.7 | 30.0 | 0.55 | 0.83 | 37.3 | 0.75 | 17.00 | 0/0 |
+| 20 | 410193-vhugala-makhwathane | 3 | 33.3 | 27.3 | 0.60 | 0.67 | 27.0 | 1.00 | 8.67 | 0/0 |
+| 21 | 408501-asher-urison | 4 | 25.0 | 29.0 | 0.40 | 0.50 | 38.3 | 0.70 | 8.00 | 0/0 |
+| 22 | 388060-tshepang-tshabalala | 6 | 16.7 | 25.2 | 0.30 | 0.33 | 44.7 | 1.00 | 15.00 | 1/0 |
+| 23 | 422777-thandile-mamiana | 4 | 0.0 | 25.2 | 0.44 | 0.25 | 35.0 | 0.81 | 8.33 | 0/0 |
+| 24 | 422453-mauricetshepo-frost | 4 | 0.0 | 29.0 | 0.08 | 0.25 | 48.7 | 1.00 | 26.00 | 0/0 |
+| 25 | 428464-madalitso-mnqanqeni | 5 | 0.0 | 27.8 | 0.53 | 0.60 | 39.0 | 0.56 | 9.33 | 0/0 |
+| 26 | 419636-jason-chen | 5 | 0.0 | 26.2 | 0.15 | 0.80 | 42.7 | 1.00 | 6.67 | 0/0 |
+| 27 | 403754-vhuimo-mudau | 4 | 25.0 | 23.5 | 0.88 | 0.50 | 35.3 | 1.00 | 11.00 | 0/0 |
+| 28 | 408008-bradley-buys | 5 | 0.0 | 26.0 | 0.35 | 0.60 | 42.0 | 0.76 | 16.67 | 1/1 |
+| 29 | 429782-maseeha-seedat | 4 | 0.0 | 27.5 | 0.24 | 0.75 | 37.3 | 0.79 | 12.33 | 1/0 |
+| 30 | 406000-mulimisi-rammela | 6 | 0.0 | 20.2 | 0.69 | 0.50 | 25.0 | 1.00 | 12.00 | 0/0 |
+| 31 | 424907-sibongakonke-ntsele | 5 | 20.0 | 26.2 | 0.21 | 0.40 | 36.7 | 0.62 | 8.00 | 0/0 |
+| 32 | 427417-phophi-shavhani | 5 | 0.0 | 23.0 | 0.30 | 0.40 | 44.0 | 0.40 | 10.00 | 0/0 |
 
 ## 5. The same students: *actual replay-derived* behavior
 
@@ -113,16 +113,16 @@ observed food-event/death rates and their conditional correlations.
 ![Student food events per observed move in each mode](charts/observed_food_by_mode.svg)
 ![Student deaths per observed move in each mode](charts/observed_deaths_by_mode.svg)
 ### Forward-looking head pressure and escape space
-Unique replays with complete frame-based pressure analysis: **169**
-(league **91**, trial **78**).
+Unique replays with complete frame-based pressure analysis: **179**
+(league **97**, trial **82**).
 Measure danger BEFORE the outcome: each living student's nearest
 opponent head, free adjacent cells, then death events in the NEXT
 ten turns. See [head-pressure and escape study](threat_windows.md)
 for length-stratified results, per-replay counts and uncertainty.
 ![10-turn death frequencies by head proximity](charts/head_pressure_vs_death.svg)
 ### Matched death autopsies versus observed 10-turn escapes
-League death cases paired to real survivors: **108**.
-On-arrival trial death cases paired separately: **5**.
+League death cases paired to real survivors: **115**.
+On-arrival trial death cases paired separately: **6**.
 [Explore actual first-turn escape movement](escape_autopsies.md),
 matching on initial length, head proximity, and available neighboring
 cells. Later-turn comparisons exclude early deaths and are subject
@@ -138,7 +138,7 @@ NO observational rule is automatically promoted into the new agent.
 using official standings from the SAME replay season, with body-length
 and danger-state common-support checks. Palmer and the submitted
 snake are ordinary members of their cohorts, not a head-to-head.
-Same-season ranked league danger windows: **2,548**.
+Same-season ranked league danger windows: **2,693**.
 ![League and trial cohorts by danger response](charts/cohort_danger_outcomes.svg)
 ### Which actual first moves preserve usable future space?
 The [route-space investigation](route_space.md) contrasts frozen
@@ -146,7 +146,7 @@ flood-fill with an 8-step simulated moving-own-tail continuation for
 EACH alternative first move, then measures the actual chosen action.
 The model freezes opponents and assumes no growth; its routes are
 NOT engine-verified safe paths or counterfactual outcomes.
-Replay-sampled danger positions with route features: **4049**.
+Replay-sampled danger positions with route features: **4310**.
 ![Recorded high-route-space first moves by cohort](charts/route_choice_cohorts.svg)
 ### Which first steps could become opponent head contests?
 The [whole-field head-cone analysis](opponent_cones.md) models all
@@ -154,7 +154,7 @@ opponents' next-head REACHABLE cells from current geometry, compares
 them with each alternative route and audits real next-frame
 moves and head-to-head victim events. Separate league and trial
 outcomes remain visible; these are NOT verified engine-legal moves.
-Actual league danger positions with cone features: **3389**.
+Actual league danger positions with cone features: **3610**.
 ![Observed head-contest choices by group](charts/opponent_contests.svg)
 ### Does the snake remain safe after its first escape?
 [Palmer's audited danger-response casebook](palmer_casebook.md) gives
@@ -169,7 +169,7 @@ students in his archived league games, not benchmark opponents.
 
 ## 6. Longitudinal disagreement: league specialists vs trial specialists
 
-Historical Division 1 snapshots with matched outcome comparisons: **11**.
+Historical Division 1 snapshots with matched outcome comparisons: **12**.
 We rank the same eligible students within each official division and
 season, then compare league versus trial percentiles. Repeated hourly
 snapshots are correlated and do not form independent experiments.
@@ -179,7 +179,7 @@ snapshots are correlated and do not form independent experiments.
 
 ## 7. Older seasons with actual peer games but no saved standings
 
-Historical seasons comparable by match-derived Division 1 outcomes: **123** snapshots.
+Historical seasons comparable by match-derived Division 1 outcomes: **134** snapshots.
 This study uses cataloged student-versus-student placements when old
 OFFICIAL rankings were not archived. These are explicitly labeled
 match-derived outcomes, never represented as official league rank.

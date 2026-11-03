@@ -1,6 +1,6 @@
 # Snake26: are risk and food opportunities state-dependent?
 
-Generated UTC: 2026-11-03T15:21:36+00:00
+Generated UTC: 2026-11-03T19:57:17+00:00
 
 ## Study design and missingness
 
@@ -18,10 +18,10 @@ Phases: turns 0-499, 500-1499, 1500+; length bands: 5-24, 25-49, 50-99, 100+.
 All density is instantaneous arena occupancy, not a measured
 probability of a path becoming blocked.
 
-Unique peer league replays: **91**; trial replays: **78**.
-Observed complete 10-turn windows: **35039**;
-league **28802**,
-trials **6237**.
+Unique peer league replays: **97**; trial replays: **82**.
+Observed complete 10-turn windows: **37276**;
+league **30719**,
+trials **6557**.
 Duplicate replay payloads removed: **71**.
 
 ## Stratified actual outcomes
@@ -35,111 +35,112 @@ correlated. **No cross-row causal effect claim**.
 
 | Environment | Stratum | Windows | Unique replay games | Deaths by +10 | Death risk | Apples before death /100 |
 |---|---|---:|---:|---:|---:|---:|
-| league | 100+ | 6633 | 91 | 51 | 0.77% | 11.99 |
-| league | 25-49 | 6222 | 91 | 32 | 0.51% | 16.46 |
-| league | 5-24 | 6341 | 91 | 22 | 0.35% | 16.69 |
-| league | 50-99 | 9606 | 91 | 56 | 0.58% | 13.67 |
-| trial | 100+ | 3496 | 78 | 4 | 0.11% | 17.11 |
-| trial | 25-49 | 721 | 78 | 1 | 0.14% | 27.32 |
-| trial | 5-24 | 606 | 78 | 0 | 0.00% | 24.75 |
-| trial | 50-99 | 1414 | 78 | 2 | 0.14% | 25.46 |
+| league | 100+ | 7044 | 97 | 57 | 0.81% | 12.11 |
+| league | 25-49 | 6698 | 97 | 33 | 0.49% | 16.14 |
+| league | 5-24 | 6732 | 97 | 23 | 0.34% | 16.93 |
+| league | 50-99 | 10245 | 97 | 58 | 0.57% | 13.79 |
+| trial | 100+ | 3668 | 82 | 5 | 0.14% | 17.09 |
+| trial | 25-49 | 760 | 82 | 1 | 0.13% | 28.03 |
+| trial | 5-24 | 643 | 82 | 0 | 0.00% | 24.42 |
+| trial | 50-99 | 1486 | 82 | 2 | 0.13% | 25.57 |
 
 ### Arena occupancy
 
 | Environment | Stratum | Windows | Unique replay games | Deaths by +10 | Death risk | Apples before death /100 |
 |---|---|---:|---:|---:|---:|---:|
-| league | high_>=30% | 2863 | 62 | 35 | 1.22% | 9.81 |
-| league | low_<15% | 6815 | 91 | 9 | 0.13% | 20.34 |
-| league | mid_15-30% | 19124 | 91 | 117 | 0.61% | 13.19 |
-| trial | low_<15% | 3376 | 78 | 3 | 0.09% | 23.82 |
-| trial | mid_15-30% | 2861 | 77 | 4 | 0.14% | 17.51 |
+| league | high_>=30% | 2991 | 66 | 40 | 1.34% | 9.70 |
+| league | low_<15% | 7231 | 97 | 9 | 0.12% | 20.44 |
+| league | mid_15-30% | 20497 | 97 | 122 | 0.60% | 13.27 |
+| trial | high_>=30% | 2 | 1 | 0 | 0.00% | 50.00 |
+| trial | low_<15% | 3528 | 82 | 3 | 0.09% | 24.01 |
+| trial | mid_15-30% | 3027 | 81 | 5 | 0.17% | 17.48 |
 
 ### Game phase
 
 | Environment | Stratum | Windows | Unique replay games | Deaths by +10 | Death risk | Apples before death /100 |
 |---|---|---:|---:|---:|---:|---:|
-| league | early_0-499 | 7221 | 91 | 8 | 0.11% | 20.01 |
-| league | late_1500+ | 7191 | 91 | 57 | 0.79% | 11.25 |
-| league | middle_500-1499 | 14390 | 91 | 96 | 0.67% | 13.45 |
-| trial | early_0-499 | 1560 | 78 | 1 | 0.06% | 26.09 |
-| trial | late_1500+ | 1559 | 78 | 2 | 0.13% | 16.87 |
-| trial | middle_500-1499 | 3118 | 78 | 4 | 0.13% | 20.37 |
+| league | early_0-499 | 7701 | 97 | 8 | 0.10% | 20.17 |
+| league | late_1500+ | 7671 | 97 | 58 | 0.76% | 11.24 |
+| league | middle_500-1499 | 15347 | 97 | 105 | 0.68% | 13.50 |
+| trial | early_0-499 | 1640 | 82 | 1 | 0.06% | 26.28 |
+| trial | late_1500+ | 1639 | 82 | 3 | 0.18% | 16.78 |
+| trial | middle_500-1499 | 3278 | 82 | 4 | 0.12% | 20.47 |
 
 ### Length × occupancy
 
 | Environment | Stratum | Windows | Unique replay games | Deaths by +10 | Death risk | Apples before death /100 |
 |---|---|---:|---:|---:|---:|---:|
-| league | 100+ / high_>=30% | 1582 | 62 | 18 | 1.14% | 9.73 |
-| league | 100+ / low_<15% | 45 | 16 | 1 | 2.22% | 22.22 |
-| league | 100+ / mid_15-30% | 5006 | 91 | 32 | 0.64% | 12.60 |
-| league | 25-49 / high_>=30% | 294 | 40 | 5 | 1.70% | 9.86 |
-| league | 25-49 / low_<15% | 2793 | 91 | 3 | 0.11% | 20.69 |
-| league | 25-49 / mid_15-30% | 3135 | 91 | 24 | 0.77% | 13.30 |
-| league | 5-24 / high_>=30% | 224 | 32 | 3 | 1.34% | 12.05 |
-| league | 5-24 / low_<15% | 3138 | 91 | 5 | 0.16% | 20.59 |
-| league | 5-24 / mid_15-30% | 2979 | 90 | 14 | 0.47% | 12.92 |
-| league | 50-99 / high_>=30% | 763 | 57 | 9 | 1.18% | 9.31 |
-| league | 50-99 / low_<15% | 839 | 90 | 0 | 0.00% | 18.12 |
-| league | 50-99 / mid_15-30% | 8004 | 91 | 47 | 0.59% | 13.62 |
-| trial | 100+ / low_<15% | 827 | 73 | 1 | 0.12% | 17.05 |
-| trial | 100+ / mid_15-30% | 2669 | 77 | 3 | 0.11% | 17.12 |
-| trial | 25-49 / low_<15% | 716 | 78 | 1 | 0.14% | 26.96 |
-| trial | 5-24 / low_<15% | 606 | 78 | 0 | 0.00% | 24.75 |
-| trial | 50-99 / low_<15% | 1227 | 78 | 1 | 0.08% | 26.08 |
-| trial | 50-99 / mid_15-30% | 187 | 37 | 1 | 0.53% | 21.39 |
+| league | 100+ / high_>=30% | 1648 | 66 | 22 | 1.33% | 9.71 |
+| league | 100+ / low_<15% | 53 | 19 | 1 | 1.89% | 18.87 |
+| league | 100+ / mid_15-30% | 5343 | 97 | 34 | 0.64% | 12.78 |
+| league | 25-49 / high_>=30% | 318 | 42 | 6 | 1.89% | 9.12 |
+| league | 25-49 / low_<15% | 2960 | 97 | 3 | 0.10% | 20.68 |
+| league | 25-49 / mid_15-30% | 3420 | 97 | 24 | 0.70% | 12.87 |
+| league | 5-24 / high_>=30% | 225 | 33 | 3 | 1.33% | 12.44 |
+| league | 5-24 / low_<15% | 3343 | 97 | 5 | 0.15% | 20.85 |
+| league | 5-24 / mid_15-30% | 3164 | 96 | 15 | 0.47% | 13.12 |
+| league | 50-99 / high_>=30% | 800 | 61 | 9 | 1.12% | 9.12 |
+| league | 50-99 / low_<15% | 875 | 96 | 0 | 0.00% | 18.17 |
+| league | 50-99 / mid_15-30% | 8570 | 97 | 49 | 0.57% | 13.78 |
+| trial | 100+ / low_<15% | 858 | 76 | 1 | 0.12% | 17.25 |
+| trial | 100+ / mid_15-30% | 2808 | 81 | 4 | 0.14% | 17.02 |
+| trial | 25-49 / low_<15% | 753 | 82 | 1 | 0.13% | 27.49 |
+| trial | 5-24 / low_<15% | 643 | 82 | 0 | 0.00% | 24.42 |
+| trial | 50-99 / low_<15% | 1274 | 82 | 1 | 0.08% | 26.30 |
+| trial | 50-99 / mid_15-30% | 212 | 40 | 1 | 0.47% | 21.23 |
 
 ### Length × phase
 
 | Environment | Stratum | Windows | Unique replay games | Deaths by +10 | Death risk | Apples before death /100 |
 |---|---|---:|---:|---:|---:|---:|
-| league | 100+ / late_1500+ | 2927 | 90 | 21 | 0.72% | 11.21 |
-| league | 100+ / middle_500-1499 | 3699 | 90 | 30 | 0.81% | 12.63 |
-| league | 25-49 / early_0-499 | 3072 | 91 | 3 | 0.10% | 20.25 |
-| league | 25-49 / late_1500+ | 1228 | 80 | 14 | 1.14% | 11.64 |
-| league | 25-49 / middle_500-1499 | 1922 | 88 | 15 | 0.78% | 13.48 |
-| league | 5-24 / early_0-499 | 2791 | 91 | 4 | 0.14% | 20.96 |
-| league | 5-24 / late_1500+ | 1567 | 88 | 9 | 0.57% | 12.06 |
-| league | 5-24 / middle_500-1499 | 1983 | 87 | 9 | 0.45% | 14.32 |
-| league | 50-99 / early_0-499 | 1351 | 91 | 1 | 0.07% | 17.62 |
-| league | 50-99 / late_1500+ | 1469 | 77 | 13 | 0.88% | 10.14 |
-| league | 50-99 / middle_500-1499 | 6786 | 91 | 42 | 0.62% | 13.65 |
-| trial | 100+ / late_1500+ | 1348 | 74 | 2 | 0.15% | 15.73 |
-| trial | 100+ / middle_500-1499 | 2145 | 75 | 2 | 0.09% | 18.00 |
-| trial | 25-49 / early_0-499 | 601 | 78 | 1 | 0.17% | 27.12 |
-| trial | 25-49 / late_1500+ | 46 | 8 | 0 | 0.00% | 23.91 |
-| trial | 25-49 / middle_500-1499 | 74 | 13 | 0 | 0.00% | 31.08 |
-| trial | 5-24 / early_0-499 | 503 | 78 | 0 | 0.00% | 23.26 |
-| trial | 5-24 / late_1500+ | 42 | 9 | 0 | 0.00% | 26.19 |
+| league | 100+ / late_1500+ | 3071 | 96 | 22 | 0.72% | 11.23 |
+| league | 100+ / middle_500-1499 | 3966 | 96 | 35 | 0.88% | 12.81 |
+| league | 25-49 / early_0-499 | 3274 | 97 | 3 | 0.09% | 20.19 |
+| league | 25-49 / late_1500+ | 1368 | 86 | 14 | 1.02% | 10.96 |
+| league | 25-49 / middle_500-1499 | 2056 | 94 | 16 | 0.78% | 13.13 |
+| league | 5-24 / early_0-499 | 2968 | 97 | 4 | 0.13% | 21.23 |
+| league | 5-24 / late_1500+ | 1666 | 94 | 9 | 0.54% | 12.12 |
+| league | 5-24 / middle_500-1499 | 2098 | 93 | 10 | 0.48% | 14.68 |
+| league | 50-99 / early_0-499 | 1452 | 97 | 1 | 0.07% | 18.04 |
+| league | 50-99 / late_1500+ | 1566 | 82 | 13 | 0.83% | 10.54 |
+| league | 50-99 / middle_500-1499 | 7227 | 97 | 44 | 0.61% | 13.64 |
+| trial | 100+ / late_1500+ | 1415 | 78 | 3 | 0.21% | 15.55 |
+| trial | 100+ / middle_500-1499 | 2250 | 79 | 2 | 0.09% | 18.09 |
+| trial | 25-49 / early_0-499 | 630 | 82 | 1 | 0.16% | 27.94 |
+| trial | 25-49 / late_1500+ | 54 | 9 | 0 | 0.00% | 25.93 |
+| trial | 25-49 / middle_500-1499 | 76 | 14 | 0 | 0.00% | 30.26 |
+| trial | 5-24 / early_0-499 | 536 | 82 | 0 | 0.00% | 22.95 |
+| trial | 5-24 / late_1500+ | 46 | 10 | 0 | 0.00% | 26.09 |
 | trial | 5-24 / middle_500-1499 | 61 | 10 | 0 | 0.00% | 36.07 |
-| trial | 50-99 / early_0-499 | 453 | 71 | 0 | 0.00% | 28.04 |
-| trial | 50-99 / late_1500+ | 123 | 11 | 0 | 0.00% | 23.58 |
-| trial | 50-99 / middle_500-1499 | 838 | 76 | 2 | 0.24% | 24.34 |
+| trial | 50-99 / early_0-499 | 471 | 74 | 0 | 0.00% | 28.03 |
+| trial | 50-99 / late_1500+ | 124 | 12 | 0 | 0.00% | 23.39 |
+| trial | 50-99 / middle_500-1499 | 891 | 80 | 2 | 0.22% | 24.58 |
 
 ### Head proximity × occupancy
 
 | Environment | Stratum | Windows | Unique replay games | Deaths by +10 | Death risk | Apples before death /100 |
 |---|---|---:|---:|---:|---:|---:|
-| league | far_8_plus / high_>=30% | 2146 | 62 | 16 | 0.75% | 10.62 |
-| league | far_8_plus / low_<15% | 5367 | 91 | 4 | 0.07% | 20.64 |
-| league | far_8_plus / mid_15-30% | 13631 | 91 | 44 | 0.32% | 14.35 |
-| league | middle_4_7 / high_>=30% | 475 | 53 | 8 | 1.68% | 8.63 |
-| league | middle_4_7 / low_<15% | 1113 | 91 | 2 | 0.18% | 19.86 |
-| league | middle_4_7 / mid_15-30% | 3882 | 91 | 32 | 0.82% | 10.61 |
-| league | near_0_3 / high_>=30% | 242 | 46 | 11 | 4.55% | 4.96 |
-| league | near_0_3 / low_<15% | 335 | 64 | 3 | 0.90% | 17.01 |
-| league | near_0_3 / mid_15-30% | 1611 | 91 | 41 | 2.55% | 9.62 |
-| trial | far_8_plus / low_<15% | 2385 | 78 | 1 | 0.04% | 22.94 |
-| trial | far_8_plus / mid_15-30% | 2109 | 77 | 2 | 0.09% | 15.93 |
-| trial | middle_4_7 / low_<15% | 688 | 77 | 0 | 0.00% | 26.16 |
-| trial | middle_4_7 / mid_15-30% | 553 | 74 | 1 | 0.18% | 24.77 |
-| trial | near_0_3 / low_<15% | 303 | 74 | 2 | 0.66% | 25.41 |
-| trial | near_0_3 / mid_15-30% | 199 | 68 | 1 | 0.50% | 14.07 |
+| league | far_8_plus / high_>=30% | 2238 | 66 | 20 | 0.89% | 10.55 |
+| league | far_8_plus / low_<15% | 5679 | 97 | 4 | 0.07% | 20.76 |
+| league | far_8_plus / mid_15-30% | 14599 | 97 | 45 | 0.31% | 14.39 |
+| league | middle_4_7 / high_>=30% | 503 | 57 | 9 | 1.79% | 8.35 |
+| league | middle_4_7 / low_<15% | 1199 | 97 | 2 | 0.17% | 19.93 |
+| league | middle_4_7 / mid_15-30% | 4166 | 97 | 33 | 0.79% | 10.78 |
+| league | near_0_3 / high_>=30% | 250 | 48 | 11 | 4.40% | 4.80 |
+| league | near_0_3 / low_<15% | 353 | 69 | 3 | 0.85% | 17.00 |
+| league | near_0_3 / mid_15-30% | 1732 | 97 | 44 | 2.54% | 9.76 |
+| trial | far_8_plus / low_<15% | 2476 | 82 | 1 | 0.04% | 23.18 |
+| trial | far_8_plus / mid_15-30% | 2237 | 81 | 3 | 0.13% | 16.05 |
+| trial | middle_4_7 / low_<15% | 728 | 81 | 0 | 0.00% | 26.24 |
+| trial | middle_4_7 / mid_15-30% | 585 | 78 | 1 | 0.17% | 24.27 |
+| trial | near_0_3 / low_<15% | 324 | 78 | 2 | 0.62% | 25.31 |
+| trial | near_0_3 / mid_15-30% | 205 | 71 | 1 | 0.49% | 13.66 |
 
 ## Palmer as reference subset, not population replacement
 
-Palmer league windows: **2478** / **28802** league windows;
-death events in next 10: **4**;
-observed apple events before death: **456**.
+Palmer league windows: **2798** / **30719** league windows;
+death events in next 10: **6**;
+observed apple events before death: **520**.
 Selected games/versions are not a matched estimate of Palmer's
 causal strategy or an appropriate single-opponent benchmark.
 

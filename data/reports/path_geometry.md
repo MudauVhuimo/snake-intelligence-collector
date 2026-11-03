@@ -1,6 +1,6 @@
 # Snake26: does occupied-space geometry explain underdog apples?
 
-Generated UTC: 2026-11-03T15:19:42+00:00
+Generated UTC: 2026-11-03T19:55:51+00:00
 
 ## Critical definition
 
@@ -17,13 +17,13 @@ Exclude episodes with no static path for either head, which can bias results.
 
 | Frozen-body path ordering | Student captures | Benchmark captures | Student capture share |
 |---|---:|---:|---:|
-| Student shortest | 363 | 387 | 48.4% |
-| Benchmark shortest or tied | 269 | 4281 | 5.9% |
+| Student shortest | 380 | 419 | 47.6% |
+| Benchmark shortest or tied | 284 | 4481 | 6.0% |
 
-Observed difference in student capture share: **42.5 percentage points**.
+Observed difference in student capture share: **41.6 percentage points**.
 Exploratory 95% **match-cluster bootstrap** interval for the difference:
-**38.4 to 46.5 percentage points**
-(4000 valid bootstrap draws, resampling 78 complete replay matches).
+**37.6 to 45.7 percentage points**
+(4000 valid bootstrap draws, resampling 82 complete replay matches).
 This interval reflects match-level resampling variability in this selected archive;
 it does not adjust for bot version, different opponent skill or hidden strategy choices.
 
@@ -31,12 +31,12 @@ it does not adjust for bot version, different opponent skill or hidden strategy 
 
 | Initially closest benchmark | Reversal: student captures / all | Not reversed: student captures / all |
 |---|---:|---:|
-| ~benchmark | 109/218 (50.0%) | 41/1362 (3.0%) |
-| ~gauntlet_1 | 53/108 (49.1%) | 22/500 (4.4%) |
-| ~hungry | 38/68 (55.9%) | 13/503 (2.6%) |
-| ~hunter | 36/72 (50.0%) | 12/423 (2.8%) |
-| ~survivor | 102/226 (45.1%) | 67/1227 (5.5%) |
-| ~wander | 25/58 (43.1%) | 114/535 (21.3%) |
+| ~benchmark | 116/238 (48.7%) | 43/1426 (3.0%) |
+| ~gauntlet_1 | 54/112 (48.2%) | 24/535 (4.5%) |
+| ~hungry | 38/70 (54.3%) | 13/523 (2.5%) |
+| ~hunter | 38/75 (50.7%) | 12/433 (2.8%) |
+| ~survivor | 107/241 (44.4%) | 75/1299 (5.8%) |
+| ~wander | 27/63 (42.9%) | 117/549 (21.3%) |
 
 ## What this does and DOES NOT establish
 
