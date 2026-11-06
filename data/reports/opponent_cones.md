@@ -1,6 +1,6 @@
 # Snake26: Opponent next-head reachability across league and trials
 
-Generated UTC: 2026-11-03T19:59:20+00:00
+Generated UTC: 2026-11-06T11:08:58+00:00
 
 ## What was tested
 
@@ -20,19 +20,19 @@ New candidates are NOT built or modified by this investigation.
 
 ## 1. Transition verification and actual head-on death records
 
-Source replay payloads: **178**.
-Danger positions: **4310**, league **3610**, trials **700**.
-Unique opponent normal next-head transitions checked: **9779**.
-Within predicted cone: **9779**; outside: **0**.
-Dead/absent/respawned opponents excluded, not marked predicted: **23**.
-League recorded head-to-head VICTIM events (all replay turns): **76**; trials **654**.
+Source replay payloads: **180**.
+Danger positions: **4451**, league **3789**, trials **662**.
+Unique opponent normal next-head transitions checked: **10065**.
+Within predicted cone: **10065**; outside: **0**.
+Dead/absent/respawned opponents excluded, not marked predicted: **21**.
+League recorded head-to-head VICTIM events (all replay turns): **77**; trials **646**.
 Victim events are not distinct collisions, and may lack an
 identifiable opposing player. Compare last-frame lengths only:
 
 | Last-known victim length relative to named peer | Events |
 |---|---:|
-| victim_shorter | 688 |
-| equal | 42 |
+| victim_shorter | 685 |
+| equal | 38 |
 | victim_longer | 0 |
 | missing_participant | 0 |
 | missing_prior_frame | 0 |
@@ -47,14 +47,14 @@ peer IDs can complicate interpretation.
 
 | Mode | League performance group | Students | Games | Danger windows | Frames with ≥1 contested alternative | ALL alternatives contested | Observed first moves | Observed move into cone | Into equal/longer cone | Death by +10 |
 |---|---|---:|---:|---:|---|---|---:|---|---|---|
-| league | top_quartile | 15 | 64 | 913 | 166/906 (18.3%) | 5/906 (0.6%) | 882 | 74/882 (8.4%) | 0/882 (0.0%) | 12/913 |
-| league | middle_half | 37 | 68 | 1284 | 271/1266 (21.4%) | 8/1266 (0.6%) | 1205 | 82/1205 (6.8%) | 1/1205 (0.1%) | 48/1284 |
-| league | bottom_quartile | 25 | 45 | 496 | 100/493 (20.3%) | 2/493 (0.4%) | 471 | 23/471 (4.9%) | 1/471 (0.2%) | 20/496 |
-| league | unranked | 58 | 27 | 917 | 156/907 (17.2%) | 6/907 (0.7%) | 873 | 52/873 (6.0%) | 1/873 (0.1%) | 35/917 |
-| trial | top_quartile | 10 | 18 | 139 | 34/139 (24.5%) | 2/139 (1.4%) | 139 | 15/139 (10.8%) | 0/139 (0.0%) | 1/139 |
+| league | top_quartile | 17 | 68 | 979 | 175/971 (18.0%) | 6/971 (0.6%) | 943 | 76/943 (8.1%) | 0/943 (0.0%) | 14/979 |
+| league | middle_half | 39 | 72 | 1333 | 280/1314 (21.3%) | 8/1314 (0.6%) | 1251 | 89/1251 (7.1%) | 1/1251 (0.1%) | 49/1333 |
+| league | bottom_quartile | 27 | 48 | 533 | 107/530 (20.2%) | 2/530 (0.4%) | 504 | 25/504 (5.0%) | 1/504 (0.2%) | 22/533 |
+| league | unranked | 58 | 28 | 944 | 160/934 (17.1%) | 6/934 (0.6%) | 900 | 52/900 (5.8%) | 1/900 (0.1%) | 35/944 |
+| trial | top_quartile | 12 | 21 | 158 | 38/158 (24.1%) | 2/158 (1.3%) | 158 | 17/158 (10.8%) | 0/158 (0.0%) | 1/158 |
 | trial | middle_half | 12 | 17 | 169 | 25/167 (15.0%) | 1/167 (0.6%) | 161 | 16/161 (9.9%) | 0/161 (0.0%) | 1/169 |
 | trial | bottom_quartile | 5 | 7 | 64 | 22/64 (34.4%) | 0/64 (0.0%) | 64 | 13/64 (20.3%) | 0/64 (0.0%) | 1/64 |
-| trial | unranked | 19 | 39 | 328 | 90/327 (27.5%) | 5/327 (1.5%) | 325 | 42/325 (12.9%) | 0/325 (0.0%) | 3/328 |
+| trial | unranked | 19 | 33 | 271 | 78/271 (28.8%) | 5/271 (1.8%) | 271 | 36/271 (13.3%) | 0/271 (0.0%) | 1/271 |
 
 ### A critical sensitivity check: does a shorter-opponent opportunity exist?
 
@@ -67,14 +67,14 @@ observed first moves WITH an actual such opportunity.
 
 | Mode | Cohort | Mean body length (observed) | First moves with shorter-only opportunity | Chose shorter-only contest | Conditional % |
 |---|---|---:|---:|---:|---:|
-| league | top_quartile | 94.9 | 111 | 74 | 66.7% |
-| league | middle_half | 69.8 | 123 | 81 | 65.9% |
-| league | bottom_quartile | 55.2 | 30 | 22 | 73.3% |
-| league | unranked | 68.8 | 73 | 51 | 69.9% |
-| trial | top_quartile | 118.7 | 30 | 15 | 50.0% |
+| league | top_quartile | 94.8 | 114 | 76 | 66.7% |
+| league | middle_half | 69.9 | 130 | 88 | 67.7% |
+| league | bottom_quartile | 55.5 | 33 | 24 | 72.7% |
+| league | unranked | 68.7 | 75 | 51 | 68.0% |
+| trial | top_quartile | 121.5 | 34 | 17 | 50.0% |
 | trial | middle_half | 118.7 | 21 | 16 | 76.2% |
 | trial | bottom_quartile | 105.2 | 21 | 13 | 61.9% |
-| trial | unranked | 108.6 | 84 | 42 | 50.0% |
+| trial | unranked | 106.5 | 73 | 36 | 49.3% |
 
 The top group may encounter MORE weaker opponents because its snakes
 are already longer. Conditional rates can erase or reverse the
@@ -90,15 +90,15 @@ are not present in next-frame surviving heads.
 | 5-24 | top_quartile | 1 | 0 | 0.0% |
 | 5-24 | middle_half | 5 | 3 | 60.0% |
 | 5-24 | bottom_quartile | 1 | 1 | 100.0% |
-| 25-49 | top_quartile | 4 | 2 | 50.0% |
+| 25-49 | top_quartile | 5 | 2 | 40.0% |
 | 25-49 | middle_half | 14 | 13 | 92.9% |
 | 25-49 | bottom_quartile | 3 | 2 | 66.7% |
 | 50-99 | top_quartile | 36 | 23 | 63.9% |
-| 50-99 | middle_half | 53 | 33 | 62.3% |
-| 50-99 | bottom_quartile | 18 | 14 | 77.8% |
-| 100+ | top_quartile | 70 | 49 | 70.0% |
-| 100+ | middle_half | 51 | 32 | 62.7% |
-| 100+ | bottom_quartile | 8 | 5 | 62.5% |
+| 50-99 | middle_half | 58 | 38 | 65.5% |
+| 50-99 | bottom_quartile | 20 | 16 | 80.0% |
+| 100+ | top_quartile | 72 | 51 | 70.8% |
+| 100+ | middle_half | 53 | 34 | 64.2% |
+| 100+ | bottom_quartile | 9 | 5 | 55.6% |
 
 These strata are small and not exact-matched relative-length or
 opponent-heading contexts; do NOT extrapolate a universal
@@ -119,18 +119,18 @@ a calibrated risk or evidence of a better agent.
 
 | Match mode | Pre-action feature | Holdout windows | Death events | AUC |
 |---|---|---:|---:|---:|
-| league | Current free neighboring cells | 1055 | 33 | 0.736 |
-| league | Best 8-step moving-own-tail reach | 1055 | 33 | 0.857 |
-| league | Modeled first steps outside all opponent cones | 1055 | 33 | 0.770 |
-| league | Best tail reach outside all head cones | 1055 | 33 | 0.867 |
-| league | First steps avoiding equal/longer head cones | 1055 | 33 | 0.787 |
-| league | Best tail reach outside equal/longer head cones | 1055 | 33 | 0.864 |
-| trial | Current free neighboring cells | 127 | 0 | insufficient |
-| trial | Best 8-step moving-own-tail reach | 127 | 0 | insufficient |
-| trial | Modeled first steps outside all opponent cones | 127 | 0 | insufficient |
-| trial | Best tail reach outside all head cones | 127 | 0 | insufficient |
-| trial | First steps avoiding equal/longer head cones | 127 | 0 | insufficient |
-| trial | Best tail reach outside equal/longer head cones | 127 | 0 | insufficient |
+| league | Current free neighboring cells | 1101 | 35 | 0.742 |
+| league | Best 8-step moving-own-tail reach | 1101 | 35 | 0.864 |
+| league | Modeled first steps outside all opponent cones | 1101 | 35 | 0.772 |
+| league | Best tail reach outside all head cones | 1101 | 35 | 0.873 |
+| league | First steps avoiding equal/longer head cones | 1101 | 35 | 0.791 |
+| league | Best tail reach outside equal/longer head cones | 1101 | 35 | 0.870 |
+| trial | Current free neighboring cells | 131 | 0 | insufficient |
+| trial | Best 8-step moving-own-tail reach | 131 | 0 | insufficient |
+| trial | Modeled first steps outside all opponent cones | 131 | 0 | insufficient |
+| trial | Best tail reach outside all head cones | 131 | 0 | insufficient |
+| trial | First steps avoiding equal/longer head cones | 131 | 0 | insufficient |
+| trial | Best tail reach outside equal/longer head cones | 131 | 0 | insufficient |
 
 ### Match-cluster uncertainty for league predictor differences
 
@@ -142,30 +142,30 @@ is established.
 
 | Same held-out league observations | AUC difference | Exploratory 95% replay interval | Matches |
 |---|---:|---|---:|
-| Avoid any possible head vs plain tail reach | 0.010 | [-0.004, +0.028] | 28 |
-| Avoid equal/longer heads vs plain tail reach | 0.007 | [-0.000, +0.016] | 28 |
-| Avoid any possible head vs free neighbors | 0.131 | [+0.070, +0.214] | 28 |
+| Avoid any possible head vs plain tail reach | 0.009 | [-0.004, +0.028] | 29 |
+| Avoid equal/longer heads vs plain tail reach | 0.006 | [-0.000, +0.015] | 29 |
+| Avoid any possible head vs free neighbors | 0.131 | [+0.076, +0.201] | 29 |
 
 ## 4. Same-game comparisons, NOT selected opponent anecdotes
 
 Compare previous non-reused top-vs-bottom student pairs from the
 SAME league replay and matched baseline length/pressure/phase.
-Paired game situations with opponent cone data: **96**.
+Paired game situations with opponent cone data: **109**.
 Differences below are bottom minus top. Matched situations can
 still have different food, opponents or exact positions.
 
 | State/observed behavior | Both measurable pairs | Games | Bottom minus top | 95% game interval |
 |---|---:|---:|---:|---|
-| Surviving first move entered possible head contest | 90 | 30 | -0.044 | [-0.131, +0.023] |
-| Surviving move entered equal/longer head cone | 90 | 30 | 0.000 | [+0.000, +0.000] |
-| ALL projected next cells possibly head-contested | 96 | 30 | 0.000 | [+0.000, +0.000] |
+| Surviving first move entered possible head contest | 101 | 33 | -0.030 | [-0.112, +0.033] |
+| Surviving move entered equal/longer head cone | 101 | 33 | 0.000 | [+0.000, +0.000] |
+| ALL projected next cells possibly head-contested | 109 | 33 | 0.000 | [+0.000, +0.000] |
 
 ## 5. Same student/season: do league and trial styles agree?
 
 Join by student AND season, only when each environment has at
 least THREE real observed first moves from that student.
-Paired student-season samples: **32**.
-Spearman correlation of observed head-contest rates: **0.115** (n/a if insufficient/constant).
+Paired student-season samples: **35**.
+Spearman correlation of observed head-contest rates: **0.171** (n/a if insufficient/constant).
 With so few and sometimes repeated submitted versions, this is
 not evidence of causal cross-environment transfer.
 [Underlying paired-student rows](../derived/opponent_cone_paired_students.csv).

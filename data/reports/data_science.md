@@ -1,14 +1,14 @@
 # Snake26 — Data Science Dashboard: Phase I
 
-Generated UTC: 2026-11-03T19:55:07+00:00
+Generated UTC: 2026-11-06T11:03:52+00:00
 
 ## Data coverage and quality
 
-- Cataloged seasons: **142**; match records: **71,298**.
-- Replay records marked downloaded in SQLite: **250**.
-- Files on disk: **250**; sampled: **250**.
-- Unique replay payloads (SHA-256): **179**; duplicate payloads skipped: **71**; unreadable: **0**.
-- Latest season: **2026-11-03-185906-season**; published gauntlet_1 trial results: **152**.
+- Cataloged seasons: **153**; match records: **78,048**.
+- Replay records marked downloaded in SQLite: **260**.
+- Files on disk: **260**; sampled: **250**.
+- Unique replay payloads (SHA-256): **181**; duplicate payloads skipped: **69**; unreadable: **0**.
+- Latest season: **2026-11-06-102324-season**; published gauntlet_1 trial results: **168**.
 
 > Thousands of catalog records are not thousands of independent replay observations.
 > Adjacent turns are correlated. Same bot, version, opponent setup or seed can recur.
@@ -19,13 +19,13 @@ Generated UTC: 2026-11-03T19:55:07+00:00
 ![Final body lengths](charts/gauntlet_rankings.svg)
 
 A single shared-seed on-arrival match per student is not evidence of consistent performance.
-Our recorded trial: **175 final length**, **34 apples**, placement **1**.
+Our recorded trial: **215 final length**, **42 apples**, placement **1**.
 
 ## 2. Food acquired versus retained growth
 
 ![Apples and retained length](charts/apples_vs_length.svg)
 
-The no-reset relation **L = 5 + 5 × apples** holds exactly in **56/152** reported trials.
+The no-reset relation **L = 5 + 5 × apples** holds exactly in **61/168** reported trials.
 **0** result(s) exceed this reference: inspect game mechanics if nonzero.
 Below-reference points may reflect growth lost to deaths, but only full replay events establish their cause.
 
@@ -33,7 +33,7 @@ Below-reference points may reflect growth lost to deaths, but only full replay e
 
 ![Growth across game turns](charts/gauntlet_growth.svg)
 
-Current-season gauntlet_1 trial replays with trajectories: **2**.
+Current-season gauntlet_1 trial replays with trajectories: **1**.
 Actual recorded body lengths, sampled every 100 turns; missing curves are not interpolated.
 
 ## 4. Deaths by recorded cause (all match modes pooled)
@@ -48,11 +48,11 @@ Raw counts mix opponent groups and survival exposure; they are not comparable ri
 
 | Length range | Student alive turns | Student deaths | Deaths / 1,000 alive turns | Benchmark alive turns | Benchmark deaths |
 |---|---:|---:|---:|---:|---:|
-| 5-24 | 179,665 | 52 | 0.289 | 321,307 | 1,399 |
-| 25-49 | 187,625 | 78 | 0.416 | 107,263 | 465 |
-| 50-99 | 294,123 | 161 | 0.547 | 49,302 | 140 |
-| 100-149 | 184,306 | 103 | 0.559 | 3,522 | 10 |
-| 150+ | 86,017 | 38 | 0.442 | 0 | 0 |
+| 5-24 | 186,800 | 53 | 0.284 | 308,489 | 1,351 |
+| 25-49 | 194,050 | 79 | 0.407 | 103,525 | 441 |
+| 50-99 | 306,855 | 164 | 0.534 | 48,255 | 137 |
+| 100-149 | 191,450 | 112 | 0.585 | 3,522 | 10 |
+| 150+ | 86,506 | 36 | 0.416 | 0 | 0 |
 
 Exposure: one alive snake at the start of an observed turn. A death is attributed
 to its previous alive state, not the dead/respawned frame's length. A zero-exposure
@@ -65,13 +65,13 @@ These pooled figures DO NOT establish differences between the two game environme
 
 | Length | League alive turns | League deaths | League rate / 1000 | Trial alive turns | Trial deaths | Trial rate / 1000 |
 |---|---:|---:|---:|---:|---:|---:|
-| 5-24 | 164,553 | 52 | 0.316 | 15,112 | 0 | 0.000 |
-| 25-49 | 168,703 | 77 | 0.456 | 18,922 | 1 | 0.053 |
-| 50-99 | 256,839 | 157 | 0.611 | 37,284 | 4 | 0.107 |
-| 100-149 | 144,306 | 103 | 0.714 | 40,000 | 0 | 0.000 |
-| 150+ | 33,437 | 21 | 0.628 | 52,580 | 17 | 0.323 |
+| 5-24 | 172,577 | 53 | 0.307 | 14,223 | 0 | 0.000 |
+| 25-49 | 175,764 | 78 | 0.444 | 18,286 | 1 | 0.055 |
+| 50-99 | 271,144 | 161 | 0.594 | 35,711 | 3 | 0.084 |
+| 100-149 | 152,560 | 112 | 0.734 | 38,890 | 0 | 0.000 |
+| 150+ | 35,698 | 22 | 0.616 | 50,808 | 14 | 0.276 |
 
-Unique full replay payloads sampled: league 97, trials 82.
+Unique full replay payloads sampled: league 102, trials 79.
 A missing bar denotes NO exposure, not zero risk. Different opponents,
 seeds and bot versions make these observational, non-causal comparisons.
 

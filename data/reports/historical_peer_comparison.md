@@ -1,6 +1,6 @@
 # Snake26 historical league outcomes versus fixed trials
 
-Generated UTC: 2026-11-03T19:59:22+00:00
+Generated UTC: 2026-11-06T11:09:01+00:00
 
 ## Why this analysis exists
 
@@ -19,13 +19,13 @@ NOT a series of independent replications.
 
 ## Coverage
 
-- Season/division cohorts with at least 10 eligible students: **256**.
-- Distinct seasons represented: **134**.
-- Division 1 snapshots: **134**.
-- Eligible student/season/division records: **7112**.
-- Excluded student-seasons with fewer than 3 peer league games: **104**.
+- Season/division cohorts with at least 10 eligible students: **280**.
+- Distinct seasons represented: **145**.
+- Division 1 snapshots: **145**.
+- Eligible student/season/division records: **7855**.
+- Excluded student-seasons with fewer than 3 peer league games: **112**.
 - Excluded student-seasons with conflicting match divisions: **0**.
-- Excluded student-seasons without all three trial suites: **27**.
+- Excluded student-seasons without all three trial suites: **29**.
 
 ## Student-vs-student placement correlation with benchmark growth
 
@@ -38,6 +38,8 @@ It does NOT establish that benchmark growth causes league success.
 
 | Indexed season | Division 1 students | Spearman rho | Avg peer matches/student | Official ranks saved? |
 |---|---:|---:|---:|---:|
+| 2026-11-06-102324-season | 32 | +0.145 | 5.4 | 32/32 |
+| 2026-11-06-092316-season | 32 | +0.215 | 5 | 0/32 |
 | 2026-11-03-185906-season | 32 | +0.310 | 4.8 | 32/32 |
 | 2026-11-03-175900-season | 32 | +0.199 | 5.1 | 0/32 |
 | 2026-11-03-145900-season | 32 | +0.350 | 5 | 32/32 |
@@ -59,9 +61,7 @@ It does NOT establish that benchmark growth causes league success.
 | 2026-11-01-215859-season | 32 | +0.062 | 5.6 | 32/32 |
 | 2026-11-01-205859-season | 32 | +0.113 | 4.5 | 32/32 |
 | 2026-11-01-195859-season | 32 | +0.377 | 4.5 | 0/32 |
-| 2026-10-29-155859-season | 31 | +0.113 | 5 | 0/31 |
-| 2026-10-29-125858-season | 32 | +0.496 | 5 | 0/32 |
-| 2026-10-29-105900-season | 32 | +0.382 | 4.9 | 0/32 |
+| 2026-10-31-165858-season | 32 | +0.106 | 5.4 | 0/32 |
 
 ## Interpretation and responsible next actions
 

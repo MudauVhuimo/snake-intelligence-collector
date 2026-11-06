@@ -13,6 +13,11 @@ If no frame or an unexplained absence is observed, +30 is censored.
 
 | Archived league replay | Turn | Length | Start head distance | Free exits 0 to +3 | Actual first move | Death-free +30? | Comparable peer in same game |
 |---|---:|---:|---:|---|---|---|---|
+| [game-76004.rep.gz](../replays/2026-11-06-102324-season/game-76004.rep.gz) | 300 | 50 | 3 | 3 → 3 | +x / turn | alive | 423239-zeeshaan-bham |
+| [game-75004.rep.gz](../replays/2026-11-06-102324-season/game-75004.rep.gz) | 225 | 20 | 3 | 3 → 3 | +x / straight | alive | 420790-damian-nel |
+| [game-74007.rep.gz](../replays/2026-11-06-102324-season/game-74007.rep.gz) | 325 | 65 | 3 | 3 → 3 | -x / straight | alive | 424251-thandolwethu-zondi |
+| [game-73001.rep.gz](../replays/2026-11-06-102324-season/game-73001.rep.gz) | 500 | 80 | 6 | 1 → 3 | +y / turn | alive | 429653-elohim-mahungele |
+| [game-71004.rep.gz](../replays/2026-11-06-092316-season/game-71004.rep.gz) | 75 | 25 | 2 | 3 → 3 | -x / turn | alive | 428786-marvellous-sambo |
 | [game-76004.rep.gz](../replays/2026-11-03-185906-season/game-76004.rep.gz) | 350 | 35 | 6 | 1 → 3 | -x / turn | alive | no matching baseline peer |
 | [game-75004.rep.gz](../replays/2026-11-03-185906-season/game-75004.rep.gz) | 525 | 95 | 15 | 1 → 3 | -y / turn | alive | 389160-lwandle-ramanugu |
 | [game-73001.rep.gz](../replays/2026-11-03-185906-season/game-73001.rep.gz) | 500 | 70 | 5 | 1 → 2 | -y / turn | alive | no matching baseline peer |
